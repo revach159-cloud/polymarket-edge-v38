@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FireIcon } from "@/components/gold/fire-icon";
 import { Badge } from "@/components/ui/badge";
 import { formatPercent, formatUsd } from "@/lib/utils";
 import type { Market } from "@/types";
@@ -30,7 +31,8 @@ export function MarketTable({ markets }: { markets: Market[] }) {
                   <span className="line-clamp-2 ltr-isolate">{m.question}</span>
                 </Link>
                 {m.goldPick ? (
-                  <Badge variant="gold" className="mt-1">
+                  <Badge variant="gold" className="mt-1 inline-flex items-center gap-1">
+                    <FireIcon size="xs" />
                     Gold
                   </Badge>
                 ) : null}

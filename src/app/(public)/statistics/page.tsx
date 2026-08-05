@@ -1,16 +1,21 @@
 import { DataFreshnessBadge } from "@/components/layout/data-freshness-badge";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
+import { MarketsStatsStrip } from "@/components/markets/market-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatNumber, formatUsd } from "@/lib/utils";
-import { getMarketStats, getMarkets } from "@/services/markets";
+import {
+  getMarketStats,
+  getMarkets,
+  getResolvedPredictions,
+} from "@/services/markets";
 
 export const metadata = { title: "סטטיסטיקה" };
 export const dynamic = "force-dynamic";
 
 export default async function StatisticsPage() {
-  const [stats, markets] = await Promise.all([
+  const [stats, markets, resolvedPredictions] = await Promise.all([
     getMarketStats(),
     getMarkets({ status: "active", sort: "volume" }),
+    getResolvedPredictions(),
   ]);
 
   const sampleSize = markets.data.length;
@@ -22,16 +27,12 @@ export default async function StatisticsPage() {
   const topCategories = Object.entries(categories)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8);
-  const goldCount = markets.data.filter((m) => m.goldPick).length;
-
   return (
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="font-display text-3xl font-bold">סטטיסטיקה</h1>
-          <p className="mt-1 text-muted-foreground">
-            סיכום מדגם שווקים פעילים — ללא אחוזי הצלחה מדומים
-          </p>
+          <p className="mt-1 text-muted-foreground">מדדי פעילות ותוצאות מוכרעות בלבד</p>
         </div>
         <DataFreshnessBadge
           fetchedAt={markets.fetchedAt}
@@ -40,58 +41,55 @@ export default async function StatisticsPage() {
         />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">
-              גודל מדגם
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="font-display text-3xl font-bold">
-              {formatNumber(sampleSize)}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              שווקים במשיכה הנוכחית
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">נפח</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="font-display text-3xl font-bold">
-              {formatUsd(stats.volume)}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">נזילות</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="font-display text-3xl font-bold">
-              {formatUsd(stats.liquidity)}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">
-              מועמדי Gold במדגם
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="font-display text-3xl font-bold">
-              {formatNumber(goldCount)}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              מתוך {formatNumber(sampleSize)} — לא אחוז ניצחון
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <MarketsStatsStrip {...stats} />
+
+      <section className="space-y-3">
+        <div>
+          <h2 className="font-display text-xl font-bold">תוצאות מוכרעות</h2>
+          <p className="text-sm text-muted-foreground">
+            Win Rate מופיע רק לפרדיקשנים שהוכרעו בפועל, עם גודל המדגם.
+          </p>
+        </div>
+        {resolvedPredictions.length === 0 ? (
+          <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+            עדיין אין פרדיקשנים מוכרעים במדגם. שיעור הצלחה יוצג רק לאחר שתהיינה
+            תוצאות אמיתיות.
+          </div>
+        ) : (
+          <div className="data-table overflow-x-auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>שוק</th>
+                  <th>בחירה</th>
+                  <th>תוצאה</th>
+                  <th>צדק?</th>
+                  <th>תאריך</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resolvedPredictions.map((prediction) => (
+                  <tr key={prediction.id}>
+                    <td className="max-w-[28rem] truncate">{prediction.marketQuestion}</td>
+                    <td className="ltr-isolate">{prediction.side}</td>
+                    <td>הוכרע</td>
+                    <td className={prediction.correct ? "text-primary" : "text-muted-foreground"}>
+                      {prediction.correct ? "כן" : "לא"}
+                    </td>
+                    <td className="ltr-isolate">
+                      {prediction.resolvedAt
+                        ? new Intl.DateTimeFormat("he-IL", { dateStyle: "medium" }).format(
+                            new Date(prediction.resolvedAt),
+                          )
+                        : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
 
       <Card>
         <CardHeader>

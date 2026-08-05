@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Activity, ArrowLeft, Shield } from "lucide-react";
+import { GoldWordmark } from "@/components/gold/fire-icon";
 import { DataFreshnessBadge } from "@/components/layout/data-freshness-badge";
 import { MarketCard } from "@/components/markets/market-card";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -40,7 +41,9 @@ export default async function HomePage() {
             </Link>
           </Button>
           <Button asChild size="lg" variant="gold">
-            <Link href="/gold">Gold</Link>
+            <Link href="/gold">
+              <GoldWordmark size="sm" />
+            </Link>
           </Button>
         </div>
       </section>

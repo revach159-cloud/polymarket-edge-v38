@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Crown } from "lucide-react";
+import { FireIcon } from "@/components/gold/fire-icon";
 import { Button } from "@/components/ui/button";
 
 export function SubscriptionRequired({
@@ -10,8 +10,8 @@ export function SubscriptionRequired({
   description?: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-gold/30 bg-gold/5 px-6 py-14 text-center">
-      <Crown className="mb-3 h-8 w-8 text-gold" aria-hidden />
+    <div className="gold-gate flex flex-col items-center justify-center px-6 py-14 text-center">
+      <FireIcon size="lg" className="mb-3" />
       <h2 className="font-display text-xl font-semibold text-gold">
         נדרש מנוי {tier}
       </h2>

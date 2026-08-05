@@ -1,16 +1,8 @@
 import { Check } from "lucide-react";
+import { FireIcon } from "@/components/gold/fire-icon";
 import { Container } from "@/components/layout/container";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { isStripeConfigured } from "@/lib/env";
 
@@ -23,31 +15,31 @@ const plans = [
     id: "free",
     name: "Free",
     price: "₪0",
-    description: "גישה לשווקים ציבוריים ומעקב בסיסי",
-    features: ["שווקים חיים", "סטטיסטיקה בסיסית", "חיפוש ארנקים"],
+    period: "לתמיד",
+    description: "נקודת כניסה חינמית למחקר שווקי חיזוי.",
+    features: ["מודל השווקים", "סטטיסטיקת פעילות", "חיפוש ארנקים בסיסי"],
     cta: "התחילו בחינם",
     href: "/signup",
-    highlight: false,
   },
   {
     id: "core",
     name: "Core",
-    price: "בקרוב",
-    description: "התראות, מועדפים מתקדמים וסינון Edge",
-    features: ["הכל ב־Free", "מועדפים מסונכרנים", "התראות שוק"],
-    cta: "בקרוב",
+    price: "יוכרז בהשקה",
+    period: "ללא חיוב כרגע",
+    description: "כלי מעקב וסינון מתקדמים למחקר מסודר.",
+    features: ["הכל ב־Free", "מועדפים מסונכרנים", "התראות שוק כשיהיו זמינות"],
+    cta: "לרשימת ההמתנה",
     href: "#waitlist",
-    highlight: false,
   },
   {
     id: "gold",
     name: "Gold",
-    price: "בקרוב",
-    description: "בחירות איכות מנופות וגישה מוקדמת",
-    features: ["הכל ב־Core", "Gold Picks", "עדיפות בתמיכה"],
-    cta: "בקרוב",
+    price: "יוכרז בהשקה",
+    period: "ללא חיוב כרגע",
+    description: "גישה לבחירות איכות שעברו סינון, בכפוף לזמינות.",
+    features: ["הכל ב־Core", "Gold Picks מסוננים", "עדיפות בתמיכה"],
+    cta: "להצטרפות לרשימת ההמתנה",
     href: "#waitlist",
-    highlight: true,
   },
 ];
 
@@ -55,110 +47,74 @@ export default function PricingPage() {
   const stripeOn = isStripeConfigured();
 
   return (
-    <main id="main-content" className="pb-10">
-      <Container className="space-y-8 py-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
-            תמחור שקוף
-          </h1>
-          <p className="mt-3 text-muted-foreground">
-            התחילו בחינם. מנויי Core ו־Gold יופעלו כש־Stripe יחובר.
+    <Container className="space-y-8 py-8">
+      <section className="relative overflow-hidden rounded-3xl border border-border bg-card px-5 py-10 text-center sm:px-10">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,rgba(125,255,106,0.14),transparent_70%)]" />
+        <div className="relative mx-auto max-w-2xl">
+          <Badge className="mb-4" variant="outline">מנויים</Badge>
+          <h1 className="font-display text-4xl font-bold sm:text-5xl">תמחור ברור. מחקר אחראי.</h1>
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+            בחרו את עומק הכלים שמתאים לכם. אין הבטחות לתשואה, ואין חיוב עד שחיבור התשלומים יהיה פעיל.
           </p>
         </div>
+      </section>
 
-        {!stripeOn ? (
-          <Alert variant="info" id="waitlist">
-            <AlertTitle>תשלומים — בקרוב</AlertTitle>
-            <AlertDescription>
-              Stripe עדיין כבוי בסביבה זו. השאירו אימייל לרשימת המתנה ונעדכן
-              כשהמנויים ייפתחו.
-            </AlertDescription>
-          </Alert>
-        ) : null}
-
-        <div className="grid gap-4 lg:grid-cols-3">
-          {plans.map((plan) => (
-            <Card
+      <div className="grid gap-4 lg:grid-cols-3">
+        {plans.map((plan) => {
+          const gold = plan.id === "gold";
+          return (
+            <article
               key={plan.id}
-              className={
-                plan.highlight
-                  ? "border-gold/50 bg-gold/5"
-                  : undefined
-              }
+              className={`relative flex min-h-[30rem] flex-col overflow-hidden rounded-2xl border p-6 ${
+                gold
+                  ? "border-gold/55 bg-[radial-gradient(ellipse_at_top,rgba(255,225,115,0.18),transparent_55%)] shadow-[0_0_40px_rgba(255,225,115,0.08)]"
+                  : "border-border bg-card"
+              }`}
             >
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle
-                    className={plan.highlight ? "text-gold" : undefined}
-                  >
-                    {plan.name}
-                  </CardTitle>
-                  {plan.highlight ? <Badge variant="gold">מומלץ</Badge> : null}
+              {gold ? (
+                <div className="mb-6 flex items-center justify-between">
+                  <Badge variant="gold">המסלול הבכיר</Badge>
+                  <FireIcon size="md" />
                 </div>
-                <CardDescription>{plan.description}</CardDescription>
-                <p className="pt-2 font-display text-3xl font-bold">
-                  {stripeOn && plan.id !== "free" ? "—" : plan.price}
-                </p>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-primary" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                {plan.id === "free" ? (
-                  <Button asChild className="w-full">
-                    <a href={plan.href}>{plan.cta}</a>
-                  </Button>
-                ) : (
-                  <Button
-                    className="w-full"
-                    variant={plan.highlight ? "gold" : "secondary"}
-                    disabled={!stripeOn}
-                  >
-                    {stripeOn ? "הצטרפות" : "בקרוב"}
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+              ) : <div className="mb-6 h-7" />}
+              <h2 className={`font-display text-3xl font-bold ${gold ? "text-gold" : ""}`}>{plan.name}</h2>
+              <p className="mt-3 min-h-12 text-sm leading-6 text-muted-foreground">{plan.description}</p>
+              <div className="my-7 border-y border-border/80 py-5">
+                <p className={`font-display text-3xl font-bold ${gold ? "text-gold" : ""}`}>{plan.price}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{plan.period}</p>
+              </div>
+              <ul className="space-y-3 text-sm">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2">
+                    <Check className={gold ? "mt-0.5 h-4 w-4 shrink-0 text-gold" : "mt-0.5 h-4 w-4 shrink-0 text-primary"} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild className="mt-auto w-full" variant={gold ? "gold" : plan.id === "free" ? "default" : "secondary"}>
+                <a href={plan.href}>{plan.cta}</a>
+              </Button>
+            </article>
+          );
+        })}
+      </div>
 
-        {!stripeOn ? (
-          <Card>
-            <CardHeader>
-              <CardTitle>רשימת המתנה</CardTitle>
-              <CardDescription>
-                נעדכן כשמנויים ישולמו דרך Stripe
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form
-                className="flex flex-col gap-3 sm:flex-row"
-                action="mailto:hello@edgedlab.local"
-                method="get"
-              >
-                <Input
-                  type="email"
-                  name="body"
-                  required
-                  placeholder="you@example.com"
-                  className="ltr-isolate"
-                  dir="ltr"
-                />
-                <Button type="submit" variant="outline">
-                  שליחה
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        ) : null}
-      </Container>
-    </main>
+      <section id="waitlist" className="rounded-2xl border border-border bg-card p-5 sm:p-7">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-display text-xl font-bold">רשימת המתנה</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {stripeOn
+                ? "הצטרפות בתשלום עדיין אינה זמינה בדף זה; נעדכן כשהמסלול ייפתח."
+                : "Stripe עדיין אינו מחובר בסביבה זו. השאירו אימייל לעדכון ההשקה."}
+            </p>
+          </div>
+          <form className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row" action="mailto:hello@edgedlab.local" method="get">
+            <Input type="email" name="body" required placeholder="you@example.com" className="ltr-isolate sm:w-64" dir="ltr" />
+            <Button type="submit" variant="outline">עדכנו אותי</Button>
+          </form>
+        </div>
+      </section>
+    </Container>
   );
 }

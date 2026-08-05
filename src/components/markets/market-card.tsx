@@ -1,125 +1,190 @@
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCountdown } from "@/lib/predictions/time-buckets";
-import { formatNumber, formatPercent, cn } from "@/lib/utils";
+import { formatNumber, formatPercent, formatUsd, cn } from "@/lib/utils";
 import type { Market } from "@/types";
 
 function polymarketUrl(slug: string) {
   return `https://polymarket.com/event/${encodeURIComponent(slug)}`;
 }
 
-export function MarketCard({ market }: { market: Market }) {
-  const yes =
+const accentByCategory: Record<string, string> = {
+  sports: "#7dff6a",
+  ספורט: "#7dff6a",
+  politics: "#a78bfa",
+  פוליטיקה: "#a78bfa",
+  world: "#38bdf8",
+  עולם: "#38bdf8",
+};
+
+export function MarketCard({
+  market,
+  variant = "default",
+}: {
+  market: Market;
+  variant?: "default" | "gold";
+}) {
+  const marketProb =
     market.marketProbability ??
-    market.outcomes.find((o) => o.name.toLowerCase() === "yes")?.price;
+    market.outcomes.find((o) => o.name.toLowerCase() === "yes")?.price ??
+    market.outcomes[0]?.price;
+  const modelProb = market.modelProbability ?? marketProb;
   const outcome = market.selectedOutcome;
+  const selectionLabel =
+    outcome === "YES"
+      ? market.outcomes.find((o) => o.name.toLowerCase() === "yes")?.name ?? "YES"
+      : outcome === "NO"
+        ? market.outcomes.find((o) => o.name.toLowerCase() === "no")?.name ?? "NO"
+        : null;
+  const category = market.category ?? "כללי";
+  const accent =
+    accentByCategory[category.toLowerCase()] ??
+    accentByCategory[category] ??
+    (variant === "gold" ? "#ffe173" : "#7dff6a");
 
   return (
-    <Card className="animate-fade-in flex h-full flex-col">
-      <CardHeader className="gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          {market.category ? <Badge variant="muted">{market.category}</Badge> : null}
-          {market.goldPick ? <Badge variant="gold">Gold</Badge> : null}
-          {outcome ? (
-            <Badge variant={outcome === "YES" ? "success" : "risk"}>
-              בחירה: {outcome}
-            </Badge>
+    <article
+      className={cn(
+        "market-card-shell animate-fade-in",
+        variant === "gold" && "market-card-shell-gold",
+      )}
+      style={{ ["--accent-line" as string]: accent }}
+    >
+      {variant === "gold" ? (
+        <div className="market-card-gold-sheen" aria-hidden="true" />
+      ) : null}
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        <div className="flex items-start justify-between gap-2">
+          <span className={cn("score-pill", variant === "gold" && "score-pill-gold")}>
+            ציון {market.qualityScore != null ? Math.round(market.qualityScore) : "—"}
+          </span>
+          <span
+            className={cn(
+              "text-xs font-semibold",
+              variant === "gold" ? "text-gold/80" : "text-muted-foreground",
+            )}
+          >
+            {category}
+          </span>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold leading-snug text-foreground md:text-[0.95rem]">
+            <span className="ltr-isolate" dir="ltr">
+              {market.question}
+            </span>
+          </h3>
+          {market.endDate ? (
+            <span className="countdown-pill">{formatCountdown(market.endDate)}</span>
+          ) : null}
+          {selectionLabel ? (
+            <p
+              className={cn(
+                "text-lg font-bold leading-tight md:text-xl",
+                variant === "gold" ? "text-gold" : "text-primary",
+              )}
+            >
+              <span className="ltr-isolate" dir="ltr">
+                {selectionLabel}
+              </span>
+            </p>
           ) : (
-            <Badge variant="outline">ללא בחירה</Badge>
+            <p className="text-sm text-muted-foreground">ללא בחירת מודל</p>
           )}
         </div>
-        <CardTitle className="font-display text-base leading-snug">
-          <span className="ltr-isolate" dir="ltr">
-            {market.question}
-          </span>
-        </CardTitle>
-        <p className="text-xs text-muted-foreground">
-          סגירה: {market.endDate ? formatCountdown(market.endDate) : "—"}
-        </p>
-      </CardHeader>
-      <CardContent className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
-        <Metric label="הסתברות שוק" value={yes != null ? formatPercent(yes) : "—"} />
-        <Metric
-          label="הסתברות מודל"
-          value={
-            market.modelProbability != null
-              ? formatPercent(market.modelProbability)
-              : "—"
-          }
-        />
-        <Metric
-          label="Edge"
-          value={
-            market.edgeScore != null
-              ? `${market.edgeScore > 0 ? "+" : ""}${market.edgeScore.toFixed(1)} נק'`
-              : "—"
-          }
-          tone={market.edgeScore != null && market.edgeScore > 0 ? "success" : "muted"}
-        />
-        <Metric
-          label="ציון איכות"
-          value={
-            market.qualityScore != null
-              ? `${market.qualityScore.toFixed(0)}/100`
-              : "—"
-          }
-        />
-        <Metric label="נזילות" value={formatNumber(market.liquidity)} />
-        <Metric label="נפח" value={formatNumber(market.volume)} />
-        {market.primaryReason ? (
-          <p className="col-span-2 text-xs text-muted-foreground sm:col-span-3">
-            <span className="font-semibold text-success">תומך:</span>{" "}
-            {market.primaryReason}
-          </p>
-        ) : null}
-        {market.primaryRisk ? (
-          <p className="col-span-2 text-xs text-muted-foreground sm:col-span-3">
-            <span className="font-semibold text-warning">סיכון:</span>{" "}
-            {market.primaryRisk}
-          </p>
-        ) : null}
-      </CardContent>
-      <CardFooter className="mt-auto flex flex-wrap gap-2">
-        <Button asChild size="sm" className="min-h-11 flex-1">
-          <Link href={`/markets/${market.slug}`}>פרטים</Link>
-        </Button>
-        <Button asChild size="sm" variant="outline" className="min-h-11">
+
+        <div className="metrics-bar mt-auto">
+          <MiniMetric label="נפח" value={formatUsd(market.volume, 0)} />
+          <MiniMetric label="נזילות" value={formatUsd(market.liquidity, 0)} />
+          <MiniMetric
+            label="שוק"
+            value={marketProb != null ? formatPercent(marketProb) : "—"}
+          />
+          <MiniMetric
+            label="מודל"
+            value={modelProb != null ? formatPercent(modelProb) : "—"}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <Link
+            href={`/markets/${market.slug}`}
+            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-background-muted/60 text-sm font-semibold"
+          >
+            פרטים
+          </Link>
           <a
             href={polymarketUrl(market.slug)}
             target="_blank"
             rel="noopener noreferrer"
+            className={cn("cta-full text-sm", variant === "gold" && "cta-full-gold")}
           >
-            <ExternalLink />
-            Polymarket
+            פתח ב־Polymarket
           </a>
-        </Button>
-      </CardFooter>
-    </Card>
+        </div>
+      </div>
+    </article>
   );
 }
 
-function Metric({
-  label,
-  value,
-  tone = "muted",
-}: {
-  label: string;
-  value: string;
-  tone?: "muted" | "success";
-}) {
+function MiniMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg bg-background-muted/70 p-2.5">
-      <div className="text-[11px] text-muted-foreground">{label}</div>
-      <div
-        className={cn(
-          "mt-0.5 font-semibold tabular-nums",
-          tone === "success" ? "text-success" : "text-foreground",
-        )}
-      >
-        {value}
+    <div className="min-w-0">
+      <div className="truncate text-[10px] text-muted-foreground">{label}</div>
+      <div className="truncate text-xs font-bold tabular-nums ltr-isolate">{value}</div>
+    </div>
+  );
+}
+
+export function MarketsStatsStrip({
+  active,
+  within2h,
+  within24h,
+  scanned,
+  closed,
+  correct,
+  winRateLabel,
+}: {
+  active: number;
+  within2h: number;
+  within24h: number;
+  scanned: number;
+  closed: number;
+  correct: number | null;
+  winRateLabel: string;
+}) {
+  const items = [
+    { label: "פועלים", value: String(active) },
+    { label: "עד שעתיים", value: String(within2h) },
+    { label: "עד 24 שעות", value: String(within24h) },
+    { label: "נסרקו", value: formatNumber(scanned) },
+    { label: "נסגרו", value: String(closed) },
+    {
+      label: "צדקנו?",
+      value: correct == null ? "0" : String(correct),
+      highlight: true,
+    },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+        {items.map((item) => (
+          <div key={item.label} className="stat-chip">
+            <div className="stat-chip-label">{item.label}</div>
+            <div
+              className={cn(
+                "stat-chip-value",
+                item.highlight && "text-primary",
+              )}
+            >
+              {item.value}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="stat-chip">
+        <div className="stat-chip-label">Win Rate</div>
+        <div className="stat-chip-value text-base">{winRateLabel}</div>
       </div>
     </div>
   );

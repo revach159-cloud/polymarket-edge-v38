@@ -13,9 +13,11 @@ import type { DataResult, Market, MarketFilters, SystemStatus } from "@/types";
 function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
   const now = new Date();
   let list = markets.filter((m) => {
-    if (m.closed) return false;
-    if (!m.endDate) return false;
-    return isWithinDisplayHorizon(m.endDate, now);
+    if (filters?.status === "closed") return m.closed;
+    if (filters?.status === "active") {
+      return Boolean(m.active && !m.closed && m.endDate && isWithinDisplayHorizon(m.endDate, now));
+    }
+    return m.closed || Boolean(m.endDate && isWithinDisplayHorizon(m.endDate, now));
   });
 
   if (filters?.q) {
@@ -116,11 +118,24 @@ export async function getMarkets(
     }
   }
 
-  const { markets, error } = await fetchGammaMarkets({
-    limit: 48,
-    active: filters?.status === "closed" ? undefined : true,
-    closed: filters?.status === "closed" ? true : false,
-  });
+  const fetchParams =
+    filters?.status === "all"
+      ? [
+          { limit: 48, active: true, closed: false },
+          { limit: 48, closed: true },
+        ]
+      : [
+          {
+            limit: 48,
+            active: filters?.status === "closed" ? undefined : true,
+            closed: filters?.status === "closed",
+          },
+        ];
+  const gammaResults = await Promise.all(fetchParams.map((params) => fetchGammaMarkets(params)));
+  const markets = Array.from(
+    new Map(gammaResults.flatMap((result) => result.markets).map((market) => [market.id, market])).values(),
+  );
+  const error = gammaResults.map((result) => result.error).find(Boolean);
 
   if (!markets.length) {
     return {
@@ -233,21 +248,86 @@ export async function getMarketStats(): Promise<{
   markets: number;
   active: number;
   within2h: number;
+  within24h: number;
+  scanned: number;
+  closed: number;
+  correct: number | null;
+  winRateLabel: string;
   volume: number;
   liquidity: number;
 }> {
-  const { data } = await getMarkets({ status: "active" });
+  const [activeResult, closedResult, resolvedPredictions] = await Promise.all([
+    getMarkets({ status: "active" }),
+    getMarkets({ status: "closed" }),
+    getResolvedPredictions(1_000),
+  ]);
+  const data = activeResult.data;
   const now = new Date();
   const within2h = data.filter((m) => {
-    if (!m.endDate) return false;
-    const ms = new Date(m.endDate).getTime() - now.getTime();
-    return ms > 0 && ms <= 2 * 60 * 60 * 1000;
+    return m.endDate && getTimeBucket(m.endDate, now) === "within_2h";
   }).length;
+  const within24h = data.filter((m) => {
+    if (!m.endDate) return false;
+    const bucket = getTimeBucket(m.endDate, now);
+    return bucket === "within_2h" || bucket === "within_6h" || bucket === "within_24h";
+  }).length;
+  const correct = resolvedPredictions.length
+    ? resolvedPredictions.filter((prediction) => prediction.correct).length
+    : null;
+  const winRateLabel =
+    correct == null
+      ? "— · אין מדגם מוכרע עדיין"
+      : `${Math.round((correct / resolvedPredictions.length) * 100)}% · n=${resolvedPredictions.length}`;
+
   return {
     markets: data.length,
     active: data.filter((m) => m.active && !m.closed).length,
     within2h,
+    within24h,
+    scanned: data.length + closedResult.data.length,
+    closed: closedResult.data.length,
+    correct,
+    winRateLabel,
     volume: data.reduce((s, m) => s + m.volume, 0),
     liquidity: data.reduce((s, m) => s + m.liquidity, 0),
   };
+}
+
+export type ResolvedPrediction = {
+  id: string;
+  marketId: string;
+  marketQuestion: string;
+  side: string;
+  correct: boolean;
+  resolvedAt: string | null;
+};
+
+export async function getResolvedPredictions(limit = 25): Promise<ResolvedPrediction[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  try {
+    const supabase = await createClient();
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from("predictions")
+      .select("id, market_id, side, resolved_correct, resolved_at, markets(question)")
+      .not("resolved_correct", "is", null)
+      .order("resolved_at", { ascending: false })
+      .limit(limit);
+    if (error || !data) return [];
+
+    return data.map((row) => {
+      const market = Array.isArray(row.markets) ? row.markets[0] : row.markets;
+      return {
+        id: row.id,
+        marketId: row.market_id,
+        marketQuestion: market?.question ?? "שוק ללא כותרת",
+        side: row.side,
+        correct: Boolean(row.resolved_correct),
+        resolvedAt: row.resolved_at,
+      };
+    });
+  } catch {
+    return [];
+  }
 }

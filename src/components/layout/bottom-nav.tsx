@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Home, Sparkles, Store, Wallet } from "lucide-react";
+import { BarChart3, Home, Store, Wallet } from "lucide-react";
+import { FireIcon } from "@/components/gold/fire-icon";
 import { cn } from "@/lib/utils";
 
 const items = [
   { href: "/", label: "בית", icon: Home },
-  { href: "/markets", label: "שווקים", icon: Store },
-  { href: "/gold", label: "Gold", icon: Sparkles },
+  { href: "/markets", label: "מודל", icon: Store },
+  { href: "/gold", label: "Gold", gold: true },
   { href: "/wallets", label: "ארנקים", icon: Wallet },
-  { href: "/statistics", label: "נתונים", icon: BarChart3 },
-];
+  { href: "/statistics", label: "סטטיסטיקה", icon: BarChart3 },
+] as const;
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -24,22 +25,34 @@ export function BottomNav() {
     >
       <ul className="mx-auto grid h-[var(--bottom-nav-height)] max-w-lg grid-cols-5">
         {items.map((item) => {
-          const Icon = item.icon;
           const active =
             item.href === "/"
               ? pathname === "/"
               : pathname.startsWith(item.href);
+          const isGold = "gold" in item && item.gold;
           return (
             <li key={item.href}>
               <Link
                 href={item.href}
                 className={cn(
                   "flex h-full min-h-11 flex-col items-center justify-center gap-0.5 text-[11px]",
-                  active ? "text-primary" : "text-muted-foreground",
+                  isGold
+                    ? active
+                      ? "text-gold"
+                      : "text-gold/75"
+                    : active
+                      ? "text-primary"
+                      : "text-muted-foreground",
                 )}
               >
-                <Icon className="h-5 w-5" aria-hidden />
-                <span>{item.label}</span>
+                {isGold ? (
+                  <FireIcon size="sm" className="fire-icon--nav-bottom" />
+                ) : "icon" in item ? (
+                  <item.icon className="h-5 w-5" aria-hidden />
+                ) : null}
+                <span className={cn(isGold && "font-semibold text-gold")}>
+                  {item.label}
+                </span>
               </Link>
             </li>
           );

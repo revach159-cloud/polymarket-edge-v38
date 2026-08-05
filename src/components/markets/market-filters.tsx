@@ -12,6 +12,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const categories = [
+  { value: "all", label: "הכל" },
+  { value: "Politics", label: "פוליטיקה" },
+  { value: "Sports", label: "ספורט" },
+  { value: "Crypto", label: "קריפטו" },
+  { value: "Business", label: "עסקים" },
+];
+
+const horizons = [
+  { value: "all", label: "הכל" },
+  { value: "2h", label: "עד 2ש" },
+  { value: "24h", label: "עד 24ש" },
+  { value: "7d", label: "עד 7י" },
+  { value: "30d", label: "עד 30י" },
+];
+
 export function MarketFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -40,71 +56,88 @@ export function MarketFilters() {
 
   return (
     <div
-      className="grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-2 lg:grid-cols-4"
+      className="space-y-4 rounded-xl border border-border/80 bg-card/60 p-4"
       aria-busy={pending}
     >
-      <div className="space-y-1.5 sm:col-span-2 lg:col-span-1">
-        <Label htmlFor="q">חיפוש</Label>
-        <Input
-          id="q"
-          name="q"
-          value={q}
-          placeholder="שאלה, קטגוריה…"
-          onChange={(e) => setQ(e.target.value)}
-        />
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="min-w-48 flex-1 space-y-1.5">
+          <Label htmlFor="q">חיפוש</Label>
+          <Input
+            id="q"
+            name="q"
+            value={q}
+            placeholder="שאלה, קטגוריה…"
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </div>
+        <div className="w-36 space-y-1.5">
+          <Label>מיון</Label>
+          <Select
+            defaultValue={searchParams.get("sort") ?? "endDate"}
+            onValueChange={(v) => update("sort", v)}
+          >
+            <SelectTrigger aria-label="מיון">
+              <SelectValue placeholder="מיון" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="volume">נפח</SelectItem>
+              <SelectItem value="liquidity">נזילות</SelectItem>
+              <SelectItem value="endDate">תאריך סיום</SelectItem>
+              <SelectItem value="edge">ציון Edge</SelectItem>
+              <SelectItem value="quality">ציון איכות</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="w-32 space-y-1.5">
+          <Label>סטטוס</Label>
+          <Select
+            defaultValue={searchParams.get("status") ?? "active"}
+            onValueChange={(v) => update("status", v)}
+          >
+            <SelectTrigger aria-label="סטטוס">
+              <SelectValue placeholder="סטטוס" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="active">פעילים</SelectItem>
+              <SelectItem value="closed">סגורים</SelectItem>
+              <SelectItem value="all">הכל</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
-      <div className="space-y-1.5">
-        <Label>מיון</Label>
-        <Select
-          defaultValue={searchParams.get("sort") ?? "volume"}
-          onValueChange={(v) => update("sort", v)}
-        >
-          <SelectTrigger aria-label="מיון">
-            <SelectValue placeholder="מיון" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="volume">נפח</SelectItem>
-            <SelectItem value="liquidity">נזילות</SelectItem>
-            <SelectItem value="endDate">תאריך סיום</SelectItem>
-            <SelectItem value="edge">ציון Edge</SelectItem>
-            <SelectItem value="quality">ציון איכות</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="space-y-1.5">
-        <Label>סטטוס</Label>
-        <Select
-          defaultValue={searchParams.get("status") ?? "active"}
-          onValueChange={(v) => update("status", v)}
-        >
-          <SelectTrigger aria-label="סטטוס">
-            <SelectValue placeholder="סטטוס" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="active">פעילים</SelectItem>
-            <SelectItem value="closed">סגורים</SelectItem>
-            <SelectItem value="all">הכל</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <Label>קטגוריה</Label>
-        <Select
-          defaultValue={searchParams.get("category") ?? "all"}
-          onValueChange={(v) => update("category", v)}
-        >
-          <SelectTrigger aria-label="קטגוריה">
-            <SelectValue placeholder="קטגוריה" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">הכל</SelectItem>
-            <SelectItem value="Politics">Politics</SelectItem>
-            <SelectItem value="Sports">Sports</SelectItem>
-            <SelectItem value="Crypto">Crypto</SelectItem>
-            <SelectItem value="Pop Culture">Pop Culture</SelectItem>
-            <SelectItem value="Business">Business</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((category) => (
+            <button
+              key={category.value}
+              type="button"
+              onClick={() => update("category", category.value)}
+              className={`nav-pill ${(
+                searchParams.get("category") ?? "all"
+              ) === category.value ? "nav-pill-active" : ""}`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-2">
+        <Label>אופק סגירה</Label>
+        <div className="flex flex-wrap gap-2">
+          {horizons.map((horizon) => (
+            <button
+              key={horizon.value}
+              type="button"
+              onClick={() => update("horizon", horizon.value)}
+              className={`nav-pill ${(
+                searchParams.get("horizon") ?? "all"
+              ) === horizon.value ? "nav-pill-active" : ""}`}
+            >
+              {horizon.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

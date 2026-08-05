@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FireIcon } from "@/components/gold/fire-icon";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,12 @@ export default async function MarketDetailPage({
         <div className="flex flex-wrap gap-2">
           <Badge>{market.category ?? "כללי"}</Badge>
           <Badge variant="success">בחירה: {outcome}</Badge>
-          {market.goldPick ? <Badge variant="gold">Gold</Badge> : null}
+          {market.goldPick ? (
+            <Badge variant="gold" className="inline-flex items-center gap-1">
+              <FireIcon size="xs" />
+              Gold
+            </Badge>
+          ) : null}
         </div>
         <h1 className="font-display text-2xl font-bold leading-snug ltr-isolate">{market.question}</h1>
         {market.description ? (

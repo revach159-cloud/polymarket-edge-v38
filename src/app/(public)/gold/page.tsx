@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { GoldAtmosphere, GoldHero } from "@/components/gold/gold-atmosphere";
+import { GoldWordmark } from "@/components/gold/fire-icon";
 import { MarketCard } from "@/components/markets/market-card";
 import { EmptyState } from "@/components/shared/empty-state";
 import { SubscriptionRequired } from "@/components/shared/subscription-required";
@@ -23,27 +25,38 @@ export default async function GoldPage() {
 
   if (!canAccessGoldPicks(role, plan)) {
     return (
-      <div className="space-y-4">
-        <h1 className="font-display text-3xl font-bold text-gold">Gold Picks</h1>
+      <GoldAtmosphere compact className="space-y-4">
+        <GoldHero>
+          <h1 className="font-display text-3xl font-bold text-gold">
+            <GoldWordmark size="lg" className="gold-title-mark" />
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            בחירות פרימיום שעברו סינון איכות מחמיר.
+          </p>
+        </GoldHero>
         <SubscriptionRequired
           tier="Gold"
           description="בחירות Gold זמינות למשתמשי Gold ומנהלים בלבד. בדף המנויים ניתן להצטרף לרשימת המתנה עד ש־Stripe יופעל."
         />
-      </div>
+      </GoldAtmosphere>
     );
   }
 
   const result = await getGoldMarkets();
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Badge variant="gold">סינון איכות</Badge>
-        <h1 className="font-display text-3xl font-bold text-gold">בחירות Gold</h1>
-        <p className="text-sm text-muted-foreground">
+    <GoldAtmosphere className="space-y-6">
+      <GoldHero>
+        <Badge variant="gold" className="badge-gold-lux">
+          סינון איכות
+        </Badge>
+        <h1 className="font-display text-3xl font-bold text-gold md:text-4xl">
+          <GoldWordmark size="lg" className="gold-title-mark" />
+        </h1>
+        <p className="text-sm text-muted-foreground md:text-[0.95rem]">
           מוצגות רק בחירות שעברו את רף האיכות — ללא מילוי כפוי של הרשימה.
         </p>
-      </div>
+      </GoldHero>
 
       {result.stale || result.error ? (
         <StaleBanner message={result.error} />
@@ -61,10 +74,10 @@ export default async function GoldPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {result.data.map((m) => (
-            <MarketCard key={m.id} market={m} />
+            <MarketCard key={m.id} market={m} variant="gold" />
           ))}
         </div>
       )}
-    </div>
+    </GoldAtmosphere>
   );
 }
