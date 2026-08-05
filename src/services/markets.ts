@@ -6,7 +6,8 @@ import {
   probeGamma,
 } from "@/lib/polymarket/api";
 import { enrichMarketWithHeuristic, enrichMarkets } from "@/lib/predictions/enrich";
-import { getTimeBucket, isWithinDisplayHorizon } from "@/lib/predictions/time-buckets";
+import { computeMarketStats } from "@/lib/markets/stats";
+import { isWithinDisplayHorizon, getTimeBucket } from "@/lib/predictions/time-buckets";
 import { createClient } from "@/lib/supabase/server";
 import type { DataResult, Market, MarketFilters, SystemStatus } from "@/types";
 
@@ -172,7 +173,7 @@ export async function getMarketBySlug(
           .maybeSingle();
         if (data) {
           return {
-            data: {
+            data: enrichMarketWithHeuristic({
               id: String(data.id),
               slug: data.slug,
               question: data.question,
@@ -193,7 +194,7 @@ export async function getMarketBySlug(
               clobTokenIds: Array.isArray(data.clob_token_ids)
                 ? data.clob_token_ids
                 : undefined,
-            },
+            }),
             stale: false,
             fetchedAt,
             source: "supabase",
@@ -244,53 +245,17 @@ export async function getSystemStatus(): Promise<SystemStatus> {
   };
 }
 
-export async function getMarketStats(): Promise<{
-  markets: number;
-  active: number;
-  within2h: number;
-  within24h: number;
-  scanned: number;
-  closed: number;
-  correct: number | null;
-  winRateLabel: string;
-  volume: number;
-  liquidity: number;
-}> {
+export async function getMarketStats() {
   const [activeResult, closedResult, resolvedPredictions] = await Promise.all([
     getMarkets({ status: "active" }),
     getMarkets({ status: "closed" }),
     getResolvedPredictions(1_000),
   ]);
-  const data = activeResult.data;
-  const now = new Date();
-  const within2h = data.filter((m) => {
-    return m.endDate && getTimeBucket(m.endDate, now) === "within_2h";
-  }).length;
-  const within24h = data.filter((m) => {
-    if (!m.endDate) return false;
-    const bucket = getTimeBucket(m.endDate, now);
-    return bucket === "within_2h" || bucket === "within_6h" || bucket === "within_24h";
-  }).length;
-  const correct = resolvedPredictions.length
-    ? resolvedPredictions.filter((prediction) => prediction.correct).length
-    : null;
-  const winRateLabel =
-    correct == null
-      ? "— · אין מדגם מוכרע עדיין"
-      : `${Math.round((correct / resolvedPredictions.length) * 100)}% · n=${resolvedPredictions.length}`;
-
-  return {
-    markets: data.length,
-    active: data.filter((m) => m.active && !m.closed).length,
-    within2h,
-    within24h,
-    scanned: data.length + closedResult.data.length,
-    closed: closedResult.data.length,
-    correct,
-    winRateLabel,
-    volume: data.reduce((s, m) => s + m.volume, 0),
-    liquidity: data.reduce((s, m) => s + m.liquidity, 0),
-  };
+  return computeMarketStats(
+    activeResult.data,
+    closedResult.data,
+    resolvedPredictions,
+  );
 }
 
 export type ResolvedPrediction = {

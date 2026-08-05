@@ -10,7 +10,7 @@ test.describe("critical smoke", () => {
 
   test("markets page opens", async ({ page }) => {
     await page.goto("/markets");
-    await expect(page.getByRole("heading", { name: "שווקים" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "מודל השווקים" })).toBeVisible();
   });
 
   test("health endpoint", async ({ request }) => {

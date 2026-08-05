@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { DataFreshnessBadge } from "@/components/layout/data-freshness-badge";
 import { MarketCard, MarketsStatsStrip } from "@/components/markets/market-card";
@@ -5,7 +6,10 @@ import { MarketFilters } from "@/components/markets/market-filters";
 import { EmptyState } from "@/components/shared/empty-state";
 import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
-import { getMarketStats, getMarkets } from "@/services/markets";
+import { inferMarketResolution } from "@/lib/markets/resolution";
+import { computeMarketStats } from "@/lib/markets/stats";
+import { formatShortDate, cn } from "@/lib/utils";
+import { getMarkets, getResolvedPredictions } from "@/services/markets";
 import type { MarketFilters as Filters } from "@/types";
 
 export const metadata = { title: "מודל השווקים" };
@@ -27,11 +31,20 @@ export default async function MarketsPage({
     horizon: (typeof sp.horizon === "string" ? sp.horizon : "all") as Filters["horizon"],
   };
 
-  const [result, stats, closedMarkets] = await Promise.all([
+  const [result, closedMarkets, activeForStats, resolvedPredictions] = await Promise.all([
     getMarkets(filters),
-    getMarketStats(),
     getMarkets({ status: "closed", sort: "endDate" }),
+    filters.status === "active" && !filters.q && !filters.category && filters.horizon === "all"
+      ? Promise.resolve(null)
+      : getMarkets({ status: "active" }),
+    getResolvedPredictions(1_000),
   ]);
+
+  const stats = computeMarketStats(
+    activeForStats?.data ?? (filters.status === "active" ? result.data : []),
+    closedMarkets.data,
+    resolvedPredictions,
+  );
 
   return (
     <div className="space-y-6">
@@ -54,13 +67,21 @@ export default async function MarketsPage({
       <MarketsStatsStrip {...stats} />
 
       <Suspense fallback={<LoadingState rows={1} />}>
-        <MarketFilters />
+        <MarketFilters resultCount={result.data.length} />
       </Suspense>
 
       {result.data.length === 0 ? (
         <EmptyState
           title="לא נמצאו שווקים שמתאימים למסננים שבחרת."
           description="נסו לאפס מסננים או לחזור מאוחר יותר."
+          action={
+            <Link
+              href="/markets"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
+            >
+              איפוס מסננים
+            </Link>
+          }
         />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
@@ -74,7 +95,7 @@ export default async function MarketsPage({
         <div>
           <h2 className="font-display text-xl font-bold">שווקים שנסגרו</h2>
           <p className="text-sm text-muted-foreground">
-            סגירת שוק אינה מעידה על נכונות מודל; תוצאות מוצגות רק לאחר הכרעה.
+            סגירת שוק אינה מעידה על נכונות מודל; תוצאות מוצגות רק לאחר הכרעה ברורה.
           </p>
         </div>
         {closedMarkets.data.length === 0 ? (
@@ -94,15 +115,48 @@ export default async function MarketsPage({
                 </tr>
               </thead>
               <tbody>
-                {closedMarkets.data.slice(0, 10).map((market) => (
-                  <tr key={market.id}>
-                    <td className="max-w-[28rem] truncate">{market.question}</td>
-                    <td className="ltr-isolate">{market.selectedOutcome ?? "—"}</td>
-                    <td>טרם הוכרע</td>
-                    <td>—</td>
-                    <td className="ltr-isolate">{market.endDate ?? "—"}</td>
-                  </tr>
-                ))}
+                {closedMarkets.data.slice(0, 10).map((market) => {
+                  const resolution = inferMarketResolution(market);
+                  return (
+                    <tr key={market.id}>
+                      <td className="max-w-[28rem]">
+                        <Link
+                          href={`/markets/${market.slug}`}
+                          className="line-clamp-2 font-medium hover:text-primary hover:underline"
+                        >
+                          <span className="ltr-isolate" dir="ltr">
+                            {market.question}
+                          </span>
+                        </Link>
+                      </td>
+                      <td className="ltr-isolate">{market.selectedOutcome ?? "—"}</td>
+                      <td>
+                        <span className="ltr-isolate" dir="ltr">
+                          {resolution.label}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={cn(
+                            "font-semibold",
+                            resolution.correct === true && "text-success",
+                            resolution.correct === false && "text-destructive",
+                            resolution.correct == null && "text-muted-foreground",
+                          )}
+                        >
+                          {resolution.correct === true
+                            ? "כן"
+                            : resolution.correct === false
+                              ? "לא"
+                              : "—"}
+                        </span>
+                      </td>
+                      <td className="ltr-isolate whitespace-nowrap">
+                        {formatShortDate(market.endDate)}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
