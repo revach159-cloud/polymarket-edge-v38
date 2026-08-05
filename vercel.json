@@ -1,0 +1,9 @@
+{
+  "crons": [
+    { "path": "/api/cron/sync-markets", "schedule": "*/15 * * * *" },
+    { "path": "/api/cron/sync-prices", "schedule": "*/15 * * * *" },
+    { "path": "/api/cron/run-model", "schedule": "*/30 * * * *" },
+    { "path": "/api/cron/check-resolutions", "schedule": "*/30 * * * *" },
+    { "path": "/api/cron/sync-wallets", "schedule": "0 * * * *" }
+  ]
+}
