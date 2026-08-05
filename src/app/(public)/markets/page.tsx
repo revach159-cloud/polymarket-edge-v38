@@ -25,7 +25,7 @@ export default async function MarketsPage({
   const sp = await searchParams;
   const filters: Filters = {
     q: typeof sp.q === "string" ? sp.q : undefined,
-    sort: (typeof sp.sort === "string" ? sp.sort : "endDate") as Filters["sort"],
+    sort: (typeof sp.sort === "string" ? sp.sort : "smart") as Filters["sort"],
     status: (typeof sp.status === "string" ? sp.status : "active") as Filters["status"],
     category: typeof sp.category === "string" ? sp.category : undefined,
     horizon: (typeof sp.horizon === "string" ? sp.horizon : "all") as Filters["horizon"],
@@ -36,7 +36,7 @@ export default async function MarketsPage({
     getMarkets({ status: "closed", sort: "endDate" }),
     filters.status === "active" && !filters.q && !filters.category && filters.horizon === "all"
       ? Promise.resolve(null)
-      : getMarkets({ status: "active" }),
+      : getMarkets({ status: "active", sort: "smart" }),
     getResolvedPredictions(1_000),
   ]);
 
@@ -46,13 +46,15 @@ export default async function MarketsPage({
     resolvedPredictions,
   );
 
+  const showingClosed = filters.status === "closed";
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="font-display text-3xl font-bold">מודל השווקים</h1>
           <p className="mt-1 text-muted-foreground">
-            שווקים פעילים עד 30 יום לסגירה · נתונים ציבוריים מ־Polymarket
+            מיון חכם לפי מודל + קונצנזוס ארנקים חזקים · שווקים סגורים מסונכרנים לסטטיסטיקה
           </p>
         </div>
         <DataFreshnessBadge
@@ -66,6 +68,30 @@ export default async function MarketsPage({
 
       <MarketsStatsStrip {...stats} />
 
+      <div className="flex flex-wrap gap-2">
+        <Link
+          href="/markets?status=active&sort=smart"
+          className={cn(
+            "nav-pill",
+            (!showingClosed && filters.status !== "all") && "nav-pill-active",
+          )}
+        >
+          פעילים
+        </Link>
+        <Link
+          href="/markets?status=closed&sort=endDate"
+          className={cn("nav-pill", showingClosed && "nav-pill-active")}
+        >
+          סגורים לסטטיסטיקה
+        </Link>
+        <Link
+          href="/statistics"
+          className="nav-pill"
+        >
+          היסטוריה וסטטיסטיקה
+        </Link>
+      </div>
+
       <Suspense fallback={<LoadingState rows={1} />}>
         <MarketFilters resultCount={result.data.length} />
       </Suspense>
@@ -73,7 +99,7 @@ export default async function MarketsPage({
       {result.data.length === 0 ? (
         <EmptyState
           title="לא נמצאו שווקים שמתאימים למסננים שבחרת."
-          description="נסו לאפס מסננים או לחזור מאוחר יותר."
+          description="נסו חיפוש חופשי (למשל crypto / ספורט) או איפוס מסננים."
           action={
             <Link
               href="/markets"
@@ -92,11 +118,16 @@ export default async function MarketsPage({
       )}
 
       <section className="space-y-3">
-        <div>
-          <h2 className="font-display text-xl font-bold">שווקים שנסגרו</h2>
-          <p className="text-sm text-muted-foreground">
-            סגירת שוק אינה מעידה על נכונות מודל; תוצאות מוצגות רק לאחר הכרעה ברורה.
-          </p>
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן להיסטוריה</h2>
+            <p className="text-sm text-muted-foreground">
+              כל הכרעה ברורה נשמרת לסטטיסטיקה (Win Rate עם גודל מדגם). סגירה בלבד אינה מספיקה.
+            </p>
+          </div>
+          <Link href="/markets?status=closed&sort=endDate" className="text-sm font-semibold text-primary hover:underline">
+            הצג את כל הסגורים
+          </Link>
         </div>
         {closedMarkets.data.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
@@ -115,7 +146,7 @@ export default async function MarketsPage({
                 </tr>
               </thead>
               <tbody>
-                {closedMarkets.data.slice(0, 10).map((market) => {
+                {closedMarkets.data.slice(0, 15).map((market) => {
                   const resolution = inferMarketResolution(market);
                   return (
                     <tr key={market.id}>
@@ -152,7 +183,7 @@ export default async function MarketsPage({
                         </span>
                       </td>
                       <td className="ltr-isolate whitespace-nowrap">
-                        {formatShortDate(market.endDate)}
+                        {formatShortDate(market.endDate ?? market.updatedAt)}
                       </td>
                     </tr>
                   );

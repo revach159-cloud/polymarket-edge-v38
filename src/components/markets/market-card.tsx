@@ -71,6 +71,14 @@ export function MarketCard({
                 Edge {edgeLabel}
               </span>
             ) : null}
+            {market.walletSupportCount && market.walletSupportCount > 0 ? (
+              <span
+                className="score-pill score-pill-wallet"
+                title="כמה ארנקים מובילים נכנסו לאותו שוק לאחרונה"
+              >
+                {market.walletSupportCount} ארנקים
+              </span>
+            ) : null}
             {isGold ? (
               <span className="score-pill score-pill-gold inline-flex items-center gap-1">
                 <FireIcon size="xs" />

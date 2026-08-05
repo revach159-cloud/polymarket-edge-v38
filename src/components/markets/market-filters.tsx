@@ -38,7 +38,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
   const [pending, startTransition] = useTransition();
   const [q, setQ] = useState(searchParams.get("q") ?? "");
 
-  const sort = searchParams.get("sort") ?? "endDate";
+  const sort = searchParams.get("sort") ?? "smart";
   const status = searchParams.get("status") ?? "active";
   const category = searchParams.get("category") ?? "all";
   const horizon = searchParams.get("horizon") ?? "all";
@@ -47,7 +47,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
     searchParams.get("q") ||
       searchParams.get("category") ||
       searchParams.get("horizon") ||
-      (searchParams.get("sort") && searchParams.get("sort") !== "endDate") ||
+      (searchParams.get("sort") && searchParams.get("sort") !== "smart") ||
       (searchParams.get("status") && searchParams.get("status") !== "active"),
   );
 
@@ -105,7 +105,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
             id="q"
             name="q"
             value={q}
-            placeholder="שאלה, קטגוריה…"
+            placeholder="חיפוש חכם: קבוצה, קריפטו, בחירות…"
             onChange={(e) => setQ(e.target.value)}
           />
         </div>
@@ -116,15 +116,17 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
               <SelectValue placeholder="מיון" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="smart">חכם (מודל+ארנקים)</SelectItem>
+              <SelectItem value="relevance">רלוונטיות לחיפוש</SelectItem>
+              <SelectItem value="quality">ציון איכות</SelectItem>
+              <SelectItem value="edge">ציון Edge</SelectItem>
+              <SelectItem value="endDate">תאריך סיום</SelectItem>
               <SelectItem value="volume">נפח</SelectItem>
               <SelectItem value="liquidity">נזילות</SelectItem>
-              <SelectItem value="endDate">תאריך סיום</SelectItem>
-              <SelectItem value="edge">ציון Edge</SelectItem>
-              <SelectItem value="quality">ציון איכות</SelectItem>
             </SelectContent>
           </Select>
         </div>
-        <div className="w-32 space-y-1.5">
+        <div className="w-36 space-y-1.5">
           <Label>סטטוס</Label>
           <Select value={status} onValueChange={(v) => update("status", v)}>
             <SelectTrigger aria-label="סטטוס">
@@ -132,7 +134,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="active">פעילים</SelectItem>
-              <SelectItem value="closed">סגורים</SelectItem>
+              <SelectItem value="closed">סגורים (סטטיסטיקה)</SelectItem>
               <SelectItem value="all">הכל</SelectItem>
             </SelectContent>
           </Select>
