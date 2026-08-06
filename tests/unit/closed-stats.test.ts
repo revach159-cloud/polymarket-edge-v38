@@ -129,7 +129,7 @@ describe("closed market verdicts", () => {
     expect(summary.closed).toBe(0);
     expect(summary.verdicts).toHaveLength(0);
     expect(stats.closed).toBe(0);
-    expect(stats.correct).toBeNull();
+    expect(stats.correct).toBe(0);
     expect(stats.winRateLabel).toBe("אין מדגם");
   });
 });

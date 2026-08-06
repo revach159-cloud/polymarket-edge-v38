@@ -73,7 +73,7 @@ export function computeMarketStats(
   const correctCount = closedSummary.correct;
   const graded = closedSummary.evaluable;
 
-  if (closedCount === 0 || graded === 0) {
+  if (graded === 0) {
     return {
       markets: activeMarkets.length,
       active: activeMarkets.filter((m) => m.active && !m.closed).length,
@@ -81,8 +81,9 @@ export function computeMarketStats(
       within5h,
       within24h,
       scanned: activeMarkets.length + closedMarkets.length,
+      // After reset both are 0; צדקנו stays a glowing green number (never "—").
       closed: closedCount,
-      correct: null,
+      correct: 0,
       resolvedTotal: 0,
       winRatePercent: null,
       winRateWilson: null,
