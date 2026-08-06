@@ -134,5 +134,7 @@ describe("win rate stats display", () => {
     expect(stats.winRateLabel).toBe("70%");
     expect(stats.winRateWilson).toBeGreaterThan(0);
     expect(stats.winRateWilson).toBeLessThanOrEqual(70);
+    // צדקנו מתוך === נסגרו
+    expect(stats.resolvedTotal).toBe(stats.closed);
   });
 });

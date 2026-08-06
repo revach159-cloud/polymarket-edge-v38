@@ -151,58 +151,83 @@ export default async function MarketsPage({
             אין שווקים סגורים במשיכה הנוכחית.
           </div>
         ) : (
-          <div className="data-table overflow-x-auto">
-            <table>
-              <thead>
-                <tr>
-                  <th>שוק</th>
-                  <th>בחירה</th>
-                  <th>תוצאה</th>
-                  <th>צדק?</th>
-                  <th>תאריך</th>
-                </tr>
-              </thead>
-              <tbody>
-                {closedSummary.verdicts.slice(0, 15).map((verdict) => {
-                  const { market, predictedSide, resolution, correct } = verdict;
-                  return (
-                    <tr key={market.id}>
-                      <td className="max-w-[28rem]">
-                        <Link
-                          href={`/markets/${market.slug}`}
-                          className="line-clamp-2 font-medium hover:text-primary hover:underline"
-                        >
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              סיכום סגורים:{" "}
+              <span className="font-semibold text-foreground tabular-nums">
+                נסגרו {closedSummary.closed}
+              </span>
+              {" · "}
+              <span className="font-semibold tabular-nums">
+                <span className="stat-chip-value-glow">
+                  צדקנו {closedSummary.correct}
+                </span>
+                <span className="text-foreground">
+                  {" "}
+                  מתוך {closedSummary.closed}
+                </span>
+              </span>
+              {" · "}
+              <span className="font-semibold text-foreground tabular-nums">
+                אחוז הצלחה{" "}
+                {closedSummary.closed > 0
+                  ? `${Math.round((closedSummary.correct / closedSummary.closed) * 100)}%`
+                  : "—"}
+              </span>
+            </p>
+            <div className="data-table overflow-x-auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>שוק</th>
+                    <th>בחירה</th>
+                    <th>תוצאה</th>
+                    <th>צדק?</th>
+                    <th>תאריך</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {closedSummary.verdicts.slice(0, 15).map((verdict) => {
+                    const { market, predictedSide, resolution, correct } = verdict;
+                    return (
+                      <tr key={market.id}>
+                        <td className="max-w-[28rem]">
+                          <Link
+                            href={`/markets/${market.slug}`}
+                            className="line-clamp-2 font-medium hover:text-primary hover:underline"
+                          >
+                            <span className="ltr-isolate" dir="ltr">
+                              {market.question}
+                            </span>
+                          </Link>
+                        </td>
+                        <td className="ltr-isolate">{predictedSide ?? "—"}</td>
+                        <td>
                           <span className="ltr-isolate" dir="ltr">
-                            {market.question}
+                            {resolution.label}
                           </span>
-                        </Link>
-                      </td>
-                      <td className="ltr-isolate">{predictedSide ?? "—"}</td>
-                      <td>
-                        <span className="ltr-isolate" dir="ltr">
-                          {resolution.label}
-                        </span>
-                      </td>
-                      <td>
-                        <span
-                          className={cn(
-                            "font-semibold",
-                            correct === true && "text-success",
-                            correct === false && "text-destructive",
-                            correct == null && "text-muted-foreground",
-                          )}
-                        >
-                          {correct === true ? "כן" : correct === false ? "לא" : "—"}
-                        </span>
-                      </td>
-                      <td className="ltr-isolate whitespace-nowrap">
-                        {formatShortDate(market.endDate ?? market.updatedAt)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        </td>
+                        <td>
+                          <span
+                            className={cn(
+                              "font-semibold",
+                              correct === true && "text-success",
+                              correct === false && "text-destructive",
+                              correct == null && "text-muted-foreground",
+                            )}
+                          >
+                            {correct === true ? "כן" : correct === false ? "לא" : "—"}
+                          </span>
+                        </td>
+                        <td className="ltr-isolate whitespace-nowrap">
+                          {formatShortDate(market.endDate ?? market.updatedAt)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </section>

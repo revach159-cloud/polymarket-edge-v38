@@ -262,7 +262,7 @@ export function MarketsStatsStrip({
               <>
                 <span className="ltr-isolate text-foreground">{winRateLabel}</span>
                 <span className="text-sm font-medium text-muted-foreground">
-                  {formatNumber(correct ?? 0)}/{formatNumber(sample)}
+                  {formatNumber(correct ?? 0)} מתוך {formatNumber(closed)} סגורים
                   {winRateWilson != null ? (
                     <>
                       {" · "}

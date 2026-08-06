@@ -88,10 +88,11 @@ describe("closed market verdicts", () => {
 
     expect(stats.closed).toBe(summary.closed);
     expect(stats.correct).toBe(summary.correct);
-    expect(stats.resolvedTotal).toBe(summary.evaluable);
+    // Denominator is all closed predictions (נסגרו), not only graded rows.
+    expect(stats.resolvedTotal).toBe(summary.closed);
     expect(stats.correct).toBe(1);
-    expect(stats.resolvedTotal).toBe(2);
-    expect(stats.winRatePercent).toBe(50);
-    expect(stats.winRateLabel).toBe("50%");
+    expect(stats.resolvedTotal).toBe(3);
+    expect(stats.winRatePercent).toBe(33);
+    expect(stats.winRateLabel).toBe("33%");
   });
 });

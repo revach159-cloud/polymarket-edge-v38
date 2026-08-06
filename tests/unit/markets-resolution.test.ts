@@ -102,6 +102,7 @@ describe("computeMarketStats", () => {
     expect(stats.correct).toBe(1);
     expect(stats.resolvedTotal).toBe(2);
     expect(stats.winRateLabel).toContain("50%");
+    expect(stats.winRatePercent).toBe(50);
   });
 });
 
