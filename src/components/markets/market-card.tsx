@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FireIcon } from "@/components/gold/fire-icon";
-import { formatOutcomeLabel } from "@/lib/markets/outcome-label";
+import { formatPredictionLabel } from "@/lib/markets/outcome-label";
 import { polymarketMarketUrl } from "@/lib/polymarket/urls";
 import { formatCloseLabel } from "@/lib/predictions/time-buckets";
 import { formatNumber, formatPercent, formatUsd, cn } from "@/lib/utils";
@@ -33,7 +33,7 @@ export function MarketCard({
     market.outcomes[0]?.price;
   const modelProb = market.modelProbability ?? marketProb;
   const outcome = market.selectedOutcome;
-  const selectionLabel = outcome ? formatOutcomeLabel(outcome) : null;
+  const selectionLabel = outcome ? formatPredictionLabel(market) : null;
   const category = market.category ?? "כללי";
   const accent =
     accentByCategory[category.toLowerCase()] ??

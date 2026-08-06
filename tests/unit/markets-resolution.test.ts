@@ -28,13 +28,17 @@ describe("inferMarketResolution", () => {
       market({
         closed: true,
         selectedOutcome: "YES",
+        groupItemTitle: "Paide Linnameeskond",
+        sportsMarketType: "moneyline",
+        question: "Will Paide Linnameeskond win on 2026-08-06?",
         outcomes: [
           { id: "y", name: "Yes", price: 0.99 },
           { id: "n", name: "No", price: 0.01 },
         ],
       }),
     );
-    expect(resolution.label).toBe("Yes");
+    expect(resolution.label).toBe("Paide Linnameeskond");
+    expect(resolution.label).not.toMatch(/yes|no/i);
     expect(resolution.side).toBe("YES");
     expect(resolution.correct).toBe(true);
   });
@@ -53,7 +57,7 @@ describe("inferMarketResolution", () => {
     expect(resolution.correct).toBeNull();
   });
 
-  it("maps Over/Under winners without exposing Over/Under labels", () => {
+  it("keeps Over/Under as concrete labels (not Yes/No)", () => {
     const resolution = inferMarketResolution(
       market({
         closed: true,
@@ -66,8 +70,8 @@ describe("inferMarketResolution", () => {
     );
     expect(resolution.side).toBe("YES");
     expect(resolution.correct).toBe(true);
-    expect(resolution.label).toBe("Yes");
-    expect(resolution.label.toLowerCase()).not.toContain("over");
+    expect(resolution.label).toBe("Over");
+    expect(resolution.label.toLowerCase()).not.toMatch(/^(yes|no)$/);
   });
 });
 

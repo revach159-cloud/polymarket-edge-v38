@@ -4,6 +4,7 @@ import { MarketsStatsStrip } from "@/components/markets/market-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
 import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
+import { formatPredictionLabel } from "@/lib/markets/outcome-label";
 import { formatShortDate, cn } from "@/lib/utils";
 import { getMarketStats, getMarkets } from "@/services/markets";
 
@@ -81,7 +82,12 @@ export default async function StatisticsPage() {
                         {verdict.market.question}
                       </span>
                     </td>
-                    <td className="ltr-isolate">{verdict.predictedSide ?? "—"}</td>
+                    <td className="ltr-isolate">
+                      {formatPredictionLabel(
+                        verdict.market,
+                        verdict.predictedSide,
+                      )}
+                    </td>
                     <td className="ltr-isolate">{verdict.resolution.label}</td>
                     <td
                       className={cn(

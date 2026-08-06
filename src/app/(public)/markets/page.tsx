@@ -8,7 +8,7 @@ import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
 import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
-import { formatOutcomeLabel } from "@/lib/markets/outcome-label";
+import { formatPredictionLabel } from "@/lib/markets/outcome-label";
 import { computeMarketStats } from "@/lib/markets/stats";
 import { formatShortDate, cn } from "@/lib/utils";
 import { getMarkets } from "@/services/markets";
@@ -263,11 +263,21 @@ export default async function MarketsPage({
                           </Link>
                         </td>
                         <td className="ltr-isolate">
-                          {formatOutcomeLabel(predictedSide)}
+                          {formatPredictionLabel(market, predictedSide)}
                         </td>
                         <td>
                           <span className="ltr-isolate" dir="ltr">
-                            {formatOutcomeLabel(resolution.label)}
+                            {resolution.outcomeName &&
+                            resolution.outcomeName.trim() &&
+                            !/^(yes|no)$/i.test(resolution.outcomeName.trim())
+                              ? resolution.outcomeName
+                              : formatPredictionLabel(
+                                  {
+                                    ...market,
+                                    selectedOutcome: resolution.side,
+                                  },
+                                  resolution.side,
+                                )}
                           </span>
                         </td>
                         <td>
