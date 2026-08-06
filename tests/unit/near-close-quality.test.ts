@@ -149,7 +149,7 @@ describe("win rate stats display", () => {
   it("shows clean empty/reset state with glowing zeros ready", () => {
     const stats = computeMarketStats([], [], null);
     expect(stats.closed).toBe(0);
-    expect(stats.correct).toBe(0);
+    expect(stats.correct).toBeNull();
     expect(stats.winRatePercent).toBeNull();
     expect(stats.winRateLabel).toBe("אין מדגם");
     expect(stats.within5h).toBe(0);

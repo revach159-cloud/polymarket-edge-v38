@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { runModelJob } from "@/server/jobs/run-model";
+import { HEURISTIC_V1 } from "@/lib/predictions/config";
 
 export const dynamic = "force-dynamic";
 
@@ -15,12 +17,23 @@ function assertAuth(request: Request): boolean {
 
 export async function GET(request: Request) {
   if (!assertAuth(request)) return unauthorized();
-  return NextResponse.json({
-    ok: true,
-    job: "run-model",
-    model: "heuristic-v1",
-    version: "1.0.0",
-    predictionsCreated: 0,
-    timestamp: new Date().toISOString(),
-  });
+  try {
+    const result = await runModelJob();
+    return NextResponse.json({
+      ...result,
+      model: HEURISTIC_V1.name,
+      version: HEURISTIC_V1.version,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
+        job: "run-model",
+        error: error instanceof Error ? error.message : "job failed",
+        timestamp: new Date().toISOString(),
+      },
+      { status: 500 },
+    );
+  }
 }

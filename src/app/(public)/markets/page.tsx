@@ -7,12 +7,18 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import { resolveOpenHistoryFromGamma } from "@/lib/history/resolve-open";
+import {
+  listResolvedHistory,
+  summarizeFromHistory,
+} from "@/lib/history/closed-board";
 import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
 import { formatPredictionLabel } from "@/lib/markets/outcome-label";
 import { computeMarketStats } from "@/lib/markets/stats";
 import { formatShortDate, cn } from "@/lib/utils";
 import { getMarkets } from "@/services/markets";
 import type { MarketFilters as Filters } from "@/types";
+import { isSupabaseConfigured } from "@/lib/env";
 
 export const metadata = { title: "מודל השווקים" };
 export const dynamic = "force-dynamic";
@@ -64,16 +70,44 @@ export default async function MarketsPage({
       : getMarkets({ status: "active", sort: "smart" }),
   ]);
 
-  const predictedSides = recordedPredictionSides();
-  const closedSummary = summarizeClosedMarkets(closedMarkets.data, predictedSides, {
-    fallbackToLivePick: false,
-    trackedOnly: true,
+  await resolveOpenHistoryFromGamma({
+    limit: 40,
+    concurrency: 4,
+    knownClosedIds: new Set(closedMarkets.data.map((m) => m.id)),
   });
+
+  const predictedSides = recordedPredictionSides();
+  const historyResolved = listResolvedHistory(200);
+  // Prefer tracked history board so rows appear even if missing from Gamma dump.
+  const closedSummary =
+    historyResolved.length > 0
+      ? summarizeFromHistory(historyResolved, closedMarkets.data)
+      : summarizeClosedMarkets(closedMarkets.data, predictedSides, {
+          fallbackToLivePick: false,
+          trackedOnly: true,
+        });
   const stats = computeMarketStats(
     activeForStats?.data ?? result.data,
     closedMarkets.data,
     predictedSides,
   );
+  // Force strip closed/correct onto the same history sample as the table.
+  if (historyResolved.length > 0) {
+    stats.closed = closedSummary.closed;
+    stats.correct =
+      closedSummary.evaluable > 0 ? closedSummary.correct : null;
+    stats.resolvedTotal = closedSummary.evaluable;
+    if (closedSummary.evaluable > 0) {
+      const pct = Math.round(
+        (closedSummary.correct / closedSummary.evaluable) * 100,
+      );
+      stats.winRatePercent = pct;
+      stats.winRateLabel = `${pct}%`;
+    } else {
+      stats.winRatePercent = null;
+      stats.winRateLabel = "אין מדגם";
+    }
+  }
 
   const totalClosedPages = Math.max(
     1,
@@ -200,8 +234,9 @@ export default async function MarketsPage({
         </div>
         {closedSummary.verdicts.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-            המדגם אופס. אין עדיין פרדיקשנים סגורים בהיסטוריה — הלוח ו־נסגרו
-            יתמלאו רק אחרי שפרדיקשנים שנרשמו בזמן פעילות ייסגרו.
+            {isSupabaseConfigured()
+              ? "אין עדיין תחזיות מודל שהוכרעו. נסגרו / צדקנו / הלוח יתמלאו אחרי שתחזיות שנרשמו ייסגרו (cron check-resolutions או רענון הדף)."
+              : "אין עדיין תחזיות מודל שהוכרעו בהיסטוריה המקומית. הוכרעו וצדקנו מסונכרנים לאותו מדגם (כרגע ריק) — בלי ספירת שווקי Gamma זרים."}
           </div>
         ) : (
           <div className="space-y-3">

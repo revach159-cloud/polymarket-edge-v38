@@ -80,10 +80,11 @@ export function computeMarketStats(
       within2h,
       within5h,
       within24h,
-      scanned: activeMarkets.length + closedMarkets.length,
-      // After reset both are 0; צדקנו stays a glowing green number (never "—").
+      // Scan funnel = actives + tracked closed only (not raw Gamma dump).
+      scanned: activeMarkets.length + closedCount,
+      // Keep נסגרו / צדקנו / resolvedTotal on the same empty sample.
       closed: closedCount,
-      correct: 0,
+      correct: null,
       resolvedTotal: 0,
       winRatePercent: null,
       winRateWilson: null,
@@ -104,7 +105,8 @@ export function computeMarketStats(
     within2h,
     within5h,
     within24h,
-    scanned: activeMarkets.length + closedMarkets.length,
+    scanned: activeMarkets.length + closedCount,
+    // Same sample as the closed history board (tracked picks only).
     closed: closedCount,
     correct: correctCount,
     resolvedTotal: graded,

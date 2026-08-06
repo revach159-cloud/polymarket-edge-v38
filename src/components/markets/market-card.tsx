@@ -236,14 +236,18 @@ export function MarketsStatsStrip({
     { label: "עד 5 שעות", value: formatNumber(within5h) },
     { label: "עד 24 שעות", value: formatNumber(within24h) },
     { label: "נסרקו", value: formatNumber(scanned) },
-    { label: "נסגרו", value: formatNumber(closed) },
+    {
+      label: "הוכרעו",
+      value: formatNumber(closed),
+      title: "תחזיות מודל שנרשמו והוכרעו — אותו מדגם כמו צדקנו וההיסטוריה",
+    },
   ];
 
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {items.map((item) => (
-          <div key={item.label} className="stat-chip">
+          <div key={item.label} className="stat-chip" title={"title" in item ? item.title : undefined}>
             <div className="stat-chip-label">{item.label}</div>
             <div className="stat-chip-value">{item.value}</div>
           </div>
@@ -254,12 +258,11 @@ export function MarketsStatsStrip({
         <div className="stat-chip">
           <div className="stat-chip-label">צדקנו</div>
           <div className="stat-chip-value">
-            {/* Always a glowing green number — 0 after reset, then real hits. */}
-            <span className="stat-chip-value-glow ltr-isolate">
-              {formatNumber(correct ?? 0)}
-            </span>
             {hasSample ? (
               <>
+                <span className="stat-chip-value-glow ltr-isolate">
+                  {formatNumber(correct ?? 0)}
+                </span>
                 <span className="mx-1 text-sm font-medium text-muted-foreground">
                   מתוך
                 </span>
@@ -267,7 +270,11 @@ export function MarketsStatsStrip({
                   {formatNumber(sample)}
                 </span>
               </>
-            ) : null}
+            ) : (
+              <span className="text-base font-medium text-muted-foreground ltr-isolate">
+                —
+              </span>
+            )}
           </div>
         </div>
         <div className="stat-chip">
@@ -279,7 +286,7 @@ export function MarketsStatsStrip({
                 <span className="text-sm font-medium text-muted-foreground">
                   {formatNumber(correct ?? 0)}/{formatNumber(sample)} מוכרעים
                   {" · "}
-                  נסגרו {formatNumber(closed)}
+                  הוכרעו {formatNumber(closed)}
                   {winRateWilson != null ? (
                     <>
                       {" · "}
@@ -291,7 +298,8 @@ export function MarketsStatsStrip({
               </>
             ) : (
               <span className="text-base font-medium text-muted-foreground">
-                מדגם אופס · נסגרו 0 · נתחיל לספור אחרי סגירת פרדיקשנים שנרשמו
+                אין מדגם מוכרע · הוכרעו {formatNumber(closed)} · נספור אחרי סגירת
+                תחזיות שנרשמו
               </span>
             )}
           </div>

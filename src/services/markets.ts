@@ -16,6 +16,7 @@ import {
   syncPredictionHistory,
   type HistoryPrediction,
 } from "@/lib/history/prediction-store";
+import { resolveOpenHistoryFromGamma } from "@/lib/history/resolve-open";
 import { getWalletPlaybook } from "@/lib/wallets/intelligence";
 import { isWithinDisplayHorizon, getTimeBucket } from "@/lib/predictions/time-buckets";
 import { createClient } from "@/lib/supabase/server";
@@ -165,20 +166,20 @@ export async function getMarkets(
       order: "updatedAt",
       ascending: false,
       pageSize: 100,
-      maxPages: 3,
+      maxPages: 5,
     });
     markets = closed.markets;
     error = closed.error;
   } else {
     const [universe, closed] = await Promise.all([
       fetchActivePredictionUniverse(),
-      // Keep closed batch warm for history / win-rate.
+      // Keep closed batch warm for history / win-rate matching.
       fetchGammaMarketsPaged({
         closed: true,
         order: "updatedAt",
         ascending: false,
         pageSize: 100,
-        maxPages: 2,
+        maxPages: 4,
       }),
     ]);
     const byId = new Map<string, Market>();
@@ -326,6 +327,11 @@ export type ResolvedPrediction = {
   resolvedAt: string | null;
   resolvedOutcome?: string | null;
   slug?: string;
+  edgeScore?: number | null;
+  qualityScore?: number | null;
+  marketProbability?: number | null;
+  confidence?: number | null;
+  category?: string | null;
 };
 
 function toResolved(prediction: HistoryPrediction): ResolvedPrediction {
@@ -338,17 +344,22 @@ function toResolved(prediction: HistoryPrediction): ResolvedPrediction {
     resolvedAt: prediction.resolvedAt,
     resolvedOutcome: prediction.resolvedOutcome,
     slug: prediction.slug,
+    edgeScore: prediction.edgeScore,
+    qualityScore: prediction.qualityScore,
+    marketProbability: prediction.marketProbability,
   };
 }
 
-export async function getResolvedPredictions(limit = 25): Promise<ResolvedPrediction[]> {
+export async function getResolvedPredictions(limit = 50): Promise<ResolvedPrediction[]> {
   if (isSupabaseConfigured()) {
     try {
       const supabase = await createClient();
       if (supabase) {
         const { data, error } = await supabase
           .from("predictions")
-          .select("id, market_id, side, resolved_correct, resolved_at, markets(question, slug)")
+          .select(
+            "id, market_id, side, edge, confidence, quality_score, market_probability, resolved_correct, resolved_at, is_gold, markets(question, slug, category)",
+          )
           .not("resolved_correct", "is", null)
           .order("resolved_at", { ascending: false })
           .limit(limit);
@@ -363,6 +374,15 @@ export async function getResolvedPredictions(limit = 25): Promise<ResolvedPredic
               correct: Boolean(row.resolved_correct),
               resolvedAt: row.resolved_at,
               slug: market?.slug,
+              edgeScore: row.edge != null ? Number(row.edge) : null,
+              qualityScore:
+                row.quality_score != null ? Number(row.quality_score) * 100 : null,
+              marketProbability:
+                row.market_probability != null
+                  ? Number(row.market_probability)
+                  : null,
+              confidence: row.confidence != null ? Number(row.confidence) : null,
+              category: market?.category ?? null,
             };
           });
         }
@@ -384,7 +404,14 @@ export async function getMarketStats() {
 
   // getMarkets already syncs open→closed history; score from the closed list.
   syncPredictionHistory(activeResult.data, closedResult.data);
-  const sides = recordedPredictionSides();
 
+  // Resolve open tracked picks even if they were missing from the closed dump.
+  await resolveOpenHistoryFromGamma({
+    limit: 40,
+    concurrency: 4,
+    knownClosedIds: new Set(closedResult.data.map((m) => m.id)),
+  });
+
+  const sides = recordedPredictionSides();
   return computeMarketStats(activeResult.data, closedResult.data, sides);
 }

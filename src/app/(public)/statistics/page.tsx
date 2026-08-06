@@ -3,6 +3,10 @@ import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { MarketsStatsStrip } from "@/components/markets/market-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import {
+  listResolvedHistory,
+  summarizeFromHistory,
+} from "@/lib/history/closed-board";
 import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
 import { formatPredictionLabel } from "@/lib/markets/outcome-label";
 import { formatShortDate, cn } from "@/lib/utils";
@@ -12,17 +16,37 @@ export const metadata = { title: "סטטיסטיקה" };
 export const dynamic = "force-dynamic";
 
 export default async function StatisticsPage() {
-  const [stats, markets, closedMarkets] = await Promise.all([
+  const [statsRaw, markets, closedMarkets] = await Promise.all([
     getMarketStats(),
     getMarkets({ status: "active", sort: "volume" }),
     getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
   ]);
 
-  const closedSummary = summarizeClosedMarkets(
-    closedMarkets.data,
-    recordedPredictionSides(),
-    { fallbackToLivePick: false, trackedOnly: true },
-  );
+  const closedSummary = (() => {
+    const historyResolved = listResolvedHistory(200);
+    if (historyResolved.length > 0) {
+      return summarizeFromHistory(historyResolved, closedMarkets.data);
+    }
+    return summarizeClosedMarkets(
+      closedMarkets.data,
+      recordedPredictionSides(),
+      { fallbackToLivePick: false, trackedOnly: true },
+    );
+  })();
+  const stats = { ...statsRaw };
+  if (closedSummary.closed > 0 || listResolvedHistory(1).length === 0) {
+    stats.closed = closedSummary.closed;
+    stats.correct =
+      closedSummary.evaluable > 0 ? closedSummary.correct : null;
+    stats.resolvedTotal = closedSummary.evaluable;
+    if (closedSummary.evaluable > 0) {
+      const pct = Math.round(
+        (closedSummary.correct / closedSummary.evaluable) * 100,
+      );
+      stats.winRatePercent = pct;
+      stats.winRateLabel = `${pct}%`;
+    }
+  }
   const resolvedRows = closedSummary.verdicts.filter((v) => v.correct !== null);
 
   const sampleSize = markets.data.length;
