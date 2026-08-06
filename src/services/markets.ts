@@ -6,28 +6,32 @@ import {
   probeGamma,
 } from "@/lib/polymarket/api";
 import { enrichMarketWithHeuristic, enrichMarkets } from "@/lib/predictions/enrich";
-import { getTimeBucket, isWithinDisplayHorizon } from "@/lib/predictions/time-buckets";
+import { computeMarketStats } from "@/lib/markets/stats";
+import { applySmartSearch, computeSmartScore } from "@/lib/markets/smart-rank";
+import {
+  historyWinStats,
+  liveResolvedFromClosed,
+  listHistoryPredictions,
+  syncPredictionHistory,
+  type HistoryPrediction,
+} from "@/lib/history/prediction-store";
+import { getWalletPlaybook } from "@/lib/wallets/intelligence";
+import { isWithinDisplayHorizon, getTimeBucket } from "@/lib/predictions/time-buckets";
 import { createClient } from "@/lib/supabase/server";
 import type { DataResult, Market, MarketFilters, SystemStatus } from "@/types";
 
 function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
   const now = new Date();
   let list = markets.filter((m) => {
-    if (filters?.status === "closed") return m.closed;
+    if (filters?.status === "closed") return m.closed || m.resolved;
     if (filters?.status === "active") {
       return Boolean(m.active && !m.closed && m.endDate && isWithinDisplayHorizon(m.endDate, now));
     }
-    return m.closed || Boolean(m.endDate && isWithinDisplayHorizon(m.endDate, now));
+    return m.closed || m.resolved || Boolean(m.endDate && isWithinDisplayHorizon(m.endDate, now));
   });
 
   if (filters?.q) {
-    const q = filters.q.toLowerCase();
-    list = list.filter(
-      (m) =>
-        m.question.toLowerCase().includes(q) ||
-        m.slug.toLowerCase().includes(q) ||
-        m.category?.toLowerCase().includes(q),
-    );
+    list = applySmartSearch(list, filters.q);
   }
   if (filters?.category && filters.category !== "all") {
     list = list.filter(
@@ -35,7 +39,7 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
     );
   }
   if (filters?.status === "active") list = list.filter((m) => m.active && !m.closed);
-  if (filters?.status === "closed") list = list.filter((m) => m.closed);
+  if (filters?.status === "closed") list = list.filter((m) => m.closed || m.resolved);
   if (filters?.goldOnly) list = list.filter((m) => m.goldPick);
   if (filters?.minQuality != null) {
     list = list.filter((m) => (m.qualityScore ?? 0) >= filters.minQuality!);
@@ -53,7 +57,12 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
     list = list.filter((m) => m.endDate && getTimeBucket(m.endDate, now) === wanted);
   }
 
-  const sort = filters?.sort ?? "endDate";
+  const sort = filters?.sort ?? "smart";
+  if (filters?.q && (sort === "smart" || sort === "relevance")) {
+    // applySmartSearch already sorted by relevance
+    if (sort === "relevance") return list;
+  }
+
   list.sort((a, b) => {
     if (sort === "liquidity") return b.liquidity - a.liquidity;
     if (sort === "endDate") {
@@ -63,16 +72,32 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
     }
     if (sort === "edge") return Math.abs(b.edgeScore ?? 0) - Math.abs(a.edgeScore ?? 0);
     if (sort === "quality") return (b.qualityScore ?? 0) - (a.qualityScore ?? 0);
-    return b.volume - a.volume;
+    if (sort === "volume") return b.volume - a.volume;
+    if (sort === "relevance") return (b.smartScore ?? 0) - (a.smartScore ?? 0);
+    // smart
+    return (
+      (b.smartScore ?? computeSmartScore(b, now)) -
+      (a.smartScore ?? computeSmartScore(a, now))
+    );
   });
 
   return list;
+}
+
+async function loadConsensusMap() {
+  try {
+    const playbook = await getWalletPlaybook({ walletLimit: 8, activityLimit: 30 });
+    return playbook.consensusBySlug;
+  } catch {
+    return {};
+  }
 }
 
 export async function getMarkets(
   filters?: MarketFilters,
 ): Promise<DataResult<Market[]>> {
   const fetchedAt = new Date().toISOString();
+  const consensusBySlug = await loadConsensusMap();
 
   if (isSupabaseConfigured()) {
     try {
@@ -82,31 +107,30 @@ export async function getMarkets(
         if (filters?.goldOnly) query = query.eq("gold_pick", true);
         const { data, error } = await query;
         if (!error && data && data.length > 0) {
-          const markets = filterMarkets(
-            enrichMarkets(
-              data.map((row) => ({
-                id: String(row.id),
-                slug: row.slug,
-                question: row.question,
-                description: row.description ?? undefined,
-                category: row.category ?? undefined,
-                imageUrl: row.image_url ?? undefined,
-                endDate: row.end_date ?? null,
-                volume: Number(row.volume ?? 0),
-                liquidity: Number(row.liquidity ?? 0),
-                outcomes: Array.isArray(row.outcomes) ? row.outcomes : [],
-                active: Boolean(row.active),
-                closed: Boolean(row.closed),
-                featured: Boolean(row.featured),
-                goldPick: Boolean(row.gold_pick),
-                edgeScore: row.edge_score != null ? Number(row.edge_score) : null,
-                updatedAt: row.updated_at ?? undefined,
-              })),
-            ),
-            filters,
+          const enriched = enrichMarkets(
+            data.map((row) => ({
+              id: String(row.id),
+              slug: row.slug,
+              question: row.question,
+              description: row.description ?? undefined,
+              category: row.category ?? undefined,
+              imageUrl: row.image_url ?? undefined,
+              endDate: row.end_date ?? null,
+              volume: Number(row.volume ?? 0),
+              liquidity: Number(row.liquidity ?? 0),
+              outcomes: Array.isArray(row.outcomes) ? row.outcomes : [],
+              active: Boolean(row.active),
+              closed: Boolean(row.closed),
+              featured: Boolean(row.featured),
+              goldPick: Boolean(row.gold_pick),
+              edgeScore: row.edge_score != null ? Number(row.edge_score) : null,
+              updatedAt: row.updated_at ?? undefined,
+            })),
+            new Date(),
+            consensusBySlug,
           );
           return {
-            data: markets,
+            data: filterMarkets(enriched, filters),
             stale: false,
             fetchedAt,
             source: "supabase",
@@ -118,19 +142,21 @@ export async function getMarkets(
     }
   }
 
+  const status = filters?.status ?? "active";
   const fetchParams =
-    filters?.status === "all"
-      ? [
-          { limit: 48, active: true, closed: false },
-          { limit: 48, closed: true },
-        ]
-      : [
-          {
-            limit: 48,
-            active: filters?.status === "closed" ? undefined : true,
-            closed: filters?.status === "closed",
-          },
-        ];
+    status === "closed"
+      ? [{ limit: 80, closed: true, order: "updatedAt", ascending: false }]
+      : status === "all"
+        ? [
+            { limit: 60, active: true, closed: false, order: "volume24hr", ascending: false },
+            { limit: 80, closed: true, order: "updatedAt", ascending: false },
+          ]
+        : [
+            // Always pull a closed batch in the background so history/statistics stay warm.
+            { limit: 60, active: true, closed: false, order: "volume24hr", ascending: false },
+            { limit: 80, closed: true, order: "updatedAt", ascending: false },
+          ];
+
   const gammaResults = await Promise.all(fetchParams.map((params) => fetchGammaMarkets(params)));
   const markets = Array.from(
     new Map(gammaResults.flatMap((result) => result.markets).map((market) => [market.id, market])).values(),
@@ -147,8 +173,13 @@ export async function getMarkets(
     };
   }
 
+  const enriched = enrichMarkets(markets, new Date(), consensusBySlug);
+  const active = enriched.filter((m) => m.active && !m.closed);
+  const closed = enriched.filter((m) => m.closed || m.resolved);
+  syncPredictionHistory(active, closed);
+
   return {
-    data: filterMarkets(enrichMarkets(markets), filters),
+    data: filterMarkets(enriched, filters),
     stale: Boolean(error),
     error,
     fetchedAt,
@@ -160,6 +191,7 @@ export async function getMarketBySlug(
   slug: string,
 ): Promise<DataResult<Market | null>> {
   const fetchedAt = new Date().toISOString();
+  const consensusBySlug = await loadConsensusMap();
 
   if (isSupabaseConfigured()) {
     try {
@@ -172,28 +204,34 @@ export async function getMarketBySlug(
           .maybeSingle();
         if (data) {
           return {
-            data: {
-              id: String(data.id),
-              slug: data.slug,
-              question: data.question,
-              description: data.description ?? undefined,
-              category: data.category ?? undefined,
-              imageUrl: data.image_url ?? undefined,
-              endDate: data.end_date ?? null,
-              volume: Number(data.volume ?? 0),
-              liquidity: Number(data.liquidity ?? 0),
-              outcomes: Array.isArray(data.outcomes) ? data.outcomes : [],
-              active: Boolean(data.active),
-              closed: Boolean(data.closed),
-              featured: Boolean(data.featured),
-              goldPick: Boolean(data.gold_pick),
-              edgeScore:
-                data.edge_score != null ? Number(data.edge_score) : null,
-              updatedAt: data.updated_at ?? undefined,
-              clobTokenIds: Array.isArray(data.clob_token_ids)
-                ? data.clob_token_ids
-                : undefined,
-            },
+            data: enrichMarketWithHeuristic(
+              {
+                id: String(data.id),
+                slug: data.slug,
+                question: data.question,
+                description: data.description ?? undefined,
+                category: data.category ?? undefined,
+                imageUrl: data.image_url ?? undefined,
+                endDate: data.end_date ?? null,
+                volume: Number(data.volume ?? 0),
+                liquidity: Number(data.liquidity ?? 0),
+                outcomes: Array.isArray(data.outcomes) ? data.outcomes : [],
+                active: Boolean(data.active),
+                closed: Boolean(data.closed),
+                featured: Boolean(data.featured),
+                goldPick: Boolean(data.gold_pick),
+                edgeScore:
+                  data.edge_score != null ? Number(data.edge_score) : null,
+                updatedAt: data.updated_at ?? undefined,
+                clobTokenIds: Array.isArray(data.clob_token_ids)
+                  ? data.clob_token_ids
+                  : undefined,
+                walletConsensusScore: consensusBySlug[data.slug]?.score ?? null,
+                walletSupportCount: consensusBySlug[data.slug]?.supportCount ?? null,
+              },
+              new Date(),
+              { walletConsensusScore: consensusBySlug[data.slug]?.score ?? null },
+            ),
             stale: false,
             fetchedAt,
             source: "supabase",
@@ -207,7 +245,17 @@ export async function getMarketBySlug(
 
   const { market, error } = await fetchGammaMarketBySlug(slug);
   return {
-    data: market ? enrichMarketWithHeuristic(market) : null,
+    data: market
+      ? enrichMarketWithHeuristic(
+          {
+            ...market,
+            walletConsensusScore: consensusBySlug[market.slug]?.score ?? null,
+            walletSupportCount: consensusBySlug[market.slug]?.supportCount ?? null,
+          },
+          new Date(),
+          { walletConsensusScore: consensusBySlug[market.slug]?.score ?? null },
+        )
+      : null,
     stale: Boolean(error && !market),
     error: market ? undefined : error,
     fetchedAt,
@@ -216,7 +264,7 @@ export async function getMarketBySlug(
 }
 
 export async function getGoldMarkets(): Promise<DataResult<Market[]>> {
-  const result = await getMarkets({ sort: "quality" });
+  const result = await getMarkets({ sort: "smart", status: "active" });
   const gold = result.data.filter((m) => m.goldPick);
   return {
     ...result,
@@ -226,7 +274,7 @@ export async function getGoldMarkets(): Promise<DataResult<Market[]>> {
 }
 
 export async function getTopPicks(limit = 6): Promise<DataResult<Market[]>> {
-  const result = await getMarkets({ status: "active", sort: "quality" });
+  const result = await getMarkets({ status: "active", sort: "smart" });
   return {
     ...result,
     data: result.data.slice(0, limit),
@@ -244,55 +292,6 @@ export async function getSystemStatus(): Promise<SystemStatus> {
   };
 }
 
-export async function getMarketStats(): Promise<{
-  markets: number;
-  active: number;
-  within2h: number;
-  within24h: number;
-  scanned: number;
-  closed: number;
-  correct: number | null;
-  winRateLabel: string;
-  volume: number;
-  liquidity: number;
-}> {
-  const [activeResult, closedResult, resolvedPredictions] = await Promise.all([
-    getMarkets({ status: "active" }),
-    getMarkets({ status: "closed" }),
-    getResolvedPredictions(1_000),
-  ]);
-  const data = activeResult.data;
-  const now = new Date();
-  const within2h = data.filter((m) => {
-    return m.endDate && getTimeBucket(m.endDate, now) === "within_2h";
-  }).length;
-  const within24h = data.filter((m) => {
-    if (!m.endDate) return false;
-    const bucket = getTimeBucket(m.endDate, now);
-    return bucket === "within_2h" || bucket === "within_6h" || bucket === "within_24h";
-  }).length;
-  const correct = resolvedPredictions.length
-    ? resolvedPredictions.filter((prediction) => prediction.correct).length
-    : null;
-  const winRateLabel =
-    correct == null
-      ? "— · אין מדגם מוכרע עדיין"
-      : `${Math.round((correct / resolvedPredictions.length) * 100)}% · n=${resolvedPredictions.length}`;
-
-  return {
-    markets: data.length,
-    active: data.filter((m) => m.active && !m.closed).length,
-    within2h,
-    within24h,
-    scanned: data.length + closedResult.data.length,
-    closed: closedResult.data.length,
-    correct,
-    winRateLabel,
-    volume: data.reduce((s, m) => s + m.volume, 0),
-    liquidity: data.reduce((s, m) => s + m.liquidity, 0),
-  };
-}
-
 export type ResolvedPrediction = {
   id: string;
   marketId: string;
@@ -300,34 +299,88 @@ export type ResolvedPrediction = {
   side: string;
   correct: boolean;
   resolvedAt: string | null;
+  resolvedOutcome?: string | null;
+  slug?: string;
 };
 
+function toResolved(prediction: HistoryPrediction): ResolvedPrediction {
+  return {
+    id: prediction.id,
+    marketId: prediction.marketId,
+    marketQuestion: prediction.marketQuestion,
+    side: prediction.side,
+    correct: Boolean(prediction.correct),
+    resolvedAt: prediction.resolvedAt,
+    resolvedOutcome: prediction.resolvedOutcome,
+    slug: prediction.slug,
+  };
+}
+
 export async function getResolvedPredictions(limit = 25): Promise<ResolvedPrediction[]> {
-  if (!isSupabaseConfigured()) return [];
-
-  try {
-    const supabase = await createClient();
-    if (!supabase) return [];
-    const { data, error } = await supabase
-      .from("predictions")
-      .select("id, market_id, side, resolved_correct, resolved_at, markets(question)")
-      .not("resolved_correct", "is", null)
-      .order("resolved_at", { ascending: false })
-      .limit(limit);
-    if (error || !data) return [];
-
-    return data.map((row) => {
-      const market = Array.isArray(row.markets) ? row.markets[0] : row.markets;
-      return {
-        id: row.id,
-        marketId: row.market_id,
-        marketQuestion: market?.question ?? "שוק ללא כותרת",
-        side: row.side,
-        correct: Boolean(row.resolved_correct),
-        resolvedAt: row.resolved_at,
-      };
-    });
-  } catch {
-    return [];
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      if (supabase) {
+        const { data, error } = await supabase
+          .from("predictions")
+          .select("id, market_id, side, resolved_correct, resolved_at, markets(question, slug)")
+          .not("resolved_correct", "is", null)
+          .order("resolved_at", { ascending: false })
+          .limit(limit);
+        if (!error && data?.length) {
+          return data.map((row) => {
+            const market = Array.isArray(row.markets) ? row.markets[0] : row.markets;
+            return {
+              id: row.id,
+              marketId: row.market_id,
+              marketQuestion: market?.question ?? "שוק ללא כותרת",
+              side: row.side,
+              correct: Boolean(row.resolved_correct),
+              resolvedAt: row.resolved_at,
+              slug: market?.slug,
+            };
+          });
+        }
+      }
+    } catch {
+      // fall through to local/live history
+    }
   }
+
+  const local = listHistoryPredictions({ status: "resolved", limit });
+  if (local.length) return local.map(toResolved);
+
+  // Bootstrap from live closed Gamma markets so stats start immediately (no Supabase).
+  const consensusBySlug = await loadConsensusMap();
+  const { markets } = await fetchGammaMarkets({
+    limit: 80,
+    closed: true,
+    order: "updatedAt",
+    ascending: false,
+  });
+  const enriched = enrichMarkets(markets, new Date(), consensusBySlug);
+  syncPredictionHistory([], enriched);
+  return liveResolvedFromClosed(enriched).slice(0, limit).map(toResolved);
+}
+
+export async function getMarketStats() {
+  const [activeResult, closedResult, resolvedPredictions] = await Promise.all([
+    getMarkets({ status: "active", sort: "smart" }),
+    getMarkets({ status: "closed", sort: "endDate" }),
+    getResolvedPredictions(1_000),
+  ]);
+
+  // Keep history warm on every stats pull.
+  syncPredictionHistory(activeResult.data, closedResult.data);
+  const history = historyWinStats(1_000);
+  const resolved =
+    resolvedPredictions.length >= history.total
+      ? resolvedPredictions
+      : history.predictions.map(toResolved);
+
+  return computeMarketStats(
+    activeResult.data,
+    closedResult.data,
+    resolved,
+  );
 }
