@@ -4,7 +4,7 @@ import { FireIcon } from "@/components/gold/fire-icon";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatOutcomeLabel } from "@/lib/markets/outcome-label";
+import { formatPredictionLabel } from "@/lib/markets/outcome-label";
 import { polymarketMarketUrl } from "@/lib/polymarket/urls";
 import { getMarketBySlug } from "@/services/markets";
 import { formatCloseLabel } from "@/lib/predictions/time-buckets";
@@ -22,7 +22,7 @@ export default async function MarketDetailPage({
   const market = result.data;
   if (!market) notFound();
 
-  const outcome = formatOutcomeLabel(market.selectedOutcome ?? "YES");
+  const outcome = formatPredictionLabel(market);
   const marketProb = market.marketProbability ?? market.outcomes[0]?.price ?? 0;
   const modelProb = market.modelProbability ?? marketProb;
   const externalUrl = polymarketMarketUrl({

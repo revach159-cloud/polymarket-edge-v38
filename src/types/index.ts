@@ -16,6 +16,9 @@ export interface Market {
   question: string;
   description?: string;
   category?: string;
+  /** Polymarket sports moneyline label (team name / Draw) — not Yes/No. */
+  groupItemTitle?: string | null;
+  sportsMarketType?: string | null;
   imageUrl?: string;
   endDate?: string | null;
   volume: number;

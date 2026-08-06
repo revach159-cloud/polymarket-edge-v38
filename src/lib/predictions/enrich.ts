@@ -91,7 +91,7 @@ export function enrichMarketWithHeuristic(
     walletConsensusScore != null &&
     Math.abs(walletConsensusScore - 0.5) >= 0.12
   ) {
-    reason = `קונצנזוס ארנקים חזקים נוטה ל־${walletConsensusScore >= 0.5 ? "YES" : "NO"} (${Math.round(walletConsensusScore * 100)}%).`;
+    reason = `קונצנזוס ארנקים חזקים נוטה לצד שנבחר (${Math.round(walletConsensusScore * 100)}%).`;
   } else if (hoursLabel) {
     reason = `${hoursLabel} · ${supporting[0]?.explanation ?? "דירוג לפי קרבה לסגירה ואיכות."}`;
   } else {

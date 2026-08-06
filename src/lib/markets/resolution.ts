@@ -1,4 +1,8 @@
-import { formatOutcomeLabel, normalizeOutcomeSide } from "@/lib/markets/outcome-label";
+import {
+  formatPredictionLabel,
+  isGenericYesNoLabel,
+  normalizeOutcomeSide,
+} from "@/lib/markets/outcome-label";
 import type { Market } from "@/types";
 
 export type MarketResolution = {
@@ -43,9 +47,18 @@ export function inferMarketResolution(market: Market): MarketResolution {
       ? market.selectedOutcome === side
       : null;
 
+  const concreteName =
+    market.groupItemTitle && side === "YES"
+      ? market.groupItemTitle
+      : !isGenericYesNoLabel(winner.name)
+        ? winner.name
+        : null;
+
   return {
-    label: formatOutcomeLabel(winner.name),
-    outcomeName: winner.name,
+    label:
+      concreteName ??
+      formatPredictionLabel({ ...market, selectedOutcome: side }, side),
+    outcomeName: concreteName ?? winner.name,
     side,
     correct,
   };

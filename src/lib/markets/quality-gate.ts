@@ -1,3 +1,4 @@
+import { isSportsMoneylineMarket } from "@/lib/markets/outcome-label";
 import type { Market } from "@/types";
 import { hoursUntil } from "@/lib/predictions/time-buckets";
 
@@ -31,6 +32,15 @@ export function isQualityPrediction(market: Market, now = new Date()): boolean {
   if (!market.active || market.closed) return false;
   if (!market.selectedOutcome) return false;
   if (!market.endDate) return false;
+
+  // Sports moneyline is "Team / Draw" — only YES backs a real named outcome.
+  // A NO pick would render as Yes/No noise; the sibling market carries the edge.
+  if (
+    isSportsMoneylineMarket(market) &&
+    market.selectedOutcome === "NO"
+  ) {
+    return false;
+  }
 
   const hours = hoursUntil(market.endDate, now);
   if (hours == null || hours <= 0) return false;

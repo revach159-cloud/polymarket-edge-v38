@@ -26,6 +26,8 @@ type GammaMarket = {
   featured?: boolean;
   events?: Array<{ id?: string; slug?: string }>;
   eventSlug?: string;
+  groupItemTitle?: string;
+  sportsMarketType?: string;
 };
 
 function parseJsonArray(value?: string): string[] {
@@ -87,6 +89,8 @@ export function mapGammaMarket(raw: GammaMarket): Market {
     question,
     description: raw.description,
     category: raw.category,
+    groupItemTitle: raw.groupItemTitle?.trim() || null,
+    sportsMarketType: raw.sportsMarketType?.trim() || null,
     imageUrl: raw.image || raw.icon,
     endDate: pickCloseTime(raw.endDate, raw.endDateIso),
     volume: raw.volumeNum ?? toNumber(raw.volume),
