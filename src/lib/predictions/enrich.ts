@@ -76,10 +76,27 @@ export function enrichMarketWithHeuristic(
     .sort((a, b) => a.factor_value - b.factor_value);
 
   const walletFactor = scored.factors.find((f) => f.factor_name === "wallet_consensus");
-  const reason =
-    walletConsensusScore != null && Math.abs(walletConsensusScore - 0.5) >= 0.12
-      ? `קונצנזוס ארנקים חזקים נוטה ל־${walletConsensusScore >= 0.5 ? "YES" : "NO"} (${Math.round(walletConsensusScore * 100)}%).`
-      : supporting[0]?.explanation ?? null;
+  const winProb = scored.edge_detail.win_probability;
+  const hoursLabel =
+    hoursToEnd != null && hoursToEnd <= 2
+      ? "נסגר בעוד שעתיים ומטה"
+      : hoursToEnd != null && hoursToEnd <= 5
+        ? "נסגר בעוד 5 שעות ומטה"
+        : null;
+
+  let reason: string | null = null;
+  if (winProb >= 0.7) {
+    reason = `מועדף חזק · סבירות שוק ≈ ${Math.round(winProb * 100)}% לצד שנבחר.`;
+  } else if (
+    walletConsensusScore != null &&
+    Math.abs(walletConsensusScore - 0.5) >= 0.12
+  ) {
+    reason = `קונצנזוס ארנקים חזקים נוטה ל־${walletConsensusScore >= 0.5 ? "YES" : "NO"} (${Math.round(walletConsensusScore * 100)}%).`;
+  } else if (hoursLabel) {
+    reason = `${hoursLabel} · ${supporting[0]?.explanation ?? "דירוג לפי קרבה לסגירה ואיכות."}`;
+  } else {
+    reason = supporting[0]?.explanation ?? null;
+  }
 
   const enriched: Market = {
     ...market,

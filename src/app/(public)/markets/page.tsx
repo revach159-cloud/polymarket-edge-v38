@@ -33,7 +33,7 @@ export default async function MarketsPage({
 
   const [result, closedMarkets, activeForStats, resolvedPredictions] = await Promise.all([
     getMarkets(filters),
-    getMarkets({ status: "closed", sort: "endDate" }),
+    getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
     filters.status === "active" && !filters.q && !filters.category && filters.horizon === "all"
       ? Promise.resolve(null)
       : getMarkets({ status: "active", sort: "smart" }),
@@ -54,7 +54,8 @@ export default async function MarketsPage({
         <div>
           <h1 className="font-display text-3xl font-bold">מודל השווקים</h1>
           <p className="mt-1 text-muted-foreground">
-            מיון חכם לפי מודל + קונצנזוס ארנקים חזקים · שווקים סגורים מסונכרנים לסטטיסטיקה
+            250+ פרדיקשנים איכותיים ביום · דגש על סגירה בעוד שעתיים ו־5 שעות · סבירות גבוהה
+            לניצחון
           </p>
         </div>
         <DataFreshnessBadge
@@ -79,15 +80,24 @@ export default async function MarketsPage({
           פעילים
         </Link>
         <Link
+          href="/markets?horizon=2h&sort=endDate"
+          className={cn("nav-pill", filters.horizon === "2h" && "nav-pill-active")}
+        >
+          עד שעתיים
+        </Link>
+        <Link
+          href="/markets?horizon=5h&sort=endDate"
+          className={cn("nav-pill", filters.horizon === "5h" && "nav-pill-active")}
+        >
+          עד 5 שעות
+        </Link>
+        <Link
           href="/markets?status=closed&sort=endDate"
           className={cn("nav-pill", showingClosed && "nav-pill-active")}
         >
           סגורים לסטטיסטיקה
         </Link>
-        <Link
-          href="/statistics"
-          className="nav-pill"
-        >
+        <Link href="/statistics" className="nav-pill">
           היסטוריה וסטטיסטיקה
         </Link>
       </div>
@@ -122,10 +132,13 @@ export default async function MarketsPage({
           <div>
             <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן להיסטוריה</h2>
             <p className="text-sm text-muted-foreground">
-              כל הכרעה ברורה נשמרת לסטטיסטיקה (Win Rate עם גודל מדגם). סגירה בלבד אינה מספיקה.
+              כל הכרעה ברורה נשמרת לסטטיסטיקה. אחוז הצלחה מוצג רק על מדגם מוכרע.
             </p>
           </div>
-          <Link href="/markets?status=closed&sort=endDate" className="text-sm font-semibold text-primary hover:underline">
+          <Link
+            href="/markets?status=closed&sort=endDate"
+            className="text-sm font-semibold text-primary hover:underline"
+          >
             הצג את כל הסגורים
           </Link>
         </div>

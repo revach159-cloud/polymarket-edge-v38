@@ -1,13 +1,16 @@
 import { isSupabaseConfigured } from "@/lib/env";
 import {
+  fetchActivePredictionUniverse,
   fetchGammaMarketBySlug,
   fetchGammaMarkets,
+  fetchGammaMarketsPaged,
   probeClob,
   probeGamma,
 } from "@/lib/polymarket/api";
 import { enrichMarketWithHeuristic, enrichMarkets } from "@/lib/predictions/enrich";
 import { computeMarketStats } from "@/lib/markets/stats";
 import { applySmartSearch, computeSmartScore } from "@/lib/markets/smart-rank";
+import { selectDailyPredictions } from "@/lib/markets/quality-gate";
 import {
   historyWinStats,
   liveResolvedFromClosed,
@@ -45,21 +48,28 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
     list = list.filter((m) => (m.qualityScore ?? 0) >= filters.minQuality!);
   }
   if (filters?.horizon && filters.horizon !== "all") {
-    const map = {
-      "2h": "within_2h",
-      "6h": "within_6h",
-      "24h": "within_24h",
-      "3d": "within_3d",
-      "7d": "within_7d",
-      "30d": "within_30d",
-    } as const;
-    const wanted = map[filters.horizon];
-    list = list.filter((m) => m.endDate && getTimeBucket(m.endDate, now) === wanted);
+    const map: Record<string, string[]> = {
+      "2h": ["within_2h"],
+      "5h": ["within_2h", "within_5h"],
+      "24h": ["within_2h", "within_5h", "within_24h"],
+      "3d": ["within_3d"],
+      "7d": ["within_7d"],
+      "30d": ["within_30d"],
+    };
+    const wanted = map[filters.horizon] ?? [];
+    list = list.filter(
+      (m) => m.endDate && wanted.includes(getTimeBucket(m.endDate, now)),
+    );
+  }
+
+  // Active list: keep 250+ quality predictions, near-close first.
+  const qualityOnly = filters?.qualityOnly !== false;
+  if (qualityOnly && (filters?.status === "active" || !filters?.status)) {
+    list = selectDailyPredictions(list, now);
   }
 
   const sort = filters?.sort ?? "smart";
   if (filters?.q && (sort === "smart" || sort === "relevance")) {
-    // applySmartSearch already sorted by relevance
     if (sort === "relevance") return list;
   }
 
@@ -74,7 +84,6 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
     if (sort === "quality") return (b.qualityScore ?? 0) - (a.qualityScore ?? 0);
     if (sort === "volume") return b.volume - a.volume;
     if (sort === "relevance") return (b.smartScore ?? 0) - (a.smartScore ?? 0);
-    // smart
     return (
       (b.smartScore ?? computeSmartScore(b, now)) -
       (a.smartScore ?? computeSmartScore(a, now))
@@ -86,7 +95,7 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
 
 async function loadConsensusMap() {
   try {
-    const playbook = await getWalletPlaybook({ walletLimit: 8, activityLimit: 30 });
+    const playbook = await getWalletPlaybook({ walletLimit: 10, activityLimit: 40 });
     return playbook.consensusBySlug;
   } catch {
     return {};
@@ -103,10 +112,10 @@ export async function getMarkets(
     try {
       const supabase = await createClient();
       if (supabase) {
-        let query = supabase.from("markets").select("*").limit(100);
+        let query = supabase.from("markets").select("*").limit(500);
         if (filters?.goldOnly) query = query.eq("gold_pick", true);
         const { data, error } = await query;
-        if (!error && data && data.length > 0) {
+        if (!error && data && data.length >= 250) {
           const enriched = enrichMarkets(
             data.map((row) => ({
               id: String(row.id),
@@ -143,25 +152,37 @@ export async function getMarkets(
   }
 
   const status = filters?.status ?? "active";
-  const fetchParams =
-    status === "closed"
-      ? [{ limit: 80, closed: true, order: "updatedAt", ascending: false }]
-      : status === "all"
-        ? [
-            { limit: 60, active: true, closed: false, order: "volume24hr", ascending: false },
-            { limit: 80, closed: true, order: "updatedAt", ascending: false },
-          ]
-        : [
-            // Always pull a closed batch in the background so history/statistics stay warm.
-            { limit: 60, active: true, closed: false, order: "volume24hr", ascending: false },
-            { limit: 80, closed: true, order: "updatedAt", ascending: false },
-          ];
+  let markets: Market[] = [];
+  let error: string | undefined;
 
-  const gammaResults = await Promise.all(fetchParams.map((params) => fetchGammaMarkets(params)));
-  const markets = Array.from(
-    new Map(gammaResults.flatMap((result) => result.markets).map((market) => [market.id, market])).values(),
-  );
-  const error = gammaResults.map((result) => result.error).find(Boolean);
+  if (status === "closed") {
+    const closed = await fetchGammaMarketsPaged({
+      closed: true,
+      order: "updatedAt",
+      ascending: false,
+      pageSize: 100,
+      maxPages: 3,
+    });
+    markets = closed.markets;
+    error = closed.error;
+  } else {
+    const [universe, closed] = await Promise.all([
+      fetchActivePredictionUniverse(),
+      // Keep closed batch warm for history / win-rate.
+      fetchGammaMarketsPaged({
+        closed: true,
+        order: "updatedAt",
+        ascending: false,
+        pageSize: 100,
+        maxPages: 2,
+      }),
+    ]);
+    const byId = new Map<string, Market>();
+    for (const market of universe.markets) byId.set(market.id, market);
+    for (const market of closed.markets) byId.set(market.id, market);
+    markets = [...byId.values()];
+    error = universe.error ?? closed.error;
+  }
 
   if (!markets.length) {
     return {
@@ -175,8 +196,8 @@ export async function getMarkets(
 
   const enriched = enrichMarkets(markets, new Date(), consensusBySlug);
   const active = enriched.filter((m) => m.active && !m.closed);
-  const closed = enriched.filter((m) => m.closed || m.resolved);
-  syncPredictionHistory(active, closed);
+  const closedRows = enriched.filter((m) => m.closed || m.resolved);
+  syncPredictionHistory(active, closedRows);
 
   return {
     data: filterMarkets(enriched, filters),
@@ -350,10 +371,9 @@ export async function getResolvedPredictions(limit = 25): Promise<ResolvedPredic
   const local = listHistoryPredictions({ status: "resolved", limit });
   if (local.length) return local.map(toResolved);
 
-  // Bootstrap from live closed Gamma markets so stats start immediately (no Supabase).
   const consensusBySlug = await loadConsensusMap();
   const { markets } = await fetchGammaMarkets({
-    limit: 80,
+    limit: 100,
     closed: true,
     order: "updatedAt",
     ascending: false,
@@ -366,11 +386,10 @@ export async function getResolvedPredictions(limit = 25): Promise<ResolvedPredic
 export async function getMarketStats() {
   const [activeResult, closedResult, resolvedPredictions] = await Promise.all([
     getMarkets({ status: "active", sort: "smart" }),
-    getMarkets({ status: "closed", sort: "endDate" }),
+    getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
     getResolvedPredictions(1_000),
   ]);
 
-  // Keep history warm on every stats pull.
   syncPredictionHistory(activeResult.data, closedResult.data);
   const history = historyWinStats(1_000);
   const resolved =

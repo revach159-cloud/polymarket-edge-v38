@@ -48,6 +48,17 @@ function toNumber(value: string | number | undefined, fallback = 0): number {
   return fallback;
 }
 
+/** Prefer full timestamps; Gamma often returns date-only endDateIso (midnight). */
+export function pickCloseTime(
+  endDate?: string | null,
+  endDateIso?: string | null,
+): string | null {
+  const candidates = [endDate, endDateIso].filter(Boolean) as string[];
+  if (!candidates.length) return null;
+  const withTime = candidates.find((c) => /T\d{2}:\d{2}/.test(c));
+  return withTime ?? candidates[0] ?? null;
+}
+
 export function mapGammaMarket(raw: GammaMarket): Market {
   const names = parseJsonArray(raw.outcomes);
   const prices = parseJsonArray(raw.outcomePrices).map((p) => toNumber(p));
@@ -75,7 +86,7 @@ export function mapGammaMarket(raw: GammaMarket): Market {
     description: raw.description,
     category: raw.category,
     imageUrl: raw.image || raw.icon,
-    endDate: raw.endDateIso ?? raw.endDate ?? null,
+    endDate: pickCloseTime(raw.endDate, raw.endDateIso),
     volume: raw.volumeNum ?? toNumber(raw.volume),
     liquidity: raw.liquidityNum ?? toNumber(raw.liquidity),
     outcomes,
@@ -99,6 +110,7 @@ async function fetchJson<T>(
       ...init,
       headers: {
         Accept: "application/json",
+        "User-Agent": "polymarket-edge-lab/1.0",
         ...(init?.headers ?? {}),
       },
       next: { revalidate: 60 },
@@ -123,6 +135,8 @@ export async function fetchGammaMarkets(params?: {
   closed?: boolean;
   order?: string;
   ascending?: boolean;
+  endDateMin?: string;
+  endDateMax?: string;
 }): Promise<{ markets: Market[]; error?: string }> {
   const gamma = getGammaApiUrl();
   const sp = new URLSearchParams();
@@ -130,6 +144,8 @@ export async function fetchGammaMarkets(params?: {
   sp.set("offset", String(params?.offset ?? 0));
   if (params?.active !== undefined) sp.set("active", String(params.active));
   if (params?.closed !== undefined) sp.set("closed", String(params.closed));
+  if (params?.endDateMin) sp.set("end_date_min", params.endDateMin);
+  if (params?.endDateMax) sp.set("end_date_max", params.endDateMax);
   sp.set("order", params?.order ?? "volume24hr");
   sp.set("ascending", String(params?.ascending ?? false));
 
@@ -139,6 +155,143 @@ export async function fetchGammaMarkets(params?: {
 
   if (!data) return { markets: [], error: error ?? "לא התקבלו נתונים" };
   return { markets: data.map(mapGammaMarket) };
+}
+
+/** Paginate Gamma markets and merge/dedupe by id. */
+export async function fetchGammaMarketsPaged(
+  params: {
+    active?: boolean;
+    closed?: boolean;
+    order?: string;
+    ascending?: boolean;
+    endDateMin?: string;
+    endDateMax?: string;
+    pageSize?: number;
+    maxPages?: number;
+  } = {},
+): Promise<{ markets: Market[]; error?: string }> {
+  const pageSize = params.pageSize ?? 100;
+  const maxPages = params.maxPages ?? 5;
+  const byId = new Map<string, Market>();
+  let lastError: string | undefined;
+
+  for (let page = 0; page < maxPages; page += 1) {
+    const { markets, error } = await fetchGammaMarkets({
+      limit: pageSize,
+      offset: page * pageSize,
+      active: params.active,
+      closed: params.closed,
+      order: params.order,
+      ascending: params.ascending,
+      endDateMin: params.endDateMin,
+      endDateMax: params.endDateMax,
+    });
+    if (error) lastError = error;
+    if (!markets.length) break;
+    for (const market of markets) byId.set(market.id, market);
+    if (markets.length < pageSize) break;
+  }
+
+  return {
+    markets: [...byId.values()],
+    error: byId.size ? undefined : lastError,
+  };
+}
+
+/**
+ * Multi-lane pull: near-close windows (2h / 5h / 24h) + volume for quality depth.
+ * Targets 250+ active candidates with emphasis on markets closing soon.
+ */
+const universeCache: { at: number; value: { markets: Market[]; error?: string } | null } = {
+  at: 0,
+  value: null,
+};
+
+export async function fetchActivePredictionUniverse(now = new Date()): Promise<{
+  markets: Market[];
+  error?: string;
+}> {
+  const cached = universeCache.value;
+  if (cached && Date.now() - universeCache.at < 45_000) {
+    return cached;
+  }
+
+  const iso = (msFromNow: number) =>
+    new Date(now.getTime() + msFromNow).toISOString();
+  const hour = 3_600_000;
+  const day = 24 * hour;
+
+  const lanes = await Promise.all([
+    // Closing within 2 hours — highest priority lane
+    fetchGammaMarketsPaged({
+      active: true,
+      closed: false,
+      order: "endDate",
+      ascending: true,
+      endDateMin: iso(0),
+      endDateMax: iso(2 * hour),
+      pageSize: 100,
+      maxPages: 5,
+    }),
+    // Closing within 5 hours
+    fetchGammaMarketsPaged({
+      active: true,
+      closed: false,
+      order: "endDate",
+      ascending: true,
+      endDateMin: iso(0),
+      endDateMax: iso(5 * hour),
+      pageSize: 100,
+      maxPages: 6,
+    }),
+    // Closing within 24 hours
+    fetchGammaMarketsPaged({
+      active: true,
+      closed: false,
+      order: "endDate",
+      ascending: true,
+      endDateMin: iso(0),
+      endDateMax: iso(day),
+      pageSize: 100,
+      maxPages: 6,
+    }),
+    // Volume-ranked within 30 days for quality depth toward 250+
+    fetchGammaMarketsPaged({
+      active: true,
+      closed: false,
+      order: "volume24hr",
+      ascending: false,
+      endDateMin: iso(0),
+      endDateMax: iso(30 * day),
+      pageSize: 100,
+      maxPages: 8,
+    }),
+    // Liquidity-ranked near-term backup
+    fetchGammaMarketsPaged({
+      active: true,
+      closed: false,
+      order: "liquidityNum",
+      ascending: false,
+      endDateMin: iso(0),
+      endDateMax: iso(7 * day),
+      pageSize: 100,
+      maxPages: 3,
+    }),
+  ]);
+
+  const byId = new Map<string, Market>();
+  for (const lane of lanes) {
+    for (const market of lane.markets) byId.set(market.id, market);
+  }
+  const error = lanes.map((l) => l.error).find(Boolean);
+
+  const result = {
+    markets: [...byId.values()],
+    error: byId.size ? undefined : error,
+  };
+  universeCache.at = Date.now();
+  universeCache.value = result;
+  return result;
 }
 
 export async function fetchGammaMarketBySlug(

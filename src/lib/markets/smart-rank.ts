@@ -77,26 +77,39 @@ export function computeSmartScore(market: Market, now = new Date()): number {
   const edge = Math.min(Math.abs(market.edgeScore ?? 0) * 8, 1);
   const consensusLean = Math.abs((market.walletConsensusScore ?? 0.5) - 0.5) * 2;
   const hours = hoursUntil(market.endDate, now);
+  const winProb =
+    market.selectedOutcome === "YES"
+      ? (market.marketProbability ?? 0.5)
+      : market.selectedOutcome === "NO"
+        ? 1 - (market.marketProbability ?? 0.5)
+        : 0.5;
+  const conviction = Math.max(0, (winProb - 0.5) * 2);
+
+  // Heavy urgency weight: 2h > 5h > 24h > rest
   const urgency =
     hours == null || hours < 0
-      ? 0.2
+      ? 0.15
       : hours <= 2
         ? 1
-        : hours <= 24
-          ? 0.85
-          : hours <= 72
-            ? 0.65
-            : hours <= 168
+        : hours <= 5
+          ? 0.92
+          : hours <= 24
+            ? 0.7
+            : hours <= 72
               ? 0.45
-              : 0.25;
-  const goldBonus = market.goldPick ? 0.08 : 0;
-  const walletSupport = Math.min((market.walletSupportCount ?? 0) / 6, 1) * 0.1;
+              : hours <= 168
+                ? 0.3
+                : 0.18;
+
+  const goldBonus = market.goldPick ? 0.06 : 0;
+  const walletSupport = Math.min((market.walletSupportCount ?? 0) / 6, 1) * 0.08;
 
   return (
-    quality * 0.34 +
-    edge * 0.24 +
-    consensusLean * 0.18 +
-    urgency * 0.14 +
+    quality * 0.28 +
+    edge * 0.14 +
+    conviction * 0.22 +
+    consensusLean * 0.12 +
+    urgency * 0.2 +
     goldBonus +
     walletSupport
   );

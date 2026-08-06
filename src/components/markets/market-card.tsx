@@ -48,6 +48,12 @@ export function MarketCard({
     (isGold ? "#ffe173" : "#7dff6a");
   const edgeLabel =
     market.edgeScore != null ? formatPercent(Math.abs(market.edgeScore)) : null;
+  const winProb =
+    outcome && marketProb != null
+      ? outcome === "YES"
+        ? marketProb
+        : 1 - marketProb
+      : null;
 
   return (
     <article
@@ -66,6 +72,11 @@ export function MarketCard({
             <span className={cn("score-pill", isGold && "score-pill-gold")}>
               ציון {market.qualityScore != null ? Math.round(market.qualityScore) : "—"}
             </span>
+            {winProb != null ? (
+              <span className="score-pill score-pill-edge" title="סבירות שוק לצד שנבחר">
+                {formatPercent(winProb)} ניצחון
+              </span>
+            ) : null}
             {edgeLabel ? (
               <span className="score-pill score-pill-edge" title="פער מודל מול שוק">
                 Edge {edgeLabel}
@@ -178,31 +189,38 @@ function MiniMetric({ label, value }: { label: string; value: string }) {
 export function MarketsStatsStrip({
   active,
   within2h,
+  within5h,
   within24h,
   scanned,
   closed,
   correct,
+  resolvedTotal,
+  winRatePercent,
+  winRateWilson,
   winRateLabel,
 }: {
   active: number;
   within2h: number;
+  within5h: number;
   within24h: number;
   scanned: number;
   closed: number;
   correct: number | null;
+  resolvedTotal?: number;
+  winRatePercent?: number | null;
+  winRateWilson?: number | null;
   winRateLabel: string;
 }) {
+  const sample = resolvedTotal ?? 0;
+  const hasSample = sample > 0 && correct != null;
+
   const items = [
-    { label: "פועלים", value: String(active) },
-    { label: "עד שעתיים", value: String(within2h) },
-    { label: "עד 24 שעות", value: String(within24h) },
+    { label: "פועלים", value: formatNumber(active) },
+    { label: "עד שעתיים", value: formatNumber(within2h), highlight: within2h > 0 },
+    { label: "עד 5 שעות", value: formatNumber(within5h), highlight: within5h > 0 },
+    { label: "עד 24 שעות", value: formatNumber(within24h) },
     { label: "נסרקו", value: formatNumber(scanned) },
-    { label: "נסגרו", value: String(closed) },
-    {
-      label: "צדקנו?",
-      value: correct == null ? "0" : String(correct),
-      highlight: true,
-    },
+    { label: "נסגרו", value: formatNumber(closed) },
   ];
 
   return (
@@ -222,9 +240,50 @@ export function MarketsStatsStrip({
           </div>
         ))}
       </div>
-      <div className="stat-chip">
-        <div className="stat-chip-label">אחוז הצלחה (מדגם מוכרע)</div>
-        <div className="stat-chip-value text-base">{winRateLabel}</div>
+
+      <div className="grid gap-2 sm:grid-cols-2">
+        <div className="stat-chip">
+          <div className="stat-chip-label">צדקנו</div>
+          <div className={cn("stat-chip-value", hasSample && "text-primary")}>
+            {hasSample ? (
+              <>
+                <span className="ltr-isolate">{formatNumber(correct)}</span>
+                <span className="mx-1 text-sm font-medium text-muted-foreground">
+                  מתוך
+                </span>
+                <span className="ltr-isolate text-base text-foreground">
+                  {formatNumber(sample)}
+                </span>
+              </>
+            ) : (
+              <span className="text-muted-foreground">—</span>
+            )}
+          </div>
+        </div>
+        <div className="stat-chip">
+          <div className="stat-chip-label">אחוז הצלחה</div>
+          <div className="stat-chip-value flex flex-wrap items-baseline gap-2">
+            {hasSample && winRatePercent != null ? (
+              <>
+                <span className="text-primary ltr-isolate">{winRateLabel}</span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  מדגם {formatNumber(sample)}
+                  {winRateWilson != null ? (
+                    <>
+                      {" · "}
+                      Wilson ≥{" "}
+                      <span className="ltr-isolate">{winRateWilson}%</span>
+                    </>
+                  ) : null}
+                </span>
+              </>
+            ) : (
+              <span className="text-base font-medium text-muted-foreground">
+                אין מדגם מוכרע עדיין
+              </span>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

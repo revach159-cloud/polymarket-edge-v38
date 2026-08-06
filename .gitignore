@@ -24,7 +24,7 @@
 .DS_Store
 *.pem
 
-# local prediction history / runtime data
+# local prediction history (runtime)
 .data/
 
 # debug

@@ -48,8 +48,10 @@ export interface MarketFilters {
   sort?: "smart" | "volume" | "liquidity" | "endDate" | "edge" | "quality" | "relevance";
   status?: "active" | "closed" | "all";
   goldOnly?: boolean;
-  horizon?: "2h" | "6h" | "24h" | "3d" | "7d" | "30d" | "all";
+  horizon?: "2h" | "5h" | "24h" | "3d" | "7d" | "30d" | "all";
   minQuality?: number;
+  /** When true (default for active), apply the daily quality gate. */
+  qualityOnly?: boolean;
 }
 
 export interface WalletSummary {

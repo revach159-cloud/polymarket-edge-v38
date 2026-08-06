@@ -204,7 +204,7 @@ export function historyWinStats(limit = 1_000): {
     return {
       correct: null,
       total: 0,
-      winRateLabel: "— · אין מדגם מוכרע עדיין",
+      winRateLabel: "אין מדגם",
       predictions,
     };
   }
@@ -212,7 +212,7 @@ export function historyWinStats(limit = 1_000): {
   return {
     correct,
     total: predictions.length,
-    winRateLabel: `${Math.round((correct / predictions.length) * 100)}% · n=${predictions.length}`,
+    winRateLabel: `${Math.round((correct / predictions.length) * 100)}%`,
     predictions,
   };
 }

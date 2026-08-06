@@ -25,7 +25,7 @@ const categories = [
 const horizons = [
   { value: "all", label: "הכל" },
   { value: "2h", label: "עד 2ש" },
-  { value: "6h", label: "עד 6ש" },
+  { value: "5h", label: "עד 5ש" },
   { value: "24h", label: "עד 24ש" },
   { value: "3d", label: "עד 3י" },
   { value: "7d", label: "עד 7י" },
@@ -86,7 +86,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
             ? "סינון שווקים"
             : pending
               ? "מעדכן תוצאות…"
-              : `${resultCount} שווקים מתאימים`}
+              : `${resultCount} פרדיקשנים איכותיים`}
         </p>
         {hasActiveFilters ? (
           <Link
@@ -116,11 +116,11 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
               <SelectValue placeholder="מיון" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="smart">חכם (מודל+ארנקים)</SelectItem>
+              <SelectItem value="smart">חכם (קרוב+סבירות)</SelectItem>
+              <SelectItem value="endDate">קרוב לסגירה</SelectItem>
               <SelectItem value="relevance">רלוונטיות לחיפוש</SelectItem>
               <SelectItem value="quality">ציון איכות</SelectItem>
               <SelectItem value="edge">ציון Edge</SelectItem>
-              <SelectItem value="endDate">תאריך סיום</SelectItem>
               <SelectItem value="volume">נפח</SelectItem>
               <SelectItem value="liquidity">נזילות</SelectItem>
             </SelectContent>
@@ -162,7 +162,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
       </div>
 
       <div className="space-y-2">
-        <Label id="horizon-label">אופק סגירה</Label>
+        <Label id="horizon-label">אופק סגירה · עדיפות לקרובים</Label>
         <div className="flex flex-wrap gap-2" role="group" aria-labelledby="horizon-label">
           {horizons.map((item) => {
             const active = horizon === item.value;
