@@ -4,7 +4,7 @@
     "build": "true",
     "runtime": {
       "type": "static",
-      "cwd": "./public",
+      "cwd": "./deno-static",
       "spa": true
     }
   }
