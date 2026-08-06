@@ -20,6 +20,28 @@ export type ClosedResolutionSummary = {
   verdicts: ClosedMarketVerdict[];
 };
 
+export type ClosedStatsOptions = {
+  fallbackToLivePick?: boolean;
+  /**
+   * When true (default), only markets with a pre-close recorded pick are kept.
+   * This clears נסגרו + the history board after a history reset, instead of
+   * listing every Gamma closed market.
+   */
+  trackedOnly?: boolean;
+};
+
+/**
+ * Closed markets we actually tracked while open — source of truth for נסגרו
+ * and the closed-predictions board (not the raw Gamma closed dump).
+ */
+export function trackedClosedMarkets(
+  closedMarkets: Market[],
+  predictedSides?: ReadonlyMap<string, "YES" | "NO"> | null,
+): Market[] {
+  if (!predictedSides || predictedSides.size === 0) return [];
+  return closedMarkets.filter((market) => predictedSides.has(market.id));
+}
+
 /**
  * Score one closed market the same way the closed table does.
  * Prefer a pick recorded while open; fall back to the live model pick so the
@@ -28,7 +50,7 @@ export type ClosedResolutionSummary = {
 export function evaluateClosedMarket(
   market: Market,
   predictedSide: "YES" | "NO" | null = null,
-  options?: { fallbackToLivePick?: boolean },
+  options?: ClosedStatsOptions,
 ): ClosedMarketVerdict {
   const resolution = inferMarketResolution({ ...market, closed: true });
   const allowLive = options?.fallbackToLivePick !== false;
@@ -51,9 +73,14 @@ export function evaluateClosedMarket(
 export function summarizeClosedMarkets(
   closedMarkets: Market[],
   predictedSides?: ReadonlyMap<string, "YES" | "NO"> | null,
-  options?: { fallbackToLivePick?: boolean },
+  options?: ClosedStatsOptions,
 ): ClosedResolutionSummary {
-  const verdicts = closedMarkets.map((market) =>
+  const trackedOnly = options?.trackedOnly !== false;
+  const source = trackedOnly
+    ? trackedClosedMarkets(closedMarkets, predictedSides)
+    : closedMarkets;
+
+  const verdicts = source.map((market) =>
     evaluateClosedMarket(
       market,
       predictedSides?.get(market.id) ?? null,
@@ -72,7 +99,7 @@ export function summarizeClosedMarkets(
   }
 
   return {
-    closed: closedMarkets.length,
+    closed: source.length,
     evaluable: correct + incorrect,
     correct,
     incorrect,

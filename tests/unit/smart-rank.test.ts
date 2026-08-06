@@ -66,6 +66,8 @@ describe("prediction history sync", () => {
       id: `open-${Date.now()}`,
       slug: `open-${Date.now()}`,
       selectedOutcome: "YES",
+      // Required — null/missing probability is treated as a non-tradable lock.
+      marketProbability: 0.62,
     });
     expect(recordOpenPredictions([open])).toBeGreaterThanOrEqual(1);
 

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   evaluateClosedMarket,
   summarizeClosedMarkets,
+  trackedClosedMarkets,
 } from "@/lib/markets/closed-stats";
 import { computeMarketStats } from "@/lib/markets/stats";
 import type { Market } from "@/types";
@@ -86,6 +87,8 @@ describe("closed market verdicts", () => {
     const summary = summarizeClosedMarkets(closed, sides);
     const stats = computeMarketStats([], closed, sides, now);
 
+    // Untracked Gamma closed rows are excluded from נסגרו + the board.
+    expect(summary.closed).toBe(2);
     expect(stats.closed).toBe(summary.closed);
     expect(stats.correct).toBe(summary.correct);
     // Honest denominator = graded rows with a pre-close recorded pick.
@@ -94,5 +97,39 @@ describe("closed market verdicts", () => {
     expect(stats.resolvedTotal).toBe(2);
     expect(stats.winRatePercent).toBe(50);
     expect(stats.winRateLabel).toBe("50%");
+  });
+
+  it("resets נסגרו and the closed board when history sides are empty", () => {
+    const closed = [
+      market({
+        id: "gamma-1",
+        outcomes: [
+          { id: "y", name: "Yes", price: 0.99 },
+          { id: "n", name: "No", price: 0.01 },
+        ],
+      }),
+      market({
+        id: "gamma-2",
+        selectedOutcome: "YES",
+        outcomes: [
+          { id: "y", name: "Yes", price: 0.99 },
+          { id: "n", name: "No", price: 0.01 },
+        ],
+      }),
+    ];
+
+    expect(trackedClosedMarkets(closed, new Map())).toHaveLength(0);
+
+    const summary = summarizeClosedMarkets(closed, new Map(), {
+      fallbackToLivePick: false,
+      trackedOnly: true,
+    });
+    const stats = computeMarketStats([], closed, new Map());
+
+    expect(summary.closed).toBe(0);
+    expect(summary.verdicts).toHaveLength(0);
+    expect(stats.closed).toBe(0);
+    expect(stats.correct).toBe(0);
+    expect(stats.winRateLabel).toBe("אין מדגם");
   });
 });

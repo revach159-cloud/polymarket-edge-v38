@@ -254,11 +254,12 @@ export function MarketsStatsStrip({
         <div className="stat-chip">
           <div className="stat-chip-label">צדקנו</div>
           <div className="stat-chip-value">
+            {/* Always a glowing green number — 0 after reset, then real hits. */}
+            <span className="stat-chip-value-glow ltr-isolate">
+              {formatNumber(correct ?? 0)}
+            </span>
             {hasSample ? (
               <>
-                <span className="stat-chip-value-glow ltr-isolate">
-                  {formatNumber(correct)}
-                </span>
                 <span className="mx-1 text-sm font-medium text-muted-foreground">
                   מתוך
                 </span>
@@ -266,9 +267,7 @@ export function MarketsStatsStrip({
                   {formatNumber(sample)}
                 </span>
               </>
-            ) : (
-              <span className="text-muted-foreground">—</span>
-            )}
+            ) : null}
           </div>
         </div>
         <div className="stat-chip">
@@ -292,7 +291,7 @@ export function MarketsStatsStrip({
               </>
             ) : (
               <span className="text-base font-medium text-muted-foreground">
-                אין מדגם אמיתי עדיין · נספור רק אחרי סגירה של פרדיקשנים שנרשמו מראש
+                מדגם אופס · נסגרו 0 · נתחיל לספור אחרי סגירת פרדיקשנים שנרשמו
               </span>
             )}
           </div>
