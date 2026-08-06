@@ -47,11 +47,26 @@ export function summarizeFromHistory(
   closedMarkets: Market[] = [],
 ): ClosedResolutionSummary {
   const byId = new Map(closedMarkets.map((m) => [m.id, m]));
+  const bySlug = new Map(
+    closedMarkets
+      .filter((m) => m.slug)
+      .map((m) => [m.slug.toLowerCase(), m] as const),
+  );
+  const seen = new Set<string>();
   const verdicts: ClosedMarketVerdict[] = [];
 
   for (const row of history) {
     if (row.status !== "resolved" || row.correct == null) continue;
-    const live = byId.get(row.marketId);
+    const dedupeKey = row.slug?.trim()
+      ? `slug:${row.slug.trim().toLowerCase()}`
+      : `id:${row.marketId}`;
+    if (seen.has(dedupeKey) || seen.has(`id:${row.marketId}`)) continue;
+    seen.add(dedupeKey);
+    seen.add(`id:${row.marketId}`);
+
+    const live =
+      byId.get(row.marketId) ??
+      (row.slug ? bySlug.get(row.slug.toLowerCase()) : undefined);
     if (live) {
       const verdict = evaluateClosedMarket(live, row.side, {
         fallbackToLivePick: false,

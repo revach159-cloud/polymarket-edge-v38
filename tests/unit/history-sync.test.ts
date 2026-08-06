@@ -5,10 +5,11 @@ import { computeMarketStats } from "@/lib/markets/stats";
 import type { Market } from "@/types";
 
 function hist(partial: Partial<HistoryPrediction>): HistoryPrediction {
+  const marketId = partial.marketId ?? "m1";
   return {
-    id: "pred:1",
-    marketId: "m1",
-    slug: "m1",
+    id: partial.id ?? `pred:${marketId}`,
+    marketId,
+    slug: partial.slug ?? `slug-${marketId}`,
     marketQuestion: "Will it happen?",
     side: "YES",
     marketProbability: 0.4,
@@ -29,7 +30,7 @@ function hist(partial: Partial<HistoryPrediction>): HistoryPrediction {
 function market(partial: Partial<Market>): Market {
   return {
     id: "m1",
-    slug: "m1",
+    slug: partial.id ? `slug-${partial.id}` : "m1",
     question: "Will it happen?",
     volume: 0,
     liquidity: 0,

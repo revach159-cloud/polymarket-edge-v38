@@ -27,8 +27,9 @@ export type HistoryPrediction = {
  * Bump to wipe inflated / post-close-graded history and restart honest tracking.
  * v3 also clears the closed board (נסגרו + history table) — only pre-close
  * recorded picks reappear after they resolve.
+ * v4 compacts duplicate history rows (same marketId / slug).
  */
-const STORE_VERSION = 3 as const;
+const STORE_VERSION = 4 as const;
 
 type StoreShape = {
   version: typeof STORE_VERSION;
@@ -69,14 +70,18 @@ function readStore(): StoreShape {
     const file = storePath();
     if (!existsSync(file)) return mem;
     const parsed = JSON.parse(readFileSync(file, "utf8")) as StoreShape;
-    // Reset any pre-v2 history — those rows inflated win-rate with post-close picks.
+    // Reset any pre-v4 history — clears duplicates / fixtures.
     if (!parsed || parsed.version !== STORE_VERSION) {
       writeStore(emptyStore());
       return memoryStore();
     }
     if (!parsed.predictions || !Array.isArray(parsed.predictions)) return mem;
-    mem.predictions = parsed.predictions;
+    const compacted = compactHistoryPredictions(parsed.predictions);
+    mem.predictions = compacted;
     mem.updatedAt = parsed.updatedAt ?? mem.updatedAt;
+    if (compacted.length !== parsed.predictions.length) {
+      writeStore(mem);
+    }
     return mem;
   } catch {
     return mem;
@@ -106,6 +111,43 @@ function writeStore(store: StoreShape): void {
   } catch {
     // Filesystem may be read-only in some runtimes; memory still works for the process.
   }
+}
+
+function historyRank(row: HistoryPrediction): number {
+  const resolvedBoost = row.status === "resolved" ? 1_000_000 : 0;
+  const time = Date.parse(row.resolvedAt ?? row.recordedAt) || 0;
+  return resolvedBoost + time;
+}
+
+/**
+ * One row per marketId and per slug — prefer resolved, then newest.
+ * Also drops synthetic fixture ids from local demos.
+ */
+export function compactHistoryPredictions(
+  predictions: HistoryPrediction[],
+): HistoryPrediction[] {
+  const byMarket = new Map<string, HistoryPrediction>();
+  for (const row of predictions) {
+    const prev = byMarket.get(row.marketId);
+    if (!prev || historyRank(row) >= historyRank(prev)) {
+      byMarket.set(row.marketId, row);
+    }
+  }
+
+  const bySlug = new Map<string, HistoryPrediction>();
+  for (const row of byMarket.values()) {
+    const slugKey = row.slug?.trim().toLowerCase();
+    if (!slugKey) {
+      bySlug.set(`id:${row.marketId}`, row);
+      continue;
+    }
+    const prev = bySlug.get(slugKey);
+    if (!prev || historyRank(row) >= historyRank(prev)) {
+      bySlug.set(slugKey, { ...row, id: `pred:${row.marketId}` });
+    }
+  }
+
+  return [...bySlug.values()];
 }
 
 function predictionId(market: Market): string {
@@ -149,7 +191,7 @@ export function recordOpenPredictions(markets: Market[], now = new Date()): numb
     byId.set(id, next);
   }
 
-  store.predictions = [...byId.values()];
+  store.predictions = compactHistoryPredictions([...byId.values()]);
   writeStore(store);
   return added;
 }
@@ -193,7 +235,7 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
     resolvedCount += 1;
   }
 
-  store.predictions = [...byId.values()];
+  store.predictions = compactHistoryPredictions([...byId.values()]);
   writeStore(store);
   return resolvedCount;
 }
@@ -214,7 +256,7 @@ export function listHistoryPredictions(options?: {
   const store = readStore();
   const status = options?.status ?? "all";
   const limit = options?.limit ?? 100;
-  return store.predictions
+  return compactHistoryPredictions(store.predictions)
     .filter((p) => (status === "all" ? true : p.status === status))
     .sort((a, b) => {
       const aTime = Date.parse(a.resolvedAt ?? a.recordedAt);

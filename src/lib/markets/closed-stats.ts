@@ -80,7 +80,19 @@ export function summarizeClosedMarkets(
     ? trackedClosedMarkets(closedMarkets, predictedSides)
     : closedMarkets;
 
-  const verdicts = source.map((market) =>
+  const seen = new Set<string>();
+  const uniqueSource: Market[] = [];
+  for (const market of source) {
+    const key = market.slug?.trim()
+      ? `slug:${market.slug.trim().toLowerCase()}`
+      : `id:${market.id}`;
+    if (seen.has(key) || seen.has(`id:${market.id}`)) continue;
+    seen.add(key);
+    seen.add(`id:${market.id}`);
+    uniqueSource.push(market);
+  }
+
+  const verdicts = uniqueSource.map((market) =>
     evaluateClosedMarket(
       market,
       predictedSides?.get(market.id) ?? null,
@@ -99,7 +111,7 @@ export function summarizeClosedMarkets(
   }
 
   return {
-    closed: source.length,
+    closed: uniqueSource.length,
     evaluable: correct + incorrect,
     correct,
     incorrect,

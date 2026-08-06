@@ -10,7 +10,7 @@ import type { Market } from "@/types";
 function market(partial: Partial<Market>): Market {
   return {
     id: "1",
-    slug: "test",
+    slug: partial.id ? `slug-${partial.id}` : "test",
     question: "Will it happen?",
     volume: 0,
     liquidity: 0,

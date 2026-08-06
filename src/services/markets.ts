@@ -10,6 +10,7 @@ import { enrichMarketWithHeuristic, enrichMarkets } from "@/lib/predictions/enri
 import { computeMarketStats } from "@/lib/markets/stats";
 import { applySmartSearch, computeSmartScore } from "@/lib/markets/smart-rank";
 import { selectDailyPredictions } from "@/lib/markets/quality-gate";
+import { dedupeMarkets } from "@/lib/markets/dedupe";
 import {
   listHistoryPredictions,
   recordedPredictionSides,
@@ -67,11 +68,13 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
     );
   }
 
-  // Active list: keep 250+ quality predictions, near-close first.
+  // Active list: keep 250+ quality predictions, near-close first, unique markets only.
   const qualityOnly = filters?.qualityOnly !== false;
   if (qualityOnly && (filters?.status === "active" || !filters?.status)) {
     list = selectDailyPredictions(list, now);
   }
+
+  list = dedupeMarkets(list);
 
   const sort = filters?.sort ?? "smart";
   if (filters?.q && (sort === "smart" || sort === "relevance")) {
