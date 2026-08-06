@@ -67,12 +67,16 @@ export function cleanGroupItemTitle(title: string): string {
 export function extractQuestionSubject(question?: string | null): string | null {
   if (!question) return null;
   const will = question.match(
-    /^will\s+(.+?)\s+(?:win|be|have|get|make|reach|end|finish)\b/i,
+    /^will\s+(.+?)\s+(?:win|be|have|get|make|reach|end|finish|beat|stay|hit|dip|post|say|attend|vote|release)\b/i,
   );
   if (!will?.[1]) return null;
   const subject = will[1].replace(/\s+vs\.?\s+.+$/i, "").trim();
   if (!subject || isGenericYesNoLabel(subject)) return null;
-  if (/^(it|this|that|there|he|she|they)$/i.test(subject)) return null;
+  if (/^(it|this|that|there|he|she|they|the)$/i.test(subject)) return null;
+  // Drop leading "the price of X" → keep a tighter subject when useful.
+  const priceOf = subject.match(/^the price of\s+(.+)$/i);
+  if (priceOf?.[1]) return priceOf[1].trim();
+  if (/^the\s+/i.test(subject) && subject.length < 12) return null;
   if (subject.length < 3) return null;
   return subject;
 }
