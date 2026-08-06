@@ -51,11 +51,13 @@ function liquidityDepth(liquidity: number, minLiquidity: number): number {
 
 function timeDecay(hoursToEnd: number | null): number {
   if (hoursToEnd == null || hoursToEnd < 0) return 0.5;
-  if (hoursToEnd < 2) return 0.85;
-  if (hoursToEnd < 24) return 0.9;
-  if (hoursToEnd < 168) return 0.75;
-  if (hoursToEnd < 720) return 0.55;
-  return 0.35;
+  // Near-close windows get the strongest time signal — 2h then 5h.
+  if (hoursToEnd <= 2) return 1;
+  if (hoursToEnd <= 5) return 0.95;
+  if (hoursToEnd < 24) return 0.85;
+  if (hoursToEnd < 168) return 0.7;
+  if (hoursToEnd < 720) return 0.5;
+  return 0.3;
 }
 
 export function computeFactors(
