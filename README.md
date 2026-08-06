@@ -4,6 +4,15 @@
 
 **מידע וניתוח בלבד.** המערכת אינה מבצעת עסקאות, אינה מחזיקה כספים, אינה מבקשת Private Keys, ואינה מהווה ייעוץ פיננסי או הבטחת רווח.
 
+## כתובות האתר
+
+**כתובת קבועה (Production):**
+- אתר: https://polymarket-daily-edge.vercel.app
+- שווקים: https://polymarket-daily-edge.vercel.app/markets
+- סטטיסטיקה: https://polymarket-daily-edge.vercel.app/statistics
+
+`localhost:3000` ו־`*.trycloudflare.com` הם רק לפיתוח מקומי/זמני — לא כתובת האתר.
+
 ## טכנולוגיות
 
 Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind CSS 4 · Supabase (Auth/Postgres/RLS) · Zod · React Hook Form · TanStack Table · Recharts · Vitest · Playwright · Vercel
