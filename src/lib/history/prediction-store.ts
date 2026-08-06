@@ -23,8 +23,12 @@ export type HistoryPrediction = {
   source: "live-sync";
 };
 
-/** Bump to wipe inflated / post-close-graded history and restart honest tracking. */
-const STORE_VERSION = 2 as const;
+/**
+ * Bump to wipe inflated / post-close-graded history and restart honest tracking.
+ * v3 also clears the closed board (נסגרו + history table) — only pre-close
+ * recorded picks reappear after they resolve.
+ */
+const STORE_VERSION = 3 as const;
 
 type StoreShape = {
   version: typeof STORE_VERSION;

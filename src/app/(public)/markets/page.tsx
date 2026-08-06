@@ -67,6 +67,7 @@ export default async function MarketsPage({
   const predictedSides = recordedPredictionSides();
   const closedSummary = summarizeClosedMarkets(closedMarkets.data, predictedSides, {
     fallbackToLivePick: false,
+    trackedOnly: true,
   });
   const stats = computeMarketStats(
     activeForStats?.data ?? result.data,
@@ -175,8 +176,10 @@ export default async function MarketsPage({
         </>
       ) : (
         <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-          פרדיקשנים סגורים לא מוצגים ככרטיסים ברשימה — רק בטבלת הסטטיסטיקה למטה
-          ({closedSummary.closed} סגורים).
+          פרדיקשנים סגורים לא מוצגים ככרטיסים ברשימה — רק בטבלת ההיסטוריה למטה
+          ({closedSummary.closed === 0
+            ? "המדגם ריק אחרי איפוס"
+            : `${closedSummary.closed} סגורים במדגם`}).
         </div>
       )}
 
@@ -185,7 +188,7 @@ export default async function MarketsPage({
           <div>
             <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן לסטטיסטיקה</h2>
             <p className="text-sm text-muted-foreground">
-              צדקנו ואחוז הצלחה נספרים מאותה רשימה. בחירה מוצגת כ־Yes/No בלבד.
+              רק פרדיקשנים שנרשמו לפני הסגירה · נסגרו / צדקנו / הלוח מאותו מדגם.
             </p>
           </div>
           <Link
@@ -197,7 +200,8 @@ export default async function MarketsPage({
         </div>
         {closedSummary.verdicts.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-            אין שווקים סגורים במשיכה הנוכחית.
+            המדגם אופס. אין עדיין פרדיקשנים סגורים בהיסטוריה — הלוח ו־נסגרו
+            יתמלאו רק אחרי שפרדיקשנים שנרשמו בזמן פעילות ייסגרו.
           </div>
         ) : (
           <div className="space-y-3">

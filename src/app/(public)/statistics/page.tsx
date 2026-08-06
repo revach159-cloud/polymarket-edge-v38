@@ -20,7 +20,7 @@ export default async function StatisticsPage() {
   const closedSummary = summarizeClosedMarkets(
     closedMarkets.data,
     recordedPredictionSides(),
-    { fallbackToLivePick: false },
+    { fallbackToLivePick: false, trackedOnly: true },
   );
   const resolvedRows = closedSummary.verdicts.filter((v) => v.correct !== null);
 

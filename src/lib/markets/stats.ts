@@ -66,6 +66,8 @@ export function computeMarketStats(
   const closedSummary = summarizeClosedMarkets(closedMarkets, predictedSides, {
     // Real performance only: never grade with a post-close live re-pick.
     fallbackToLivePick: false,
+    // נסגרו + board = tracked history picks only (empty after stats reset).
+    trackedOnly: true,
   });
   const closedCount = closedSummary.closed;
   const correctCount = closedSummary.correct;
