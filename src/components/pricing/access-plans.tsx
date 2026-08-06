@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Check, Crown, KeyRound, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +14,7 @@ type Plan = {
   months: number;
   total: number;
   blurb: string;
-  features: string[];
+  features: ReactNode[];
   cta: string;
   accent: "core" | "silver" | "vip";
   bestValue?: boolean;
@@ -48,7 +48,12 @@ const plans: Plan[] = [
     total: 150,
     blurb: "מחיר חודשי מוזל במסלול יציב לחצי שנה.",
     features: [
-      "כל כלי ה־Core ללא הגבלה",
+      <>
+        כל כלי ה־
+        <span className="ltr-isolate">Core</span>
+        {" "}
+        ללא הגבלה
+      </>,
       "גישה רציפה למשך 6 חודשים",
       'סה״כ למסלול: $150',
     ],
@@ -132,7 +137,7 @@ function PlanCard({
         </span>
       </div>
 
-      <div className="mt-5 flex items-baseline gap-2">
+      <div className="mt-5 flex flex-row-reverse items-baseline justify-end gap-2">
         <span className="ltr-isolate font-display text-5xl font-bold tracking-tight text-white">
           ${plan.monthly}
         </span>
@@ -141,8 +146,8 @@ function PlanCard({
       <p className="mt-2 text-sm leading-6 text-[#9aa8bc]">{plan.blurb}</p>
 
       <ul className="mt-5 space-y-3 text-sm">
-        {plan.features.map((feature) => (
-          <li key={feature} className="flex items-start gap-2.5">
+        {plan.features.map((feature, index) => (
+          <li key={index} className="flex items-start gap-2.5">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#3df8b5]" aria-hidden />
             <span className="text-[#e8eef8]">{feature}</span>
           </li>
