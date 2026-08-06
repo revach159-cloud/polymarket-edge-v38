@@ -296,6 +296,16 @@ body {
   color: var(--foreground);
 }
 
+.score-pill-edge {
+  background: color-mix(in oklab, var(--primary) 16%, var(--background-muted));
+  color: var(--primary);
+}
+
+.score-pill-wallet {
+  background: color-mix(in oklab, #38bdf8 16%, var(--background-muted));
+  color: #7dd3fc;
+}
+
 .metrics-bar {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

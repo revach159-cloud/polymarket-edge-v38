@@ -9,9 +9,10 @@ import {
 describe("time buckets", () => {
   const now = new Date("2026-03-22T12:00:00.000Z");
 
-  it("classifies horizons", () => {
+  it("classifies horizons with 2h and 5h emphasis", () => {
     expect(getTimeBucket(new Date(now.getTime() + 30 * 60_000), now)).toBe("within_2h");
-    expect(getTimeBucket(new Date(now.getTime() + 5 * 3_600_000), now)).toBe("within_6h");
+    expect(getTimeBucket(new Date(now.getTime() + 5 * 3_600_000), now)).toBe("within_5h");
+    expect(getTimeBucket(new Date(now.getTime() + 4 * 3_600_000), now)).toBe("within_5h");
     expect(getTimeBucket(new Date(now.getTime() + 20 * 3_600_000), now)).toBe("within_24h");
     expect(getTimeBucket(new Date(now.getTime() + 2 * 86_400_000), now)).toBe("within_3d");
     expect(getTimeBucket(new Date(now.getTime() + 5 * 86_400_000), now)).toBe("within_7d");
@@ -26,6 +27,8 @@ describe("time buckets", () => {
   });
 
   it("priority ordering prefers sooner buckets", () => {
+    expect(TIME_BUCKET_PRIORITY.within_2h).toBeLessThan(TIME_BUCKET_PRIORITY.within_5h);
+    expect(TIME_BUCKET_PRIORITY.within_5h).toBeLessThan(TIME_BUCKET_PRIORITY.within_24h);
     expect(TIME_BUCKET_PRIORITY.within_2h).toBeLessThan(TIME_BUCKET_PRIORITY.within_30d);
   });
 

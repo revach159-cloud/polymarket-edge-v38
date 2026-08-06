@@ -47,7 +47,7 @@ export default async function StatisticsPage() {
         <div>
           <h2 className="font-display text-xl font-bold">תוצאות מוכרעות</h2>
           <p className="text-sm text-muted-foreground">
-            Win Rate מופיע רק לפרדיקשנים שהוכרעו בפועל, עם גודל המדגם.
+            אחוז הצלחה מוצג רק לפרדיקשנים שהוכרעו בפועל, עם גודל המדגם ו־Wilson.
           </p>
         </div>
         {resolvedPredictions.length === 0 ? (

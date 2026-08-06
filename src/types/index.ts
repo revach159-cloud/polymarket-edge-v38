@@ -35,16 +35,23 @@ export interface Market {
   conditionId?: string;
   clobTokenIds?: string[];
   eventId?: string | null;
+  resolved?: boolean;
+  resolutionStatus?: string | null;
+  walletConsensusScore?: number | null;
+  walletSupportCount?: number | null;
+  smartScore?: number | null;
 }
 
 export interface MarketFilters {
   q?: string;
   category?: string;
-  sort?: "volume" | "liquidity" | "endDate" | "edge" | "quality";
+  sort?: "smart" | "volume" | "liquidity" | "endDate" | "edge" | "quality" | "relevance";
   status?: "active" | "closed" | "all";
   goldOnly?: boolean;
-  horizon?: "2h" | "6h" | "24h" | "3d" | "7d" | "30d" | "all";
+  horizon?: "2h" | "5h" | "24h" | "3d" | "7d" | "30d" | "all";
   minQuality?: number;
+  /** When true (default for active), apply the daily quality gate. */
+  qualityOnly?: boolean;
 }
 
 export interface WalletSummary {
@@ -56,6 +63,7 @@ export interface WalletSummary {
   sampleSize?: number;
   wilsonLowerBound?: number;
   rank?: number;
+  userName?: string | null;
 }
 
 export interface WalletTrade {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FireIcon } from "@/components/gold/fire-icon";
 import { formatCountdown } from "@/lib/predictions/time-buckets";
 import { formatNumber, formatPercent, formatUsd, cn } from "@/lib/utils";
 import type { Market } from "@/types";
@@ -14,6 +15,10 @@ const accentByCategory: Record<string, string> = {
   פוליטיקה: "#a78bfa",
   world: "#38bdf8",
   עולם: "#38bdf8",
+  crypto: "#f59e0b",
+  קריפטו: "#f59e0b",
+  business: "#22d3ee",
+  עסקים: "#22d3ee",
 };
 
 export function MarketCard({
@@ -23,6 +28,7 @@ export function MarketCard({
   market: Market;
   variant?: "default" | "gold";
 }) {
+  const isGold = variant === "gold" || Boolean(market.goldPick);
   const marketProb =
     market.marketProbability ??
     market.outcomes.find((o) => o.name.toLowerCase() === "yes")?.price ??
@@ -39,28 +45,62 @@ export function MarketCard({
   const accent =
     accentByCategory[category.toLowerCase()] ??
     accentByCategory[category] ??
-    (variant === "gold" ? "#ffe173" : "#7dff6a");
+    (isGold ? "#ffe173" : "#7dff6a");
+  const edgeLabel =
+    market.edgeScore != null ? formatPercent(Math.abs(market.edgeScore)) : null;
+  const winProb =
+    outcome && marketProb != null
+      ? outcome === "YES"
+        ? marketProb
+        : 1 - marketProb
+      : null;
 
   return (
     <article
       className={cn(
         "market-card-shell animate-fade-in",
-        variant === "gold" && "market-card-shell-gold",
+        isGold && "market-card-shell-gold",
       )}
       style={{ ["--accent-line" as string]: accent }}
     >
-      {variant === "gold" ? (
+      {isGold ? (
         <div className="market-card-gold-sheen" aria-hidden="true" />
       ) : null}
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div className="flex items-start justify-between gap-2">
-          <span className={cn("score-pill", variant === "gold" && "score-pill-gold")}>
-            ציון {market.qualityScore != null ? Math.round(market.qualityScore) : "—"}
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className={cn("score-pill", isGold && "score-pill-gold")}>
+              ציון {market.qualityScore != null ? Math.round(market.qualityScore) : "—"}
+            </span>
+            {winProb != null ? (
+              <span className="score-pill score-pill-edge" title="סבירות שוק לצד שנבחר">
+                {formatPercent(winProb)} ניצחון
+              </span>
+            ) : null}
+            {edgeLabel ? (
+              <span className="score-pill score-pill-edge" title="פער מודל מול שוק">
+                Edge {edgeLabel}
+              </span>
+            ) : null}
+            {market.walletSupportCount && market.walletSupportCount > 0 ? (
+              <span
+                className="score-pill score-pill-wallet"
+                title="כמה ארנקים מובילים נכנסו לאותו שוק לאחרונה"
+              >
+                {market.walletSupportCount} ארנקים
+              </span>
+            ) : null}
+            {isGold ? (
+              <span className="score-pill score-pill-gold inline-flex items-center gap-1">
+                <FireIcon size="xs" />
+                Gold
+              </span>
+            ) : null}
+          </div>
           <span
             className={cn(
-              "text-xs font-semibold",
-              variant === "gold" ? "text-gold/80" : "text-muted-foreground",
+              "shrink-0 text-xs font-semibold",
+              isGold ? "text-gold/80" : "text-muted-foreground",
             )}
           >
             {category}
@@ -69,9 +109,14 @@ export function MarketCard({
 
         <div className="space-y-2">
           <h3 className="text-sm font-semibold leading-snug text-foreground md:text-[0.95rem]">
-            <span className="ltr-isolate" dir="ltr">
-              {market.question}
-            </span>
+            <Link
+              href={`/markets/${market.slug}`}
+              className="transition-colors hover:text-primary focus-visible:text-primary"
+            >
+              <span className="ltr-isolate" dir="ltr">
+                {market.question}
+              </span>
+            </Link>
           </h3>
           {market.endDate ? (
             <span className="countdown-pill">{formatCountdown(market.endDate)}</span>
@@ -80,7 +125,7 @@ export function MarketCard({
             <p
               className={cn(
                 "text-lg font-bold leading-tight md:text-xl",
-                variant === "gold" ? "text-gold" : "text-primary",
+                isGold ? "text-gold" : "text-primary",
               )}
             >
               <span className="ltr-isolate" dir="ltr">
@@ -90,6 +135,12 @@ export function MarketCard({
           ) : (
             <p className="text-sm text-muted-foreground">ללא בחירת מודל</p>
           )}
+          {market.primaryReason ? (
+            <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+              <span className="font-semibold text-foreground/80">למה: </span>
+              {market.primaryReason}
+            </p>
+          ) : null}
         </div>
 
         <div className="metrics-bar mt-auto">
@@ -108,7 +159,7 @@ export function MarketCard({
         <div className="grid grid-cols-2 gap-2">
           <Link
             href={`/markets/${market.slug}`}
-            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-background-muted/60 text-sm font-semibold"
+            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-background-muted/60 text-sm font-semibold transition-colors hover:border-primary/40 hover:bg-background-muted"
           >
             פרטים
           </Link>
@@ -116,7 +167,7 @@ export function MarketCard({
             href={polymarketUrl(market.slug)}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn("cta-full text-sm", variant === "gold" && "cta-full-gold")}
+            className={cn("cta-full text-sm", isGold && "cta-full-gold")}
           >
             פתח ב־Polymarket
           </a>
@@ -138,31 +189,38 @@ function MiniMetric({ label, value }: { label: string; value: string }) {
 export function MarketsStatsStrip({
   active,
   within2h,
+  within5h,
   within24h,
   scanned,
   closed,
   correct,
+  resolvedTotal,
+  winRatePercent,
+  winRateWilson,
   winRateLabel,
 }: {
   active: number;
   within2h: number;
+  within5h: number;
   within24h: number;
   scanned: number;
   closed: number;
   correct: number | null;
+  resolvedTotal?: number;
+  winRatePercent?: number | null;
+  winRateWilson?: number | null;
   winRateLabel: string;
 }) {
+  const sample = resolvedTotal ?? 0;
+  const hasSample = sample > 0 && correct != null;
+
   const items = [
-    { label: "פועלים", value: String(active) },
-    { label: "עד שעתיים", value: String(within2h) },
-    { label: "עד 24 שעות", value: String(within24h) },
+    { label: "פועלים", value: formatNumber(active) },
+    { label: "עד שעתיים", value: formatNumber(within2h), highlight: within2h > 0 },
+    { label: "עד 5 שעות", value: formatNumber(within5h), highlight: within5h > 0 },
+    { label: "עד 24 שעות", value: formatNumber(within24h) },
     { label: "נסרקו", value: formatNumber(scanned) },
-    { label: "נסגרו", value: String(closed) },
-    {
-      label: "צדקנו?",
-      value: correct == null ? "0" : String(correct),
-      highlight: true,
-    },
+    { label: "נסגרו", value: formatNumber(closed) },
   ];
 
   return (
@@ -182,9 +240,50 @@ export function MarketsStatsStrip({
           </div>
         ))}
       </div>
-      <div className="stat-chip">
-        <div className="stat-chip-label">Win Rate</div>
-        <div className="stat-chip-value text-base">{winRateLabel}</div>
+
+      <div className="grid gap-2 sm:grid-cols-2">
+        <div className="stat-chip">
+          <div className="stat-chip-label">צדקנו</div>
+          <div className={cn("stat-chip-value", hasSample && "text-primary")}>
+            {hasSample ? (
+              <>
+                <span className="ltr-isolate">{formatNumber(correct)}</span>
+                <span className="mx-1 text-sm font-medium text-muted-foreground">
+                  מתוך
+                </span>
+                <span className="ltr-isolate text-base text-foreground">
+                  {formatNumber(sample)}
+                </span>
+              </>
+            ) : (
+              <span className="text-muted-foreground">—</span>
+            )}
+          </div>
+        </div>
+        <div className="stat-chip">
+          <div className="stat-chip-label">אחוז הצלחה</div>
+          <div className="stat-chip-value flex flex-wrap items-baseline gap-2">
+            {hasSample && winRatePercent != null ? (
+              <>
+                <span className="text-primary ltr-isolate">{winRateLabel}</span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  מדגם {formatNumber(sample)}
+                  {winRateWilson != null ? (
+                    <>
+                      {" · "}
+                      Wilson ≥{" "}
+                      <span className="ltr-isolate">{winRateWilson}%</span>
+                    </>
+                  ) : null}
+                </span>
+              </>
+            ) : (
+              <span className="text-base font-medium text-muted-foreground">
+                אין מדגם מוכרע עדיין
+              </span>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

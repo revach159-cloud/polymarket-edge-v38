@@ -1,6 +1,6 @@
 export type TimeBucket =
   | "within_2h"
-  | "within_6h"
+  | "within_5h"
   | "within_24h"
   | "within_3d"
   | "within_7d"
@@ -17,7 +17,7 @@ export function getTimeBucket(closeTime: Date | string, now: Date = new Date()):
   if (Number.isNaN(ms)) return "closed";
   if (ms <= 0) return "closed";
   if (ms <= 2 * HOUR) return "within_2h";
-  if (ms <= 6 * HOUR) return "within_6h";
+  if (ms <= 5 * HOUR) return "within_5h";
   if (ms <= 24 * HOUR) return "within_24h";
   if (ms <= 3 * DAY) return "within_3d";
   if (ms <= 7 * DAY) return "within_7d";
@@ -27,7 +27,7 @@ export function getTimeBucket(closeTime: Date | string, now: Date = new Date()):
 
 export const TIME_BUCKET_PRIORITY: Record<TimeBucket, number> = {
   within_2h: 0,
-  within_6h: 1,
+  within_5h: 1,
   within_24h: 2,
   within_3d: 3,
   within_7d: 4,

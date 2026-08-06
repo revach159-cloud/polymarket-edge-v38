@@ -48,11 +48,20 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         <Stat title="Gamma" value={status.gamma} variant={statusVariant(status.gamma)} />
         <Stat title="CLOB" value={status.clob} variant={statusVariant(status.clob)} />
         <Stat title="שווקים פעילים" value={String(stats.active)} />
         <Stat title="עד שעתיים" value={String(stats.within2h)} />
+        <Stat title="עד 5 שעות" value={String(stats.within5h)} />
+        <Stat
+          title="אחוז הצלחה"
+          value={
+            stats.winRatePercent != null
+              ? `${stats.winRateLabel} · n=${stats.resolvedTotal}`
+              : "אין מדגם"
+          }
+        />
       </section>
 
       {picks.stale || picks.error ? <StaleBanner message={picks.error} /> : null}
