@@ -2,7 +2,6 @@ import { isSupabaseConfigured } from "@/lib/env";
 import {
   fetchActivePredictionUniverse,
   fetchGammaMarketBySlug,
-  fetchGammaMarkets,
   fetchGammaMarketsPaged,
   probeClob,
   probeGamma,
@@ -12,7 +11,6 @@ import { computeMarketStats } from "@/lib/markets/stats";
 import { applySmartSearch, computeSmartScore } from "@/lib/markets/smart-rank";
 import { selectDailyPredictions } from "@/lib/markets/quality-gate";
 import {
-  liveResolvedFromClosed,
   listHistoryPredictions,
   recordedPredictionSides,
   syncPredictionHistory,
@@ -374,19 +372,8 @@ export async function getResolvedPredictions(limit = 25): Promise<ResolvedPredic
     }
   }
 
-  const local = listHistoryPredictions({ status: "resolved", limit });
-  if (local.length) return local.map(toResolved);
-
-  const consensusBySlug = await loadConsensusMap();
-  const { markets } = await fetchGammaMarkets({
-    limit: 100,
-    closed: true,
-    order: "updatedAt",
-    ascending: false,
-  });
-  const enriched = enrichMarkets(markets, new Date(), consensusBySlug);
-  syncPredictionHistory([], enriched);
-  return liveResolvedFromClosed(enriched).slice(0, limit).map(toResolved);
+  // Honest history only — never invent resolved rows from post-close prices.
+  return listHistoryPredictions({ status: "resolved", limit }).map(toResolved);
 }
 
 export async function getMarketStats() {

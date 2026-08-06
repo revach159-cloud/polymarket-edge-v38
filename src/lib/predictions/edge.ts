@@ -10,10 +10,14 @@ export interface EdgeResult {
   win_probability: number;
 }
 
+/** Above this, the favorite pays almost nothing — do not lock to it. */
+const MAX_FAVORITE_LOCK = 0.97;
+const FAVORITE_LOCK = 0.62;
+
 /**
  * Select side with higher chance of being correct.
- * Strong market favorites (≥62% / ≤38%) lock to the favorite for win-rate focus.
- * Otherwise fall back to fair-vs-market edge.
+ * Strong market favorites (62%–97%) lock to the favorite.
+ * Extreme 98%+ locks are left to fair-vs-market edge (and usually filtered out).
  */
 export function computeEdge(
   fairProbability: number,
@@ -24,8 +28,7 @@ export function computeEdge(
   const yesEdge = fair - market;
   const noEdge = market - fair;
 
-  const FAVORITE_LOCK = 0.62;
-  if (market >= FAVORITE_LOCK) {
+  if (market >= FAVORITE_LOCK && market < MAX_FAVORITE_LOCK) {
     return {
       side: "yes",
       edge: Math.max(yesEdge, market - 0.5),
@@ -35,7 +38,7 @@ export function computeEdge(
       win_probability: market,
     };
   }
-  if (market <= 1 - FAVORITE_LOCK) {
+  if (market <= 1 - FAVORITE_LOCK && market > 1 - MAX_FAVORITE_LOCK) {
     return {
       side: "no",
       edge: Math.max(noEdge, 0.5 - market),

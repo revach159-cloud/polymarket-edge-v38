@@ -64,16 +64,14 @@ export function computeMarketStats(
   }).length;
 
   const closedSummary = summarizeClosedMarkets(closedMarkets, predictedSides, {
-    // Live fallback keeps strip ↔ closed table identical; recorded sides win.
-    fallbackToLivePick: true,
+    // Real performance only: never grade with a post-close live re-pick.
+    fallbackToLivePick: false,
   });
-  // צדקנו / win-rate use the full closed list (נסגרו) as denominator — same
-  // source as the closed table below, not a separate history sample.
   const closedCount = closedSummary.closed;
   const correctCount = closedSummary.correct;
-  const canGrade = closedSummary.evaluable > 0;
+  const graded = closedSummary.evaluable;
 
-  if (closedCount === 0 || !canGrade) {
+  if (closedCount === 0 || graded === 0) {
     return {
       markets: activeMarkets.length,
       active: activeMarkets.filter((m) => m.active && !m.closed).length,
@@ -94,7 +92,7 @@ export function computeMarketStats(
 
   const { winRatePercent, winRateWilson, winRateLabel } = formatWinRate(
     correctCount,
-    closedCount,
+    graded,
   );
 
   return {
@@ -106,7 +104,7 @@ export function computeMarketStats(
     scanned: activeMarkets.length + closedMarkets.length,
     closed: closedCount,
     correct: correctCount,
-    resolvedTotal: closedCount,
+    resolvedTotal: graded,
     winRatePercent,
     winRateWilson,
     winRateLabel,

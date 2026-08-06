@@ -52,6 +52,15 @@ export function MarketCard({
     eventSlug: market.eventSlug,
   });
   const closeLabel = market.endDate ? formatCloseLabel(market.endDate) : null;
+  const closeTitle = market.endDate
+    ? new Intl.DateTimeFormat("he-IL", {
+        weekday: "short",
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(new Date(market.endDate))
+    : undefined;
 
   return (
     <article
@@ -121,12 +130,12 @@ export function MarketCard({
           </h3>
           {closeLabel ? (
             <div className="flex flex-wrap items-center gap-2">
-              <span className="countdown-pill" title={market.endDate ?? undefined}>
+              <span className="countdown-pill" title={closeTitle}>
                 {closeLabel}
               </span>
             </div>
           ) : (
-            <span className="countdown-pill countdown-pill-muted">זמן סגירה לא זמין</span>
+            <span className="countdown-pill countdown-pill-muted">סגירה —</span>
           )}
           {selectionLabel ? (
             <p
@@ -269,7 +278,9 @@ export function MarketsStatsStrip({
               <>
                 <span className="ltr-isolate text-foreground">{winRateLabel}</span>
                 <span className="text-sm font-medium text-muted-foreground">
-                  {formatNumber(correct ?? 0)} מתוך {formatNumber(closed)} סגורים
+                  {formatNumber(correct ?? 0)}/{formatNumber(sample)} מוכרעים
+                  {" · "}
+                  נסגרו {formatNumber(closed)}
                   {winRateWilson != null ? (
                     <>
                       {" · "}
@@ -281,7 +292,7 @@ export function MarketsStatsStrip({
               </>
             ) : (
               <span className="text-base font-medium text-muted-foreground">
-                אין מדגם מוכרע עדיין
+                אין מדגם אמיתי עדיין · נספור רק אחרי סגירה של פרדיקשנים שנרשמו מראש
               </span>
             )}
           </div>

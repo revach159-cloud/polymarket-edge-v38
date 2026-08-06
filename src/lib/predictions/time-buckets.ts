@@ -41,6 +41,7 @@ export function isWithinDisplayHorizon(closeTime: Date | string, now: Date = new
   return bucket !== "beyond_30d" && bucket !== "closed";
 }
 
+/** Short countdown: `42ד` / `4ש 17ד` / `2י 5ש` / `נסגר`. */
 export function formatCountdown(closeTime: Date | string, now: Date = new Date()): string {
   const close = typeof closeTime === "string" ? new Date(closeTime) : closeTime;
   const ms = close.getTime() - now.getTime();
@@ -49,24 +50,21 @@ export function formatCountdown(closeTime: Date | string, now: Date = new Date()
   const days = Math.floor(totalMinutes / (60 * 24));
   const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
   const minutes = totalMinutes % 60;
-  if (days > 0) return `${days}י ${hours}ש`;
-  if (hours > 0) return `${hours}ש ${minutes}ד`;
-  return `${minutes}ד`;
+  if (days > 0) return hours > 0 ? `${days}י ${hours}ש` : `${days}י`;
+  if (hours > 0) return minutes > 0 ? `${hours}ש ${minutes}ד` : `${hours}ש`;
+  return `${Math.max(1, minutes)}ד`;
 }
 
-/** Relative + clock time, e.g. "נסגר בעוד 1ש 20ד · 14:35". */
+/**
+ * Short close label for cards: `סגירה 4ש 17ד`.
+ * Full datetime stays on the element `title` attribute.
+ */
 export function formatCloseLabel(closeTime: Date | string, now: Date = new Date()): string {
   const close = typeof closeTime === "string" ? new Date(closeTime) : closeTime;
-  if (Number.isNaN(close.getTime())) return "זמן סגירה לא ידוע";
-  const clock = new Intl.DateTimeFormat("he-IL", {
-    day: "2-digit",
-    month: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(close);
+  if (Number.isNaN(close.getTime())) return "סגירה —";
   const ms = close.getTime() - now.getTime();
-  if (ms <= 0) return `נסגר · ${clock}`;
-  return `נסגר בעוד ${formatCountdown(close, now)} · ${clock}`;
+  if (ms <= 0) return "נסגר";
+  return `סגירה ${formatCountdown(close, now)}`;
 }
 
 export function hoursUntil(closeTime: Date | string | null | undefined, now = new Date()): number | null {

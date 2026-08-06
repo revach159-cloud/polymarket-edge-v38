@@ -43,10 +43,9 @@ describe("outcome labels", () => {
 });
 
 describe("formatCloseLabel", () => {
-  it("includes relative countdown and clock time", () => {
+  it("keeps a short clear close label", () => {
     const now = new Date("2026-08-06T12:00:00.000Z");
     const label = formatCloseLabel("2026-08-06T13:30:00.000Z", now);
-    expect(label).toContain("נסגר בעוד");
-    expect(label).toContain("·");
+    expect(label).toBe("סגירה 1ש 30ד");
   });
 });

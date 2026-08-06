@@ -1,5 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
+import { isOneSidedLock } from "@/lib/markets/quality-gate";
 import { inferMarketResolution } from "@/lib/markets/resolution";
 import type { Market } from "@/types";
 
@@ -22,8 +23,11 @@ export type HistoryPrediction = {
   source: "live-sync";
 };
 
+/** Bump to wipe inflated / post-close-graded history and restart honest tracking. */
+const STORE_VERSION = 2 as const;
+
 type StoreShape = {
-  version: 1;
+  version: typeof STORE_VERSION;
   updatedAt: string;
   predictions: HistoryPrediction[];
 };
@@ -38,14 +42,20 @@ function storePath(): string {
 }
 
 function emptyStore(): StoreShape {
-  return { version: 1, updatedAt: new Date().toISOString(), predictions: [] };
+  return {
+    version: STORE_VERSION,
+    updatedAt: new Date().toISOString(),
+    predictions: [],
+  };
 }
 
 function memoryStore(): StoreShape {
   const g = globalThis as typeof globalThis & {
     [GLOBAL_KEY]?: StoreShape;
   };
-  if (!g[GLOBAL_KEY]) g[GLOBAL_KEY] = emptyStore();
+  if (!g[GLOBAL_KEY] || g[GLOBAL_KEY]!.version !== STORE_VERSION) {
+    g[GLOBAL_KEY] = emptyStore();
+  }
   return g[GLOBAL_KEY]!;
 }
 
@@ -55,12 +65,29 @@ function readStore(): StoreShape {
     const file = storePath();
     if (!existsSync(file)) return mem;
     const parsed = JSON.parse(readFileSync(file, "utf8")) as StoreShape;
-    if (!parsed?.predictions || !Array.isArray(parsed.predictions)) return mem;
+    // Reset any pre-v2 history — those rows inflated win-rate with post-close picks.
+    if (!parsed || parsed.version !== STORE_VERSION) {
+      writeStore(emptyStore());
+      return memoryStore();
+    }
+    if (!parsed.predictions || !Array.isArray(parsed.predictions)) return mem;
     mem.predictions = parsed.predictions;
     mem.updatedAt = parsed.updatedAt ?? mem.updatedAt;
     return mem;
   } catch {
     return mem;
+  }
+}
+
+/** Wipe on-disk + in-memory history (used after model policy changes). */
+export function resetPredictionHistory(): void {
+  const empty = emptyStore();
+  writeStore(empty);
+  try {
+    const file = storePath();
+    if (existsSync(file)) writeFileSync(file, JSON.stringify(empty, null, 2), "utf8");
+  } catch {
+    // ignore
   }
 }
 
@@ -90,6 +117,8 @@ export function recordOpenPredictions(markets: Market[], now = new Date()): numb
   for (const market of markets) {
     if (market.closed || !market.active) continue;
     if (!market.selectedOutcome) continue;
+    // Do not record 98%+ locks — they are not tradable picks.
+    if (isOneSidedLock(market)) continue;
     const id = predictionId(market);
     const existing = byId.get(id);
     if (existing?.status === "resolved") continue;

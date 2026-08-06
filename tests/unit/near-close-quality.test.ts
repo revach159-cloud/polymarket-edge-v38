@@ -43,6 +43,12 @@ describe("computeEdge win-probability lock", () => {
     expect(edge.side).toBe("no");
     expect(edge.win_probability).toBeGreaterThanOrEqual(0.82);
   });
+
+  it("does not favorite-lock extreme 98%+ markets", () => {
+    const edge = computeEdge(0.55, 0.99);
+    // Falls through to fair-vs-market; quality gate will reject anyway.
+    expect(edge.win_probability).toBeLessThan(0.99);
+  });
 });
 
 describe("quality gate + daily target", () => {
@@ -72,6 +78,45 @@ describe("quality gate + daily target", () => {
       liquidity: 5_000,
     });
     expect(isQualityPrediction(m, now)).toBe(false);
+  });
+
+  it("rejects 98-100% one-sided locks with no payout", () => {
+    const lockedYes = market({
+      id: "lock-yes",
+      question: "temp",
+      endDate: new Date(now.getTime() + 90 * 60_000).toISOString(),
+      marketProbability: 0.99,
+      selectedOutcome: "YES",
+      qualityScore: 90,
+      liquidity: 10_000,
+      volume: 5_000,
+    });
+    const lockedNo = market({
+      id: "lock-no",
+      question: "temp-no",
+      endDate: new Date(now.getTime() + 90 * 60_000).toISOString(),
+      marketProbability: 0.01,
+      selectedOutcome: "NO",
+      qualityScore: 90,
+      liquidity: 10_000,
+      volume: 5_000,
+    });
+    expect(isQualityPrediction(lockedYes, now)).toBe(false);
+    expect(isQualityPrediction(lockedNo, now)).toBe(false);
+  });
+
+  it("keeps tradable favorites under the 97% cap", () => {
+    const m = market({
+      id: "tradeable",
+      question: "tradeable",
+      endDate: new Date(now.getTime() + 90 * 60_000).toISOString(),
+      marketProbability: 0.86,
+      selectedOutcome: "YES",
+      qualityScore: 70,
+      liquidity: 2_000,
+      volume: 1_000,
+    });
+    expect(isQualityPrediction(m, now)).toBe(true);
   });
 
   it("orders near-close first and can exceed 250 when available", () => {
@@ -134,7 +179,5 @@ describe("win rate stats display", () => {
     expect(stats.winRateLabel).toBe("70%");
     expect(stats.winRateWilson).toBeGreaterThan(0);
     expect(stats.winRateWilson).toBeLessThanOrEqual(70);
-    // צדקנו מתוך === נסגרו
-    expect(stats.resolvedTotal).toBe(stats.closed);
   });
 });

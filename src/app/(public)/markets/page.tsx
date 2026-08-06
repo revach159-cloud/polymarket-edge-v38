@@ -65,7 +65,9 @@ export default async function MarketsPage({
   ]);
 
   const predictedSides = recordedPredictionSides();
-  const closedSummary = summarizeClosedMarkets(closedMarkets.data, predictedSides);
+  const closedSummary = summarizeClosedMarkets(closedMarkets.data, predictedSides, {
+    fallbackToLivePick: false,
+  });
   const stats = computeMarketStats(
     activeForStats?.data ?? result.data,
     closedMarkets.data,
@@ -205,22 +207,28 @@ export default async function MarketsPage({
                 נסגרו {closedSummary.closed}
               </span>
               {" · "}
-              <span className="font-semibold tabular-nums">
-                <span className="stat-chip-value-glow">
-                  צדקנו {closedSummary.correct}
+              {closedSummary.evaluable > 0 ? (
+                <>
+                  <span className="font-semibold tabular-nums">
+                    <span className="stat-chip-value-glow">
+                      צדקנו {closedSummary.correct}
+                    </span>
+                    <span className="text-foreground">
+                      {" "}
+                      מתוך {closedSummary.evaluable} מוכרעים
+                    </span>
+                  </span>
+                  {" · "}
+                  <span className="font-semibold text-foreground tabular-nums">
+                    אחוז הצלחה{" "}
+                    {`${Math.round((closedSummary.correct / closedSummary.evaluable) * 100)}%`}
+                  </span>
+                </>
+              ) : (
+                <span className="font-semibold text-foreground">
+                  אין מדגם אמיתי עדיין
                 </span>
-                <span className="text-foreground">
-                  {" "}
-                  מתוך {closedSummary.closed}
-                </span>
-              </span>
-              {" · "}
-              <span className="font-semibold text-foreground tabular-nums">
-                אחוז הצלחה{" "}
-                {closedSummary.closed > 0
-                  ? `${Math.round((closedSummary.correct / closedSummary.closed) * 100)}%`
-                  : "—"}
-              </span>
+              )}
               {" · "}
               עמוד {safeClosedPage} מתוך {totalClosedPages}
             </p>
