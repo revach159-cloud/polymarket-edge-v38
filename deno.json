@@ -1,0 +1,11 @@
+{
+  "deploy": {
+    "install": "true",
+    "build": "true",
+    "runtime": {
+      "type": "static",
+      "cwd": "./public",
+      "spa": true
+    }
+  }
+}
