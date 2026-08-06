@@ -1,5 +1,6 @@
-import { getTimeBucket } from "@/lib/predictions/time-buckets";
 import { wilsonLowerBound } from "@/lib/analytics/stats";
+import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
+import { getTimeBucket } from "@/lib/predictions/time-buckets";
 import type { Market } from "@/types";
 
 export type MarketStatsSummary = {
@@ -11,6 +12,7 @@ export type MarketStatsSummary = {
   scanned: number;
   closed: number;
   correct: number | null;
+  /** Closed predictions with a decisive yes/no grade (matches closed table). */
   resolvedTotal: number;
   winRatePercent: number | null;
   winRateWilson: number | null;
@@ -33,10 +35,14 @@ function formatWinRate(correct: number, total: number): {
   };
 }
 
+/**
+ * Aggregate strip stats. Win-rate / צדקנו always come from the same closed
+ * market list shown below (optional recorded sides avoid post-close re-picks).
+ */
 export function computeMarketStats(
   activeMarkets: Market[],
   closedMarkets: Market[],
-  resolvedPredictions: Array<{ correct: boolean }> = [],
+  predictedSides: ReadonlyMap<string, "YES" | "NO"> | null = null,
   now = new Date(),
 ): MarketStatsSummary {
   const within2h = activeMarkets.filter((m) => {
@@ -57,10 +63,12 @@ export function computeMarketStats(
     );
   }).length;
 
-  const total = resolvedPredictions.length;
-  const correctCount = total
-    ? resolvedPredictions.filter((prediction) => prediction.correct).length
-    : 0;
+  const closedSummary = summarizeClosedMarkets(closedMarkets, predictedSides, {
+    // Live fallback keeps strip ↔ closed table identical; recorded sides win.
+    fallbackToLivePick: true,
+  });
+  const total = closedSummary.evaluable;
+  const correctCount = closedSummary.correct;
 
   if (total === 0) {
     return {
@@ -70,7 +78,7 @@ export function computeMarketStats(
       within5h,
       within24h,
       scanned: activeMarkets.length + closedMarkets.length,
-      closed: closedMarkets.length,
+      closed: closedSummary.closed,
       correct: null,
       resolvedTotal: 0,
       winRatePercent: null,
@@ -93,7 +101,7 @@ export function computeMarketStats(
     within5h,
     within24h,
     scanned: activeMarkets.length + closedMarkets.length,
-    closed: closedMarkets.length,
+    closed: closedSummary.closed,
     correct: correctCount,
     resolvedTotal: total,
     winRatePercent,

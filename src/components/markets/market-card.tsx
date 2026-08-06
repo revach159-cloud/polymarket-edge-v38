@@ -216,8 +216,8 @@ export function MarketsStatsStrip({
 
   const items = [
     { label: "פועלים", value: formatNumber(active) },
-    { label: "עד שעתיים", value: formatNumber(within2h), highlight: within2h > 0 },
-    { label: "עד 5 שעות", value: formatNumber(within5h), highlight: within5h > 0 },
+    { label: "עד שעתיים", value: formatNumber(within2h) },
+    { label: "עד 5 שעות", value: formatNumber(within5h) },
     { label: "עד 24 שעות", value: formatNumber(within24h) },
     { label: "נסרקו", value: formatNumber(scanned) },
     { label: "נסגרו", value: formatNumber(closed) },
@@ -229,14 +229,7 @@ export function MarketsStatsStrip({
         {items.map((item) => (
           <div key={item.label} className="stat-chip">
             <div className="stat-chip-label">{item.label}</div>
-            <div
-              className={cn(
-                "stat-chip-value",
-                item.highlight && "text-primary",
-              )}
-            >
-              {item.value}
-            </div>
+            <div className="stat-chip-value">{item.value}</div>
           </div>
         ))}
       </div>
@@ -244,10 +237,12 @@ export function MarketsStatsStrip({
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="stat-chip">
           <div className="stat-chip-label">צדקנו</div>
-          <div className={cn("stat-chip-value", hasSample && "text-primary")}>
+          <div className="stat-chip-value">
             {hasSample ? (
               <>
-                <span className="ltr-isolate">{formatNumber(correct)}</span>
+                <span className="stat-chip-value-glow ltr-isolate">
+                  {formatNumber(correct)}
+                </span>
                 <span className="mx-1 text-sm font-medium text-muted-foreground">
                   מתוך
                 </span>
@@ -265,9 +260,9 @@ export function MarketsStatsStrip({
           <div className="stat-chip-value flex flex-wrap items-baseline gap-2">
             {hasSample && winRatePercent != null ? (
               <>
-                <span className="text-primary ltr-isolate">{winRateLabel}</span>
+                <span className="ltr-isolate text-foreground">{winRateLabel}</span>
                 <span className="text-sm font-medium text-muted-foreground">
-                  מדגם {formatNumber(sample)}
+                  {formatNumber(correct ?? 0)}/{formatNumber(sample)}
                   {winRateWilson != null ? (
                     <>
                       {" · "}

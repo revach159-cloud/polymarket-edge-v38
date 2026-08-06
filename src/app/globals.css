@@ -203,6 +203,14 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Glowing green only for צדקנו — keep other stats neutral. */
+.stat-chip-value-glow {
+  color: var(--success);
+  text-shadow:
+    0 0 10px color-mix(in oklab, var(--success) 70%, transparent),
+    0 0 22px color-mix(in oklab, var(--success) 40%, transparent);
+}
+
 .market-card-shell {
   display: flex;
   height: 100%;

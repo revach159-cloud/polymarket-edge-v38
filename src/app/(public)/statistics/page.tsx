@@ -2,21 +2,26 @@ import { DataFreshnessBadge } from "@/components/layout/data-freshness-badge";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { MarketsStatsStrip } from "@/components/markets/market-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  getMarketStats,
-  getMarkets,
-  getResolvedPredictions,
-} from "@/services/markets";
+import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
+import { formatShortDate, cn } from "@/lib/utils";
+import { getMarketStats, getMarkets } from "@/services/markets";
 
 export const metadata = { title: "סטטיסטיקה" };
 export const dynamic = "force-dynamic";
 
 export default async function StatisticsPage() {
-  const [stats, markets, resolvedPredictions] = await Promise.all([
+  const [stats, markets, closedMarkets] = await Promise.all([
     getMarketStats(),
     getMarkets({ status: "active", sort: "volume" }),
-    getResolvedPredictions(),
+    getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
   ]);
+
+  const closedSummary = summarizeClosedMarkets(
+    closedMarkets.data,
+    recordedPredictionSides(),
+  );
+  const resolvedRows = closedSummary.verdicts.filter((v) => v.correct !== null);
 
   const sampleSize = markets.data.length;
   const categories = markets.data.reduce<Record<string, number>>((acc, m) => {
@@ -47,13 +52,13 @@ export default async function StatisticsPage() {
         <div>
           <h2 className="font-display text-xl font-bold">תוצאות מוכרעות</h2>
           <p className="text-sm text-muted-foreground">
-            אחוז הצלחה מוצג רק לפרדיקשנים שהוכרעו בפועל, עם גודל המדגם ו־Wilson.
+            אותם סגורים כמו במודל השווקים · צדקנו ואחוז הצלחה מסונכרנים לאותו מדגם.
           </p>
         </div>
-        {resolvedPredictions.length === 0 ? (
+        {resolvedRows.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-            עדיין אין פרדיקשנים מוכרעים במדגם. שיעור הצלחה יוצג רק לאחר שתהיינה
-            תוצאות אמיתיות.
+            עדיין אין פרדיקשנים מוכרעים במדגם. שיעור הצלחה יוצג רק לאחר שפרדיקשנים
+            שנרשמו בזמן פעילות יסגרו ויוכרעו.
           </div>
         ) : (
           <div className="data-table overflow-x-auto">
@@ -68,20 +73,27 @@ export default async function StatisticsPage() {
                 </tr>
               </thead>
               <tbody>
-                {resolvedPredictions.map((prediction) => (
-                  <tr key={prediction.id}>
-                    <td className="max-w-[28rem] truncate">{prediction.marketQuestion}</td>
-                    <td className="ltr-isolate">{prediction.side}</td>
-                    <td>הוכרע</td>
-                    <td className={prediction.correct ? "text-primary" : "text-muted-foreground"}>
-                      {prediction.correct ? "כן" : "לא"}
+                {resolvedRows.map((verdict) => (
+                  <tr key={verdict.market.id}>
+                    <td className="max-w-[28rem] truncate">
+                      <span className="ltr-isolate" dir="ltr">
+                        {verdict.market.question}
+                      </span>
+                    </td>
+                    <td className="ltr-isolate">{verdict.predictedSide ?? "—"}</td>
+                    <td className="ltr-isolate">{verdict.resolution.label}</td>
+                    <td
+                      className={cn(
+                        "font-semibold",
+                        verdict.correct ? "text-success" : "text-destructive",
+                      )}
+                    >
+                      {verdict.correct ? "כן" : "לא"}
                     </td>
                     <td className="ltr-isolate">
-                      {prediction.resolvedAt
-                        ? new Intl.DateTimeFormat("he-IL", { dateStyle: "medium" }).format(
-                            new Date(prediction.resolvedAt),
-                          )
-                        : "—"}
+                      {formatShortDate(
+                        verdict.market.endDate ?? verdict.market.updatedAt,
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -123,7 +135,7 @@ export default async function StatisticsPage() {
 
       <p className="text-sm text-muted-foreground">
         אחוזי הצלחה יוצגו רק אחרי צבירת פרדיקשנים שהוכרעו בפועל, תמיד עם גודל
-        מדגם מפורש.
+        מדגם מפורש ומסונכרן לרשימת הסגורים.
       </p>
 
       <DisclaimerBanner compact />

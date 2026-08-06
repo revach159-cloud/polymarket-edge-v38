@@ -134,27 +134,25 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
 
     const id = predictionId(market);
     const existing = byId.get(id);
-    const side = market.selectedOutcome ?? existing?.side;
-    if (!side) continue;
+    // Only resolve picks that were recorded while the market was still open.
+    // Creating a row from today's post-close favorite makes win-rate ~100%.
+    if (!existing?.side) continue;
+    const side = existing.side;
 
     const correct = side === resolution.side;
-    if (existing?.status === "resolved" && existing.correct === correct) continue;
+    if (existing.status === "resolved" && existing.correct === correct) continue;
 
     byId.set(id, {
-      id,
-      marketId: market.id,
-      slug: market.slug,
-      marketQuestion: market.question,
+      ...existing,
       side,
-      marketProbability: market.marketProbability ?? existing?.marketProbability ?? null,
-      modelProbability: market.modelProbability ?? existing?.modelProbability ?? null,
-      edgeScore: market.edgeScore ?? existing?.edgeScore ?? null,
-      qualityScore: market.qualityScore ?? existing?.qualityScore ?? null,
+      marketProbability: market.marketProbability ?? existing.marketProbability,
+      modelProbability: market.modelProbability ?? existing.modelProbability,
+      edgeScore: market.edgeScore ?? existing.edgeScore,
+      qualityScore: market.qualityScore ?? existing.qualityScore,
       walletConsensusScore:
-        market.walletConsensusScore ?? existing?.walletConsensusScore ?? null,
-      recordedAt: existing?.recordedAt ?? now.toISOString(),
+        market.walletConsensusScore ?? existing.walletConsensusScore,
       status: "resolved",
-      resolvedAt: now.toISOString(),
+      resolvedAt: existing.resolvedAt ?? now.toISOString(),
       resolvedOutcome: resolution.label,
       correct,
       source: "live-sync",
@@ -215,6 +213,18 @@ export function historyWinStats(limit = 1_000): {
     winRateLabel: `${Math.round((correct / predictions.length) * 100)}%`,
     predictions,
   };
+}
+
+/** Map marketId → recorded side (open or resolved) for closed-table scoring. */
+export function recordedPredictionSides(
+  limit = 5_000,
+): Map<string, "YES" | "NO"> {
+  const rows = listHistoryPredictions({ status: "all", limit });
+  const map = new Map<string, "YES" | "NO">();
+  for (const row of rows) {
+    if (!map.has(row.marketId)) map.set(row.marketId, row.side);
+  }
+  return map;
 }
 
 /** Build resolved rows from live closed markets when history is still empty. */

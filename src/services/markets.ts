@@ -12,9 +12,9 @@ import { computeMarketStats } from "@/lib/markets/stats";
 import { applySmartSearch, computeSmartScore } from "@/lib/markets/smart-rank";
 import { selectDailyPredictions } from "@/lib/markets/quality-gate";
 import {
-  historyWinStats,
   liveResolvedFromClosed,
   listHistoryPredictions,
+  recordedPredictionSides,
   syncPredictionHistory,
   type HistoryPrediction,
 } from "@/lib/history/prediction-store";
@@ -384,22 +384,14 @@ export async function getResolvedPredictions(limit = 25): Promise<ResolvedPredic
 }
 
 export async function getMarketStats() {
-  const [activeResult, closedResult, resolvedPredictions] = await Promise.all([
+  const [activeResult, closedResult] = await Promise.all([
     getMarkets({ status: "active", sort: "smart" }),
     getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
-    getResolvedPredictions(1_000),
   ]);
 
+  // getMarkets already syncs open→closed history; score from the closed list.
   syncPredictionHistory(activeResult.data, closedResult.data);
-  const history = historyWinStats(1_000);
-  const resolved =
-    resolvedPredictions.length >= history.total
-      ? resolvedPredictions
-      : history.predictions.map(toResolved);
+  const sides = recordedPredictionSides();
 
-  return computeMarketStats(
-    activeResult.data,
-    closedResult.data,
-    resolved,
-  );
+  return computeMarketStats(activeResult.data, closedResult.data, sides);
 }

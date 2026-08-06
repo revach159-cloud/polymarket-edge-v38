@@ -102,18 +102,34 @@ describe("quality gate + daily target", () => {
 
 describe("win rate stats display", () => {
   it("shows clean empty state without fake zeros", () => {
-    const stats = computeMarketStats([], [], []);
+    const stats = computeMarketStats([], [], null);
     expect(stats.correct).toBeNull();
     expect(stats.winRatePercent).toBeNull();
     expect(stats.winRateLabel).toBe("אין מדגם");
     expect(stats.within5h).toBe(0);
   });
 
-  it("reports percent + wilson on resolved sample", () => {
-    const resolved = Array.from({ length: 20 }, (_, i) => ({ correct: i < 14 }));
-    const stats = computeMarketStats([], [], resolved);
+  it("reports percent + wilson from closed markets + recorded sides", () => {
+    const closed = Array.from({ length: 20 }, (_, i) => ({
+      id: `m${i}`,
+      slug: `m${i}`,
+      question: `Q ${i}`,
+      volume: 0,
+      liquidity: 0,
+      active: false,
+      closed: true,
+      outcomes: [
+        { id: "y", name: "Yes", price: 0.99 },
+        { id: "n", name: "No", price: 0.01 },
+      ],
+    }));
+    const sides = new Map(
+      closed.map((m, i) => [m.id, i < 14 ? ("YES" as const) : ("NO" as const)]),
+    );
+    const stats = computeMarketStats([], closed, sides);
     expect(stats.correct).toBe(14);
     expect(stats.resolvedTotal).toBe(20);
+    expect(stats.closed).toBe(20);
     expect(stats.winRatePercent).toBe(70);
     expect(stats.winRateLabel).toBe("70%");
     expect(stats.winRateWilson).toBeGreaterThan(0);

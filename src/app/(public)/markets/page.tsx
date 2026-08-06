@@ -6,10 +6,11 @@ import { MarketFilters } from "@/components/markets/market-filters";
 import { EmptyState } from "@/components/shared/empty-state";
 import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
-import { inferMarketResolution } from "@/lib/markets/resolution";
+import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
 import { computeMarketStats } from "@/lib/markets/stats";
 import { formatShortDate, cn } from "@/lib/utils";
-import { getMarkets, getResolvedPredictions } from "@/services/markets";
+import { getMarkets } from "@/services/markets";
 import type { MarketFilters as Filters } from "@/types";
 
 export const metadata = { title: "מודל השווקים" };
@@ -31,19 +32,21 @@ export default async function MarketsPage({
     horizon: (typeof sp.horizon === "string" ? sp.horizon : "all") as Filters["horizon"],
   };
 
-  const [result, closedMarkets, activeForStats, resolvedPredictions] = await Promise.all([
+  const [result, closedMarkets, activeForStats] = await Promise.all([
     getMarkets(filters),
     getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
     filters.status === "active" && !filters.q && !filters.category && filters.horizon === "all"
       ? Promise.resolve(null)
       : getMarkets({ status: "active", sort: "smart" }),
-    getResolvedPredictions(1_000),
   ]);
 
+  // Same closed list + recorded sides drive the strip, win-rate, and table.
+  const predictedSides = recordedPredictionSides();
+  const closedSummary = summarizeClosedMarkets(closedMarkets.data, predictedSides);
   const stats = computeMarketStats(
     activeForStats?.data ?? (filters.status === "active" ? result.data : []),
     closedMarkets.data,
-    resolvedPredictions,
+    predictedSides,
   );
 
   const showingClosed = filters.status === "closed";
@@ -130,9 +133,10 @@ export default async function MarketsPage({
       <section className="space-y-3">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן להיסטוריה</h2>
+            <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן לסטטיסטיקה</h2>
             <p className="text-sm text-muted-foreground">
-              כל הכרעה ברורה נשמרת לסטטיסטיקה. אחוז הצלחה מוצג רק על מדגם מוכרע.
+              צדקנו ואחוז הצלחה נספרים מאותה רשימת סגורים — בחירה שנרשמה לפני הסגירה
+              מקבלת עדיפות.
             </p>
           </div>
           <Link
@@ -142,7 +146,7 @@ export default async function MarketsPage({
             הצג את כל הסגורים
           </Link>
         </div>
-        {closedMarkets.data.length === 0 ? (
+        {closedSummary.verdicts.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
             אין שווקים סגורים במשיכה הנוכחית.
           </div>
@@ -159,8 +163,8 @@ export default async function MarketsPage({
                 </tr>
               </thead>
               <tbody>
-                {closedMarkets.data.slice(0, 15).map((market) => {
-                  const resolution = inferMarketResolution(market);
+                {closedSummary.verdicts.slice(0, 15).map((verdict) => {
+                  const { market, predictedSide, resolution, correct } = verdict;
                   return (
                     <tr key={market.id}>
                       <td className="max-w-[28rem]">
@@ -173,7 +177,7 @@ export default async function MarketsPage({
                           </span>
                         </Link>
                       </td>
-                      <td className="ltr-isolate">{market.selectedOutcome ?? "—"}</td>
+                      <td className="ltr-isolate">{predictedSide ?? "—"}</td>
                       <td>
                         <span className="ltr-isolate" dir="ltr">
                           {resolution.label}
@@ -183,16 +187,12 @@ export default async function MarketsPage({
                         <span
                           className={cn(
                             "font-semibold",
-                            resolution.correct === true && "text-success",
-                            resolution.correct === false && "text-destructive",
-                            resolution.correct == null && "text-muted-foreground",
+                            correct === true && "text-success",
+                            correct === false && "text-destructive",
+                            correct == null && "text-muted-foreground",
                           )}
                         >
-                          {resolution.correct === true
-                            ? "כן"
-                            : resolution.correct === false
-                              ? "לא"
-                              : "—"}
+                          {correct === true ? "כן" : correct === false ? "לא" : "—"}
                         </span>
                       </td>
                       <td className="ltr-isolate whitespace-nowrap">

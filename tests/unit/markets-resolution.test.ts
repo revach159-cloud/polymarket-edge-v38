@@ -55,26 +55,52 @@ describe("inferMarketResolution", () => {
 });
 
 describe("computeMarketStats", () => {
-  it("summarizes active and closed markets", () => {
+  it("summarizes active and closed markets from the same closed list", () => {
     const now = new Date("2026-08-05T12:00:00.000Z");
+    const closed = [
+      market({
+        id: "c1",
+        closed: true,
+        active: false,
+        outcomes: [
+          { id: "y", name: "Yes", price: 0.99 },
+          { id: "n", name: "No", price: 0.01 },
+        ],
+      }),
+      market({
+        id: "c2",
+        closed: true,
+        active: false,
+        outcomes: [
+          { id: "y", name: "Yes", price: 0.99 },
+          { id: "n", name: "No", price: 0.01 },
+        ],
+      }),
+    ];
+    const sides = new Map<string, "YES" | "NO">([
+      ["c1", "YES"],
+      ["c2", "NO"],
+    ]);
     const stats = computeMarketStats(
       [
         market({
           id: "a",
           active: true,
+          closed: false,
           endDate: new Date(now.getTime() + 60 * 60_000).toISOString(),
           volume: 10,
           liquidity: 5,
         }),
       ],
-      [market({ id: "c", closed: true, active: false })],
-      [{ correct: true }, { correct: false }],
+      closed,
+      sides,
       now,
     );
     expect(stats.active).toBe(1);
     expect(stats.within2h).toBe(1);
-    expect(stats.closed).toBe(1);
+    expect(stats.closed).toBe(2);
     expect(stats.correct).toBe(1);
+    expect(stats.resolvedTotal).toBe(2);
     expect(stats.winRateLabel).toContain("50%");
   });
 });
