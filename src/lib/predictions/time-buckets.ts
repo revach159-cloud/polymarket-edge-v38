@@ -44,7 +44,7 @@ export function isWithinDisplayHorizon(closeTime: Date | string, now: Date = new
 export function formatCountdown(closeTime: Date | string, now: Date = new Date()): string {
   const close = typeof closeTime === "string" ? new Date(closeTime) : closeTime;
   const ms = close.getTime() - now.getTime();
-  if (ms <= 0) return "נסגר";
+  if (Number.isNaN(ms) || ms <= 0) return "נסגר";
   const totalMinutes = Math.floor(ms / 60_000);
   const days = Math.floor(totalMinutes / (60 * 24));
   const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
@@ -52,6 +52,21 @@ export function formatCountdown(closeTime: Date | string, now: Date = new Date()
   if (days > 0) return `${days}י ${hours}ש`;
   if (hours > 0) return `${hours}ש ${minutes}ד`;
   return `${minutes}ד`;
+}
+
+/** Relative + clock time, e.g. "נסגר בעוד 1ש 20ד · 14:35". */
+export function formatCloseLabel(closeTime: Date | string, now: Date = new Date()): string {
+  const close = typeof closeTime === "string" ? new Date(closeTime) : closeTime;
+  if (Number.isNaN(close.getTime())) return "זמן סגירה לא ידוע";
+  const clock = new Intl.DateTimeFormat("he-IL", {
+    day: "2-digit",
+    month: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(close);
+  const ms = close.getTime() - now.getTime();
+  if (ms <= 0) return `נסגר · ${clock}`;
+  return `נסגר בעוד ${formatCountdown(close, now)} · ${clock}`;
 }
 
 export function hoursUntil(closeTime: Date | string | null | undefined, now = new Date()): number | null {

@@ -134,8 +134,7 @@ export function MarketFilters({ resultCount }: { resultCount?: number }) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="active">פעילים</SelectItem>
-              <SelectItem value="closed">סגורים (סטטיסטיקה)</SelectItem>
-              <SelectItem value="all">הכל</SelectItem>
+              <SelectItem value="closed">סגורים (טבלה למטה)</SelectItem>
             </SelectContent>
           </Select>
         </div>

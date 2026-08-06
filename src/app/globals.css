@@ -286,12 +286,21 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border-radius: 9999px;
-  background: color-mix(in oklab, var(--warning) 18%, transparent);
-  padding: 0.2rem 0.65rem;
-  font-size: 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in oklab, #f59e0b 35%, transparent);
+  background: color-mix(in oklab, #f59e0b 14%, #121820);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--warning);
+  color: #fbbf24;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-pill-muted {
+  border-color: color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--background-muted) 80%, transparent);
+  color: var(--muted-foreground);
+  font-weight: 600;
 }
 
 .score-pill {
@@ -307,6 +316,12 @@ body {
 .score-pill-edge {
   background: color-mix(in oklab, var(--primary) 16%, var(--background-muted));
   color: var(--primary);
+}
+
+/* Neutral chip — keep neon green reserved for צדקנו only. */
+.score-pill-neutral {
+  background: color-mix(in oklab, #38bdf8 12%, var(--background-muted));
+  color: #7dd3fc;
 }
 
 .score-pill-wallet {

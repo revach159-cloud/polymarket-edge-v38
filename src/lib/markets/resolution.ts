@@ -1,3 +1,4 @@
+import { formatOutcomeLabel, normalizeOutcomeSide } from "@/lib/markets/outcome-label";
 import type { Market } from "@/types";
 
 export type MarketResolution = {
@@ -35,9 +36,7 @@ export function inferMarketResolution(market: Market): MarketResolution {
     };
   }
 
-  const lower = winner.name.toLowerCase();
-  const side: "YES" | "NO" | null =
-    lower === "yes" ? "YES" : lower === "no" ? "NO" : null;
+  const side = normalizeOutcomeSide(winner.name);
 
   const correct =
     market.selectedOutcome && side
@@ -45,7 +44,7 @@ export function inferMarketResolution(market: Market): MarketResolution {
       : null;
 
   return {
-    label: winner.name,
+    label: formatOutcomeLabel(winner.name),
     outcomeName: winner.name,
     side,
     correct,

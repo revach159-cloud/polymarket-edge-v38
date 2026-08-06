@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { FireIcon } from "@/components/gold/fire-icon";
-import { formatCountdown } from "@/lib/predictions/time-buckets";
+import { formatOutcomeLabel } from "@/lib/markets/outcome-label";
+import { polymarketMarketUrl } from "@/lib/polymarket/urls";
+import { formatCloseLabel } from "@/lib/predictions/time-buckets";
 import { formatNumber, formatPercent, formatUsd, cn } from "@/lib/utils";
 import type { Market } from "@/types";
-
-function polymarketUrl(slug: string) {
-  return `https://polymarket.com/event/${encodeURIComponent(slug)}`;
-}
 
 const accentByCategory: Record<string, string> = {
   sports: "#7dff6a",
@@ -35,17 +33,12 @@ export function MarketCard({
     market.outcomes[0]?.price;
   const modelProb = market.modelProbability ?? marketProb;
   const outcome = market.selectedOutcome;
-  const selectionLabel =
-    outcome === "YES"
-      ? market.outcomes.find((o) => o.name.toLowerCase() === "yes")?.name ?? "YES"
-      : outcome === "NO"
-        ? market.outcomes.find((o) => o.name.toLowerCase() === "no")?.name ?? "NO"
-        : null;
+  const selectionLabel = outcome ? formatOutcomeLabel(outcome) : null;
   const category = market.category ?? "כללי";
   const accent =
     accentByCategory[category.toLowerCase()] ??
     accentByCategory[category] ??
-    (isGold ? "#ffe173" : "#7dff6a");
+    (isGold ? "#ffe173" : "#38bdf8");
   const edgeLabel =
     market.edgeScore != null ? formatPercent(Math.abs(market.edgeScore)) : null;
   const winProb =
@@ -54,6 +47,11 @@ export function MarketCard({
         ? marketProb
         : 1 - marketProb
       : null;
+  const externalUrl = polymarketMarketUrl({
+    slug: market.slug,
+    eventSlug: market.eventSlug,
+  });
+  const closeLabel = market.endDate ? formatCloseLabel(market.endDate) : null;
 
   return (
     <article
@@ -73,12 +71,15 @@ export function MarketCard({
               ציון {market.qualityScore != null ? Math.round(market.qualityScore) : "—"}
             </span>
             {winProb != null ? (
-              <span className="score-pill score-pill-edge" title="סבירות שוק לצד שנבחר">
+              <span
+                className="score-pill score-pill-neutral"
+                title="סבירות שוק לצד שנבחר"
+              >
                 {formatPercent(winProb)} ניצחון
               </span>
             ) : null}
             {edgeLabel ? (
-              <span className="score-pill score-pill-edge" title="פער מודל מול שוק">
+              <span className="score-pill score-pill-neutral" title="פער מודל מול שוק">
                 Edge {edgeLabel}
               </span>
             ) : null}
@@ -118,14 +119,20 @@ export function MarketCard({
               </span>
             </Link>
           </h3>
-          {market.endDate ? (
-            <span className="countdown-pill">{formatCountdown(market.endDate)}</span>
-          ) : null}
+          {closeLabel ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="countdown-pill" title={market.endDate ?? undefined}>
+                {closeLabel}
+              </span>
+            </div>
+          ) : (
+            <span className="countdown-pill countdown-pill-muted">זמן סגירה לא זמין</span>
+          )}
           {selectionLabel ? (
             <p
               className={cn(
                 "text-lg font-bold leading-tight md:text-xl",
-                isGold ? "text-gold" : "text-primary",
+                isGold ? "text-gold" : "text-foreground",
               )}
             >
               <span className="ltr-isolate" dir="ltr">
@@ -164,7 +171,7 @@ export function MarketCard({
             פרטים
           </Link>
           <a
-            href={polymarketUrl(market.slug)}
+            href={externalUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={cn("cta-full text-sm", isGold && "cta-full-gold")}

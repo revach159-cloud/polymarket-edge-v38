@@ -24,6 +24,8 @@ type GammaMarket = {
   clobTokenIds?: string;
   updatedAt?: string;
   featured?: boolean;
+  events?: Array<{ id?: string; slug?: string }>;
+  eventSlug?: string;
 };
 
 function parseJsonArray(value?: string): string[] {
@@ -71,10 +73,17 @@ export function mapGammaMarket(raw: GammaMarket): Market {
 
   const question = raw.question ?? "שוק ללא כותרת";
   const slug = raw.slug || slugify(question) || raw.id || "market";
+  const eventSlug =
+    raw.eventSlug ||
+    raw.events?.[0]?.slug ||
+    null;
+  const eventId = raw.events?.[0]?.id ?? null;
 
   return {
     id: String(raw.id ?? raw.conditionId ?? slug),
     slug,
+    eventSlug,
+    eventId,
     question,
     description: raw.description,
     category: raw.category,

@@ -11,6 +11,8 @@ export interface MarketOutcome {
 export interface Market {
   id: string;
   slug: string;
+  /** Parent Polymarket event slug — required for correct deep links. */
+  eventSlug?: string | null;
   question: string;
   description?: string;
   category?: string;

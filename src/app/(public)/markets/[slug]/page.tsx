@@ -4,8 +4,10 @@ import { FireIcon } from "@/components/gold/fire-icon";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { formatOutcomeLabel } from "@/lib/markets/outcome-label";
+import { polymarketMarketUrl } from "@/lib/polymarket/urls";
 import { getMarketBySlug } from "@/services/markets";
-import { formatCountdown } from "@/lib/predictions/time-buckets";
+import { formatCloseLabel } from "@/lib/predictions/time-buckets";
 import { formatNumber, formatPercent } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -20,16 +22,20 @@ export default async function MarketDetailPage({
   const market = result.data;
   if (!market) notFound();
 
-  const outcome = market.selectedOutcome ?? "YES";
+  const outcome = formatOutcomeLabel(market.selectedOutcome ?? "YES");
   const marketProb = market.marketProbability ?? market.outcomes[0]?.price ?? 0;
   const modelProb = market.modelProbability ?? marketProb;
+  const externalUrl = polymarketMarketUrl({
+    slug: market.slug,
+    eventSlug: market.eventSlug,
+  });
 
   return (
     <article className="space-y-6">
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
           <Badge>{market.category ?? "כללי"}</Badge>
-          <Badge variant="success">בחירה: {outcome}</Badge>
+          <Badge variant="outline">בחירה: {outcome}</Badge>
           {market.goldPick ? (
             <Badge variant="gold" className="inline-flex items-center gap-1">
               <FireIcon size="xs" />
@@ -46,7 +52,7 @@ export default async function MarketDetailPage({
       </div>
 
       <dl className="grid grid-cols-2 gap-3 rounded-xl border border-border bg-card p-4 text-sm md:grid-cols-4">
-        <Item label="סגירה" value={market.endDate ? formatCountdown(market.endDate) : "—"} />
+        <Item label="סגירה" value={market.endDate ? formatCloseLabel(market.endDate) : "—"} />
         <Item label="הסתברות שוק" value={formatPercent(marketProb)} />
         <Item label="הסתברות מודל" value={formatPercent(modelProb)} />
         <Item label="Edge" value={formatPercent(market.edgeScore ?? 0)} />
@@ -61,7 +67,7 @@ export default async function MarketDetailPage({
       <div className="flex flex-wrap gap-2">
         <Button asChild>
           <a
-            href={`https://polymarket.com/event/${market.slug}`}
+            href={externalUrl}
             target="_blank"
             rel="noopener noreferrer"
           >

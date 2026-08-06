@@ -52,6 +52,23 @@ describe("inferMarketResolution", () => {
     expect(resolution.label).toBe("טרם הוכרע");
     expect(resolution.correct).toBeNull();
   });
+
+  it("maps Over/Under winners without exposing Over/Under labels", () => {
+    const resolution = inferMarketResolution(
+      market({
+        closed: true,
+        selectedOutcome: "YES",
+        outcomes: [
+          { id: "o", name: "Over", price: 0.99 },
+          { id: "u", name: "Under", price: 0.01 },
+        ],
+      }),
+    );
+    expect(resolution.side).toBe("YES");
+    expect(resolution.correct).toBe(true);
+    expect(resolution.label).toBe("Yes");
+    expect(resolution.label.toLowerCase()).not.toContain("over");
+  });
 });
 
 describe("computeMarketStats", () => {

@@ -27,10 +27,14 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
   const now = new Date();
   let list = markets.filter((m) => {
     if (filters?.status === "closed") return m.closed || m.resolved;
-    if (filters?.status === "active") {
-      return Boolean(m.active && !m.closed && m.endDate && isWithinDisplayHorizon(m.endDate, now));
-    }
-    return m.closed || m.resolved || Boolean(m.endDate && isWithinDisplayHorizon(m.endDate, now));
+    // Active / default card feeds: never mix closed markets into the list.
+    return Boolean(
+      m.active &&
+        !m.closed &&
+        !m.resolved &&
+        m.endDate &&
+        isWithinDisplayHorizon(m.endDate, now),
+    );
   });
 
   if (filters?.q) {
@@ -41,7 +45,9 @@ function filterMarkets(markets: Market[], filters?: MarketFilters): Market[] {
       (m) => m.category?.toLowerCase() === filters.category!.toLowerCase(),
     );
   }
-  if (filters?.status === "active") list = list.filter((m) => m.active && !m.closed);
+  if (filters?.status === "active") {
+    list = list.filter((m) => m.active && !m.closed && !m.resolved);
+  }
   if (filters?.status === "closed") list = list.filter((m) => m.closed || m.resolved);
   if (filters?.goldOnly) list = list.filter((m) => m.goldPick);
   if (filters?.minQuality != null) {

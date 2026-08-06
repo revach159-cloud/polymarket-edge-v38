@@ -8,6 +8,7 @@ import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
 import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
+import { formatOutcomeLabel } from "@/lib/markets/outcome-label";
 import { computeMarketStats } from "@/lib/markets/stats";
 import { formatShortDate, cn } from "@/lib/utils";
 import { getMarkets } from "@/services/markets";
@@ -16,7 +17,20 @@ import type { MarketFilters as Filters } from "@/types";
 export const metadata = { title: "מודל השווקים" };
 export const dynamic = "force-dynamic";
 
+const CLOSED_PAGE_SIZE = 25;
+
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+function pageHref(base: Record<string, string | undefined>, page: number) {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(base)) {
+    if (value) params.set(key, value);
+  }
+  if (page > 1) params.set("closedPage", String(page));
+  else params.delete("closedPage");
+  const qs = params.toString();
+  return qs ? `/markets?${qs}#closed-stats` : "/markets#closed-stats";
+}
 
 export default async function MarketsPage({
   searchParams,
@@ -24,13 +38,23 @@ export default async function MarketsPage({
   searchParams: SearchParams;
 }) {
   const sp = await searchParams;
+  const requestedStatus = (
+    typeof sp.status === "string" ? sp.status : "active"
+  ) as Filters["status"];
+  // Closed predictions belong in the stats table only — never as the main card grid.
+  const showingClosedTab = requestedStatus === "closed";
   const filters: Filters = {
     q: typeof sp.q === "string" ? sp.q : undefined,
     sort: (typeof sp.sort === "string" ? sp.sort : "smart") as Filters["sort"],
-    status: (typeof sp.status === "string" ? sp.status : "active") as Filters["status"],
+    status: showingClosedTab ? "active" : requestedStatus,
     category: typeof sp.category === "string" ? sp.category : undefined,
     horizon: (typeof sp.horizon === "string" ? sp.horizon : "all") as Filters["horizon"],
   };
+
+  const closedPageRaw = typeof sp.closedPage === "string" ? Number(sp.closedPage) : 1;
+  const closedPage = Number.isFinite(closedPageRaw) && closedPageRaw > 0
+    ? Math.floor(closedPageRaw)
+    : 1;
 
   const [result, closedMarkets, activeForStats] = await Promise.all([
     getMarkets(filters),
@@ -40,16 +64,31 @@ export default async function MarketsPage({
       : getMarkets({ status: "active", sort: "smart" }),
   ]);
 
-  // Same closed list + recorded sides drive the strip, win-rate, and table.
   const predictedSides = recordedPredictionSides();
   const closedSummary = summarizeClosedMarkets(closedMarkets.data, predictedSides);
   const stats = computeMarketStats(
-    activeForStats?.data ?? (filters.status === "active" ? result.data : []),
+    activeForStats?.data ?? result.data,
     closedMarkets.data,
     predictedSides,
   );
 
-  const showingClosed = filters.status === "closed";
+  const totalClosedPages = Math.max(
+    1,
+    Math.ceil(closedSummary.verdicts.length / CLOSED_PAGE_SIZE),
+  );
+  const safeClosedPage = Math.min(closedPage, totalClosedPages);
+  const closedSlice = closedSummary.verdicts.slice(
+    (safeClosedPage - 1) * CLOSED_PAGE_SIZE,
+    safeClosedPage * CLOSED_PAGE_SIZE,
+  );
+
+  const pageQuery = {
+    status: showingClosedTab ? "closed" : filters.status,
+    sort: filters.sort,
+    q: filters.q,
+    category: filters.category,
+    horizon: filters.horizon === "all" ? undefined : filters.horizon,
+  };
 
   return (
     <div className="space-y-6">
@@ -77,7 +116,7 @@ export default async function MarketsPage({
           href="/markets?status=active&sort=smart"
           className={cn(
             "nav-pill",
-            (!showingClosed && filters.status !== "all") && "nav-pill-active",
+            !showingClosedTab && filters.horizon === "all" && "nav-pill-active",
           )}
         >
           פעילים
@@ -95,8 +134,8 @@ export default async function MarketsPage({
           עד 5 שעות
         </Link>
         <Link
-          href="/markets?status=closed&sort=endDate"
-          className={cn("nav-pill", showingClosed && "nav-pill-active")}
+          href="/markets?status=closed#closed-stats"
+          className={cn("nav-pill", showingClosedTab && "nav-pill-active")}
         >
           סגורים לסטטיסטיקה
         </Link>
@@ -105,45 +144,53 @@ export default async function MarketsPage({
         </Link>
       </div>
 
-      <Suspense fallback={<LoadingState rows={1} />}>
-        <MarketFilters resultCount={result.data.length} />
-      </Suspense>
+      {!showingClosedTab ? (
+        <>
+          <Suspense fallback={<LoadingState rows={1} />}>
+            <MarketFilters resultCount={result.data.length} />
+          </Suspense>
 
-      {result.data.length === 0 ? (
-        <EmptyState
-          title="לא נמצאו שווקים שמתאימים למסננים שבחרת."
-          description="נסו חיפוש חופשי (למשל crypto / ספורט) או איפוס מסננים."
-          action={
-            <Link
-              href="/markets"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
-            >
-              איפוס מסננים
-            </Link>
-          }
-        />
+          {result.data.length === 0 ? (
+            <EmptyState
+              title="לא נמצאו שווקים שמתאימים למסננים שבחרת."
+              description="נסו חיפוש חופשי (למשל crypto / ספורט) או איפוס מסננים."
+              action={
+                <Link
+                  href="/markets"
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
+                >
+                  איפוס מסננים
+                </Link>
+              }
+            />
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {result.data.map((m) => (
+                <MarketCard key={m.id} market={m} />
+              ))}
+            </div>
+          )}
+        </>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {result.data.map((m) => (
-            <MarketCard key={m.id} market={m} />
-          ))}
+        <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+          פרדיקשנים סגורים לא מוצגים ככרטיסים ברשימה — רק בטבלת הסטטיסטיקה למטה
+          ({closedSummary.closed} סגורים).
         </div>
       )}
 
-      <section className="space-y-3">
+      <section id="closed-stats" className="scroll-mt-24 space-y-3">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן לסטטיסטיקה</h2>
             <p className="text-sm text-muted-foreground">
-              צדקנו ואחוז הצלחה נספרים מאותה רשימת סגורים — בחירה שנרשמה לפני הסגירה
-              מקבלת עדיפות.
+              צדקנו ואחוז הצלחה נספרים מאותה רשימה. בחירה מוצגת כ־Yes/No בלבד.
             </p>
           </div>
           <Link
-            href="/markets?status=closed&sort=endDate"
+            href="#closed-stats"
             className="text-sm font-semibold text-primary hover:underline"
           >
-            הצג את כל הסגורים
+            לראש הטבלה
           </Link>
         </div>
         {closedSummary.verdicts.length === 0 ? (
@@ -151,7 +198,7 @@ export default async function MarketsPage({
             אין שווקים סגורים במשיכה הנוכחית.
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             <p className="text-sm text-muted-foreground">
               סיכום סגורים:{" "}
               <span className="font-semibold text-foreground tabular-nums">
@@ -174,6 +221,8 @@ export default async function MarketsPage({
                   ? `${Math.round((closedSummary.correct / closedSummary.closed) * 100)}%`
                   : "—"}
               </span>
+              {" · "}
+              עמוד {safeClosedPage} מתוך {totalClosedPages}
             </p>
             <div className="data-table overflow-x-auto">
               <table>
@@ -187,7 +236,7 @@ export default async function MarketsPage({
                   </tr>
                 </thead>
                 <tbody>
-                  {closedSummary.verdicts.slice(0, 15).map((verdict) => {
+                  {closedSlice.map((verdict) => {
                     const { market, predictedSide, resolution, correct } = verdict;
                     return (
                       <tr key={market.id}>
@@ -201,10 +250,12 @@ export default async function MarketsPage({
                             </span>
                           </Link>
                         </td>
-                        <td className="ltr-isolate">{predictedSide ?? "—"}</td>
+                        <td className="ltr-isolate">
+                          {formatOutcomeLabel(predictedSide)}
+                        </td>
                         <td>
                           <span className="ltr-isolate" dir="ltr">
-                            {resolution.label}
+                            {formatOutcomeLabel(resolution.label)}
                           </span>
                         </td>
                         <td>
@@ -228,6 +279,62 @@ export default async function MarketsPage({
                 </tbody>
               </table>
             </div>
+
+            {totalClosedPages > 1 ? (
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <Link
+                  href={pageHref(pageQuery, Math.max(1, safeClosedPage - 1))}
+                  className={cn(
+                    "nav-pill",
+                    safeClosedPage <= 1 && "pointer-events-none opacity-40",
+                  )}
+                  aria-disabled={safeClosedPage <= 1}
+                >
+                  הקודם
+                </Link>
+                <div className="flex flex-wrap gap-1.5">
+                  {Array.from({ length: totalClosedPages }, (_, i) => i + 1)
+                    .filter((page) => {
+                      if (totalClosedPages <= 7) return true;
+                      return (
+                        page === 1 ||
+                        page === totalClosedPages ||
+                        Math.abs(page - safeClosedPage) <= 1
+                      );
+                    })
+                    .map((page, index, arr) => {
+                      const prev = arr[index - 1];
+                      const needsEllipsis = prev != null && page - prev > 1;
+                      return (
+                        <span key={page} className="contents">
+                          {needsEllipsis ? (
+                            <span className="px-1 text-muted-foreground">…</span>
+                          ) : null}
+                          <Link
+                            href={pageHref(pageQuery, page)}
+                            className={cn(
+                              "nav-pill min-w-10 justify-center",
+                              page === safeClosedPage && "nav-pill-active",
+                            )}
+                          >
+                            {page}
+                          </Link>
+                        </span>
+                      );
+                    })}
+                </div>
+                <Link
+                  href={pageHref(pageQuery, Math.min(totalClosedPages, safeClosedPage + 1))}
+                  className={cn(
+                    "nav-pill",
+                    safeClosedPage >= totalClosedPages && "pointer-events-none opacity-40",
+                  )}
+                  aria-disabled={safeClosedPage >= totalClosedPages}
+                >
+                  הבא
+                </Link>
+              </div>
+            ) : null}
           </div>
         )}
       </section>
