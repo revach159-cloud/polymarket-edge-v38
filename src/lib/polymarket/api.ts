@@ -19,11 +19,14 @@ type GammaMarket = {
   liquidityNum?: number;
   active?: boolean;
   closed?: boolean;
+  resolved?: boolean;
+  umaResolutionStatus?: string;
   outcomes?: string;
   outcomePrices?: string;
   clobTokenIds?: string;
   updatedAt?: string;
   featured?: boolean;
+  closedTime?: string;
 };
 
 function parseJsonArray(value?: string): string[] {
@@ -72,6 +75,10 @@ export function mapGammaMarket(raw: GammaMarket): Market {
   const question = raw.question ?? "שוק ללא כותרת";
   const slug = raw.slug || slugify(question) || raw.id || "market";
 
+  const resolved =
+    Boolean(raw.resolved) ||
+    String(raw.umaResolutionStatus ?? "").toLowerCase() === "resolved";
+
   return {
     id: String(raw.id ?? raw.conditionId ?? slug),
     slug,
@@ -83,10 +90,12 @@ export function mapGammaMarket(raw: GammaMarket): Market {
     volume: raw.volumeNum ?? toNumber(raw.volume),
     liquidity: raw.liquidityNum ?? toNumber(raw.liquidity),
     outcomes,
-    active: raw.active !== false && !raw.closed,
-    closed: Boolean(raw.closed),
+    active: raw.active !== false && !raw.closed && !resolved,
+    closed: Boolean(raw.closed) || resolved,
+    resolved,
+    resolutionStatus: raw.umaResolutionStatus ?? (resolved ? "resolved" : null),
     featured: Boolean(raw.featured),
-    updatedAt: raw.updatedAt,
+    updatedAt: raw.updatedAt ?? raw.closedTime,
     conditionId: raw.conditionId,
     clobTokenIds: tokenIds,
   };
@@ -369,6 +378,7 @@ export async function fetchTopWallets(
     pnl: row.realizedPnl ?? row.pnl,
     volume: row.volume ?? row.vol,
     rank: i + 1,
+    userName: (row as { userName?: string }).userName ?? null,
   }));
 
   return { wallets };
