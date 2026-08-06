@@ -36,3 +36,14 @@ export function slugify(text: string): string {
     .replace(/^-|-$/g, "")
     .slice(0, 120);
 }
+
+export function formatShortDate(value?: string | null): string {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat("he-IL", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(date);
+}
