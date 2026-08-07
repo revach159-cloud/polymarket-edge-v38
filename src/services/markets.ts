@@ -410,9 +410,10 @@ export async function getMarketStats() {
 
   // Resolve open tracked picks even if they were missing from the closed dump.
   await resolveOpenHistoryFromGamma({
-    limit: 150,
+    limit: 250,
     concurrency: 8,
     knownClosedIds: new Set(closedResult.data.map((m) => m.id)),
+    knownClosedMarkets: closedResult.data,
   });
 
   const sides = recordedPredictionSides();

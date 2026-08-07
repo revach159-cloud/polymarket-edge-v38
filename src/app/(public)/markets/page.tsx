@@ -71,9 +71,10 @@ export default async function MarketsPage({
   ]);
 
   await resolveOpenHistoryFromGamma({
-    limit: 150,
+    limit: 250,
     concurrency: 8,
     knownClosedIds: new Set(closedMarkets.data.map((m) => m.id)),
+    knownClosedMarkets: closedMarkets.data,
   });
 
   const predictedSides = recordedPredictionSides();

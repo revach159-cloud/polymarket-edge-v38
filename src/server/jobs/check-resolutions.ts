@@ -46,7 +46,8 @@ export async function checkResolutionsJob() {
     }
 
     const fetched = await mapPool(open, 8, async (pred) => {
-      const { market } = await fetchGammaMarketBySlug(pred.slug || pred.marketId);
+      // Pass marketId — closed markets often miss `?slug=` but answer `/markets/{id}`.
+      const { market } = await fetchGammaMarketBySlug(pred.slug, pred.marketId);
       return market;
     });
 
@@ -117,7 +118,8 @@ async function resolveDbPredictionsOnly(): Promise<{
       outcome = dbResolved;
     } else {
       const { market: gamma } = await fetchGammaMarketBySlug(
-        slug || polymarketId,
+        slug,
+        polymarketId,
       );
       if (gamma?.closed || gamma?.resolved) {
         const inferred = inferMarketResolution({ ...gamma, closed: true });

@@ -35,10 +35,18 @@ export async function resolveOpenHistoryFromGamma(options?: {
   limit?: number;
   concurrency?: number;
   knownClosedIds?: ReadonlySet<string>;
+  /** Closed markets already loaded — resolve these first (no extra Gamma calls). */
+  knownClosedMarkets?: readonly Market[];
 }): Promise<{ checked: number; resolved: number }> {
-  const limit = options?.limit ?? 150;
+  const limit = options?.limit ?? 250;
   const concurrency = options?.concurrency ?? 8;
   const known = options?.knownClosedIds;
+
+  let resolvedFromKnown = 0;
+  if (options?.knownClosedMarkets?.length) {
+    resolvedFromKnown = resolveClosedPredictions([...options.knownClosedMarkets]);
+  }
+
   const open = listHistoryPredictions({ status: "open", limit: 0 })
     .filter((p) => !(known && known.has(p.marketId)))
     // Oldest first — those are the ones most likely closed already.
@@ -46,10 +54,13 @@ export async function resolveOpenHistoryFromGamma(options?: {
       (a, b) => Date.parse(a.recordedAt) - Date.parse(b.recordedAt),
     )
     .slice(0, limit);
-  if (!open.length) return { checked: 0, resolved: 0 };
+  if (!open.length) {
+    return { checked: 0, resolved: resolvedFromKnown };
+  }
 
   const markets = await mapPool(open, concurrency, async (pred) => {
-    const { market } = await fetchGammaMarketBySlug(pred.slug || pred.marketId);
+    // Always pass marketId — `?slug=` often returns [] for expired markets.
+    const { market } = await fetchGammaMarketBySlug(pred.slug, pred.marketId);
     return market;
   });
 
@@ -57,5 +68,5 @@ export async function resolveOpenHistoryFromGamma(options?: {
     (m): m is Market => Boolean(m && (m.closed || m.resolved)),
   );
   const resolved = resolveClosedPredictions(closed);
-  return { checked: open.length, resolved };
+  return { checked: open.length, resolved: resolvedFromKnown + resolved };
 }

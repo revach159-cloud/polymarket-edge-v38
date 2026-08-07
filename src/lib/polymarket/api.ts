@@ -298,25 +298,57 @@ export async function fetchActivePredictionUniverse(now = new Date()): Promise<{
   return result;
 }
 
-export async function fetchGammaMarketBySlug(
-  slug: string,
+async function fetchGammaMarketByPathId(
+  id: string,
 ): Promise<{ market: Market | null; error?: string }> {
+  if (!id.trim()) return { market: null, error: "חסר מזהה שוק" };
   const gamma = getGammaApiUrl();
-  const { data, error } = await fetchJson<GammaMarket[]>(
-    `${gamma}/markets?slug=${encodeURIComponent(slug)}`,
+  const byId = await fetchJson<GammaMarket>(
+    `${gamma}/markets/${encodeURIComponent(id)}`,
   );
-  if (error) return { market: null, error };
-  if (data && data.length > 0) {
-    return { market: mapGammaMarket(data[0]) };
-  }
-
-  // Fallback: search by id-like slug
-  const byId = await fetchJson<GammaMarket>(`${gamma}/markets/${encodeURIComponent(slug)}`);
   if (byId.data && (byId.data.question || byId.data.id)) {
     return { market: mapGammaMarket(byId.data) };
   }
-
   return { market: null, error: byId.error ?? "השוק לא נמצא" };
+}
+
+/**
+ * Resolve a market for history sync. Prefer slug query, then path id.
+ * Closed short-horizon markets often drop out of `?slug=` but remain
+ * available at `/markets/{id}` — without the id fallback the open queue
+ * gets stuck forever on the same oldest ghosts.
+ */
+export async function fetchGammaMarketBySlug(
+  slug: string,
+  marketId?: string | null,
+): Promise<{ market: Market | null; error?: string }> {
+  const gamma = getGammaApiUrl();
+  const slugKey = slug?.trim() ?? "";
+  const idKey = marketId?.trim() ?? "";
+
+  if (slugKey) {
+    const { data, error } = await fetchJson<GammaMarket[]>(
+      `${gamma}/markets?slug=${encodeURIComponent(slugKey)}`,
+    );
+    if (data && data.length > 0) {
+      return { market: mapGammaMarket(data[0]) };
+    }
+    // Slug string as path only helps when the caller passed an id-like value.
+    const bySlugPath = await fetchGammaMarketByPathId(slugKey);
+    if (bySlugPath.market) return bySlugPath;
+    if (!idKey || idKey === slugKey) {
+      return {
+        market: null,
+        error: error ?? bySlugPath.error ?? "השוק לא נמצא",
+      };
+    }
+  }
+
+  if (idKey) {
+    return fetchGammaMarketByPathId(idKey);
+  }
+
+  return { market: null, error: "השוק לא נמצא" };
 }
 
 export async function fetchClobPrices(

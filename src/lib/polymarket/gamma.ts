@@ -119,9 +119,15 @@ export async function fetchGammaMarkets(
 
 export async function fetchGammaMarketBySlug(
   slug: string,
-  options?: FetchOptions,
+  options?: FetchOptions & { marketId?: string | null },
 ): Promise<DomainMarket | null> {
   const bySlug = await fetchMarkets({ slug, limit: 5 }, options);
   if (bySlug[0]) return bySlug[0];
-  return fetchMarketById(slug, options);
+  const bySlugPath = await fetchMarketById(slug, options);
+  if (bySlugPath) return bySlugPath;
+  const marketId = options?.marketId?.trim();
+  if (marketId && marketId !== slug) {
+    return fetchMarketById(marketId, options);
+  }
+  return null;
 }

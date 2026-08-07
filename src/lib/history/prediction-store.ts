@@ -200,6 +200,12 @@ export function recordOpenPredictions(markets: Market[], now = new Date()): numb
 export function resolveClosedPredictions(markets: Market[], now = new Date()): number {
   const store = readStore();
   const byId = new Map(store.predictions.map((p) => [p.id, p]));
+  const byMarketId = new Map(store.predictions.map((p) => [p.marketId, p]));
+  const bySlug = new Map(
+    store.predictions
+      .filter((p) => p.slug?.trim())
+      .map((p) => [p.slug.trim().toLowerCase(), p]),
+  );
   let resolvedCount = 0;
 
   for (const market of markets) {
@@ -207,18 +213,23 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
     const resolution = inferMarketResolution({ ...market, closed: true });
     if (!resolution.side) continue;
 
-    const id = predictionId(market);
-    const existing = byId.get(id);
+    const existing =
+      byId.get(predictionId(market)) ??
+      byMarketId.get(market.id) ??
+      (market.slug ? bySlug.get(market.slug.trim().toLowerCase()) : undefined);
     // Only resolve picks that were recorded while the market was still open.
     // Creating a row from today's post-close favorite makes win-rate ~100%.
     if (!existing?.side) continue;
     const side = existing.side;
+    const id = existing.id;
 
     const correct = side === resolution.side;
     if (existing.status === "resolved" && existing.correct === correct) continue;
 
-    byId.set(id, {
+    const next = {
       ...existing,
+      marketId: existing.marketId || market.id,
+      slug: existing.slug || market.slug,
       side,
       marketProbability: market.marketProbability ?? existing.marketProbability,
       modelProbability: market.modelProbability ?? existing.modelProbability,
@@ -226,12 +237,15 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
       qualityScore: market.qualityScore ?? existing.qualityScore,
       walletConsensusScore:
         market.walletConsensusScore ?? existing.walletConsensusScore,
-      status: "resolved",
+      status: "resolved" as const,
       resolvedAt: existing.resolvedAt ?? now.toISOString(),
       resolvedOutcome: resolution.label,
       correct,
-      source: "live-sync",
-    });
+      source: "live-sync" as const,
+    };
+    byId.set(id, next);
+    byMarketId.set(next.marketId, next);
+    if (next.slug?.trim()) bySlug.set(next.slug.trim().toLowerCase(), next);
     resolvedCount += 1;
   }
 
