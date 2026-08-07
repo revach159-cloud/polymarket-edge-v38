@@ -251,28 +251,33 @@ export function syncPredictionHistory(active: Market[], closed: Market[]): {
 
 export function listHistoryPredictions(options?: {
   status?: "open" | "resolved" | "all";
+  /** Cap results. Omit or pass 0 / Infinity for the full compacted set. */
   limit?: number;
 }): HistoryPrediction[] {
   const store = readStore();
   const status = options?.status ?? "all";
-  const limit = options?.limit ?? 100;
-  return compactHistoryPredictions(store.predictions)
+  const limit = options?.limit;
+  const rows = compactHistoryPredictions(store.predictions)
     .filter((p) => (status === "all" ? true : p.status === status))
     .sort((a, b) => {
       const aTime = Date.parse(a.resolvedAt ?? a.recordedAt);
       const bTime = Date.parse(b.resolvedAt ?? b.recordedAt);
       return bTime - aTime;
-    })
-    .slice(0, limit);
+    });
+  if (limit == null || !Number.isFinite(limit) || limit <= 0) return rows;
+  return rows.slice(0, limit);
 }
 
-export function historyWinStats(limit = 1_000): {
+export function historyWinStats(limit?: number): {
   correct: number | null;
   total: number;
   winRateLabel: string;
   predictions: HistoryPrediction[];
 } {
-  const predictions = listHistoryPredictions({ status: "resolved", limit });
+  const predictions = listHistoryPredictions({
+    status: "resolved",
+    limit: limit ?? 0,
+  });
   if (!predictions.length) {
     return {
       correct: null,
@@ -292,9 +297,9 @@ export function historyWinStats(limit = 1_000): {
 
 /** Map marketId → recorded side (open or resolved) for closed-table scoring. */
 export function recordedPredictionSides(
-  limit = 5_000,
+  limit?: number,
 ): Map<string, "YES" | "NO"> {
-  const rows = listHistoryPredictions({ status: "all", limit });
+  const rows = listHistoryPredictions({ status: "all", limit: limit ?? 0 });
   const map = new Map<string, "YES" | "NO">();
   for (const row of rows) {
     if (!map.has(row.marketId)) map.set(row.marketId, row.side);

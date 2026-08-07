@@ -71,13 +71,13 @@ export default async function MarketsPage({
   ]);
 
   await resolveOpenHistoryFromGamma({
-    limit: 40,
-    concurrency: 4,
+    limit: 150,
+    concurrency: 8,
     knownClosedIds: new Set(closedMarkets.data.map((m) => m.id)),
   });
 
   const predictedSides = recordedPredictionSides();
-  const historyResolved = listResolvedHistory(200);
+  const historyResolved = listResolvedHistory();
   // Prefer tracked history board so rows appear even if missing from Gamma dump.
   const closedSummary =
     historyResolved.length > 0

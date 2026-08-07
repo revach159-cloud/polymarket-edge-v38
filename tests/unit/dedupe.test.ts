@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { compactHistoryPredictions } from "@/lib/history/prediction-store";
-import { summarizeFromHistory } from "@/lib/history/closed-board";
+import {
+  compactHistoryPredictions,
+  listHistoryPredictions,
+} from "@/lib/history/prediction-store";
+import {
+  listResolvedHistory,
+  summarizeFromHistory,
+} from "@/lib/history/closed-board";
 import { dedupeMarkets, marketDedupeKey } from "@/lib/markets/dedupe";
 import type { HistoryPrediction } from "@/lib/history/prediction-store";
 import type { Market } from "@/types";
@@ -101,5 +107,28 @@ describe("dedupe markets + history", () => {
     ]);
     expect(summary.verdicts).toHaveLength(1);
     expect(summary.closed).toBe(1);
+  });
+
+  it("does not silently cap resolved history at 200", () => {
+    const rows = Array.from({ length: 250 }, (_, i) =>
+      hist({
+        id: `pred:${i}`,
+        marketId: `m${i}`,
+        slug: `slug-m${i}`,
+        correct: i % 2 === 0,
+      }),
+    );
+    const summary = summarizeFromHistory(rows);
+    expect(summary.closed).toBe(250);
+    expect(summary.evaluable).toBe(250);
+
+    // API contract: omit / 0 / Infinity = uncapped (the old default of 200
+    // froze הוכרעו on the markets page once the store grew past 200).
+    expect(listHistoryPredictions({ status: "resolved", limit: 0 }).length).toBe(
+      listHistoryPredictions({ status: "resolved" }).length,
+    );
+    expect(listResolvedHistory().length).toBe(
+      listHistoryPredictions({ status: "resolved", limit: 0 }).length,
+    );
   });
 });

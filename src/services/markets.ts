@@ -353,7 +353,7 @@ function toResolved(prediction: HistoryPrediction): ResolvedPrediction {
   };
 }
 
-export async function getResolvedPredictions(limit = 50): Promise<ResolvedPrediction[]> {
+export async function getResolvedPredictions(limit = 500): Promise<ResolvedPrediction[]> {
   if (isSupabaseConfigured()) {
     try {
       const supabase = await createClient();
@@ -410,8 +410,8 @@ export async function getMarketStats() {
 
   // Resolve open tracked picks even if they were missing from the closed dump.
   await resolveOpenHistoryFromGamma({
-    limit: 40,
-    concurrency: 4,
+    limit: 150,
+    concurrency: 8,
     knownClosedIds: new Set(closedResult.data.map((m) => m.id)),
   });
 

@@ -38,12 +38,14 @@ async function mapPool<T, R>(
  */
 export async function checkResolutionsJob() {
   return withJobLock<ResolveJobData>("check-resolutions", async () => {
-    const open = listHistoryPredictions({ status: "open", limit: 500 });
+    const open = listHistoryPredictions({ status: "open", limit: 0 })
+      .sort((a, b) => Date.parse(a.recordedAt) - Date.parse(b.recordedAt))
+      .slice(0, 800);
     if (!open.length) {
       return await resolveDbPredictionsOnly();
     }
 
-    const fetched = await mapPool(open, 4, async (pred) => {
+    const fetched = await mapPool(open, 8, async (pred) => {
       const { market } = await fetchGammaMarketBySlug(pred.slug || pred.marketId);
       return market;
     });
@@ -93,7 +95,7 @@ async function resolveDbPredictionsOnly(): Promise<{
     .select("id, market_id, side, markets(polymarket_id, slug, resolved_outcome)")
     .in("status", ["active", "frozen"])
     .is("resolved_correct", null)
-    .limit(200);
+    .limit(500);
 
   if (!openPreds?.length) {
     return { processed: 0, message: "No open predictions to resolve" };
@@ -104,7 +106,7 @@ async function resolveDbPredictionsOnly(): Promise<{
   let voids = 0;
   let processed = 0;
 
-  await mapPool(openPreds, 4, async (pred) => {
+  await mapPool(openPreds, 8, async (pred) => {
     const market = Array.isArray(pred.markets) ? pred.markets[0] : pred.markets;
     const slug = (market?.slug as string | undefined) ?? "";
     const polymarketId = (market?.polymarket_id as string | undefined) ?? "";
@@ -185,7 +187,7 @@ async function resolveDbOpenPredictions(closedMarkets: Market[]): Promise<number
     .select("id, market_id, side, markets(polymarket_id, slug)")
     .in("status", ["active", "frozen"])
     .is("resolved_correct", null)
-    .limit(200);
+    .limit(500);
 
   if (!openPreds?.length) return 0;
 

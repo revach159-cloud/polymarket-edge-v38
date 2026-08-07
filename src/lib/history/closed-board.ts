@@ -119,6 +119,7 @@ export function summarizeFromHistory(
   };
 }
 
-export function listResolvedHistory(limit = 200): HistoryPrediction[] {
-  return listHistoryPredictions({ status: "resolved", limit });
+export function listResolvedHistory(limit?: number): HistoryPrediction[] {
+  // Default: full resolved set (no silent 200 cap that freezes הוכרעו).
+  return listHistoryPredictions({ status: "resolved", limit: limit ?? 0 });
 }

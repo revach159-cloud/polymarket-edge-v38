@@ -29,18 +29,23 @@ async function mapPool<T, R>(
 /**
  * For open history rows not present in the current closed Gamma dump,
  * fetch each market by slug and resolve when closed — keeps נסגרו/צדקנו in sync.
+ * Oldest opens first (most likely already closed).
  */
 export async function resolveOpenHistoryFromGamma(options?: {
   limit?: number;
   concurrency?: number;
   knownClosedIds?: ReadonlySet<string>;
 }): Promise<{ checked: number; resolved: number }> {
-  const limit = options?.limit ?? 40;
-  const concurrency = options?.concurrency ?? 4;
+  const limit = options?.limit ?? 150;
+  const concurrency = options?.concurrency ?? 8;
   const known = options?.knownClosedIds;
-  const open = listHistoryPredictions({ status: "open", limit }).filter(
-    (p) => !(known && known.has(p.marketId)),
-  );
+  const open = listHistoryPredictions({ status: "open", limit: 0 })
+    .filter((p) => !(known && known.has(p.marketId)))
+    // Oldest first — those are the ones most likely closed already.
+    .sort(
+      (a, b) => Date.parse(a.recordedAt) - Date.parse(b.recordedAt),
+    )
+    .slice(0, limit);
   if (!open.length) return { checked: 0, resolved: 0 };
 
   const markets = await mapPool(open, concurrency, async (pred) => {

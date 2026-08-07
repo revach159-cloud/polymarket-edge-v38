@@ -23,7 +23,7 @@ export default async function StatisticsPage() {
   ]);
 
   const closedSummary = (() => {
-    const historyResolved = listResolvedHistory(200);
+    const historyResolved = listResolvedHistory();
     if (historyResolved.length > 0) {
       return summarizeFromHistory(historyResolved, closedMarkets.data);
     }
