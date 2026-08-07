@@ -107,7 +107,8 @@ function writeStore(store: StoreShape): void {
   try {
     const file = storePath();
     mkdirSync(path.dirname(file), { recursive: true });
-    writeFileSync(file, JSON.stringify(store, null, 2), "utf8");
+    // Compact JSON — pretty-print ballooned to multi‑MB and stalled page resolves.
+    writeFileSync(file, JSON.stringify(store), "utf8");
   } catch {
     // Filesystem may be read-only in some runtimes; memory still works for the process.
   }
@@ -208,10 +209,16 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
   );
   let resolvedCount = 0;
 
+  const upsert = (existing: HistoryPrediction, next: HistoryPrediction) => {
+    byId.set(existing.id, next);
+    byMarketId.set(next.marketId, next);
+    if (next.slug?.trim()) bySlug.set(next.slug.trim().toLowerCase(), next);
+    resolvedCount += 1;
+  };
+
   for (const market of markets) {
     if (!market.closed && !market.resolved) continue;
     const resolution = inferMarketResolution({ ...market, closed: true });
-    if (!resolution.side) continue;
 
     const existing =
       byId.get(predictionId(market)) ??
@@ -219,14 +226,30 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
       (market.slug ? bySlug.get(market.slug.trim().toLowerCase()) : undefined);
     // Only resolve picks that were recorded while the market was still open.
     // Creating a row from today's post-close favorite makes win-rate ~100%.
-    if (!existing?.side) continue;
+    if (!existing?.side || existing.status === "resolved") continue;
+
+    // Closed but outcome names aren't mappable to YES/NO — void out of the
+    // open queue so sports/multi-outcome ghosts can't freeze הוכרעו forever.
+    if (!resolution.side) {
+      const decisive = (market.outcomes ?? []).some((o) => Number(o.price) >= 0.95);
+      if (!decisive && !(market.outcomes?.length === 0)) continue;
+      upsert(existing, {
+        ...existing,
+        marketId: existing.marketId || market.id,
+        slug: existing.slug || market.slug,
+        status: "resolved",
+        resolvedAt: now.toISOString(),
+        resolvedOutcome: resolution.label || "לא ניתן להכריע",
+        correct: null,
+        source: "live-sync",
+      });
+      continue;
+    }
+
     const side = existing.side;
-    const id = existing.id;
-
     const correct = side === resolution.side;
-    if (existing.status === "resolved" && existing.correct === correct) continue;
 
-    const next = {
+    upsert(existing, {
       ...existing,
       marketId: existing.marketId || market.id,
       slug: existing.slug || market.slug,
@@ -237,21 +260,53 @@ export function resolveClosedPredictions(markets: Market[], now = new Date()): n
       qualityScore: market.qualityScore ?? existing.qualityScore,
       walletConsensusScore:
         market.walletConsensusScore ?? existing.walletConsensusScore,
-      status: "resolved" as const,
+      status: "resolved",
       resolvedAt: existing.resolvedAt ?? now.toISOString(),
       resolvedOutcome: resolution.label,
       correct,
-      source: "live-sync" as const,
-    };
-    byId.set(id, next);
-    byMarketId.set(next.marketId, next);
-    if (next.slug?.trim()) bySlug.set(next.slug.trim().toLowerCase(), next);
-    resolvedCount += 1;
+      source: "live-sync",
+    });
   }
 
   store.predictions = compactHistoryPredictions([...byId.values()]);
   writeStore(store);
   return resolvedCount;
+}
+
+/** Mark open rows as void when Gamma no longer returns the market. */
+export function voidMissingOpenPredictions(
+  preds: Array<{ id: string; marketId: string; slug: string }>,
+  now = new Date(),
+): number {
+  if (!preds.length) return 0;
+  const store = readStore();
+  const byId = new Map(store.predictions.map((p) => [p.id, p]));
+  let voided = 0;
+  for (const pred of preds) {
+    const existing =
+      byId.get(pred.id) ??
+      byId.get(`pred:${pred.marketId}`) ??
+      store.predictions.find(
+        (p) =>
+          p.status === "open" &&
+          (p.marketId === pred.marketId ||
+            (pred.slug && p.slug.toLowerCase() === pred.slug.toLowerCase())),
+      );
+    if (!existing || existing.status !== "open") continue;
+    byId.set(existing.id, {
+      ...existing,
+      status: "resolved",
+      resolvedAt: now.toISOString(),
+      resolvedOutcome: "שוק לא נמצא",
+      correct: null,
+      source: "live-sync",
+    });
+    voided += 1;
+  }
+  if (!voided) return 0;
+  store.predictions = compactHistoryPredictions([...byId.values()]);
+  writeStore(store);
+  return voided;
 }
 
 export function syncPredictionHistory(active: Market[], closed: Market[]): {

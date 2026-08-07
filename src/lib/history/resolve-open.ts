@@ -2,6 +2,7 @@ import { fetchGammaMarketBySlug } from "@/lib/polymarket/api";
 import {
   listHistoryPredictions,
   resolveClosedPredictions,
+  voidMissingOpenPredictions,
 } from "@/lib/history/prediction-store";
 import type { Market } from "@/types";
 
@@ -26,9 +27,11 @@ async function mapPool<T, R>(
   return results;
 }
 
+const MISSING_VOID_AFTER_MS = 36 * 60 * 60 * 1000;
+
 /**
  * For open history rows not present in the current closed Gamma dump,
- * fetch each market by slug and resolve when closed — keeps נסגרו/צדקנו in sync.
+ * fetch each market by slug/id and resolve when closed — keeps נסגרו/צדקנו in sync.
  * Oldest opens first (most likely already closed).
  */
 export async function resolveOpenHistoryFromGamma(options?: {
@@ -68,5 +71,17 @@ export async function resolveOpenHistoryFromGamma(options?: {
     (m): m is Market => Boolean(m && (m.closed || m.resolved)),
   );
   const resolved = resolveClosedPredictions(closed);
-  return { checked: open.length, resolved: resolvedFromKnown + resolved };
+
+  const now = Date.now();
+  const missing = open.filter((pred, i) => {
+    if (markets[i]) return false;
+    const age = now - Date.parse(pred.recordedAt);
+    return Number.isFinite(age) && age >= MISSING_VOID_AFTER_MS;
+  });
+  const voided = voidMissingOpenPredictions(missing);
+
+  return {
+    checked: open.length,
+    resolved: resolvedFromKnown + resolved + voided,
+  };
 }

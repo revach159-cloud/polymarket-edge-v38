@@ -73,6 +73,40 @@ describe("inferMarketResolution", () => {
     expect(resolution.label).toBe("Over");
     expect(resolution.label.toLowerCase()).not.toMatch(/^(yes|no)$/);
   });
+
+  it("maps binary team/spread winners to YES/NO by outcome index", () => {
+    const yesWin = inferMarketResolution(
+      market({
+        closed: true,
+        selectedOutcome: "YES",
+        groupItemTitle: "SK Rapid Wien (-1.5)",
+        sportsMarketType: "spreads",
+        outcomes: [
+          { id: "a", name: "SK Rapid Wien", price: 1 },
+          { id: "b", name: "Paide Linnameeskond", price: 0 },
+        ],
+      }),
+    );
+    expect(yesWin.side).toBe("YES");
+    expect(yesWin.correct).toBe(true);
+    expect(yesWin.label).toMatch(/SK Rapid Wien/);
+
+    const noWin = inferMarketResolution(
+      market({
+        closed: true,
+        selectedOutcome: "NO",
+        groupItemTitle: "Rangers FC (-1.5)",
+        sportsMarketType: "spreads",
+        outcomes: [
+          { id: "a", name: "Rangers FC", price: 0 },
+          { id: "b", name: "Jagiellonia Białystok", price: 1 },
+        ],
+      }),
+    );
+    expect(noWin.side).toBe("NO");
+    expect(noWin.correct).toBe(true);
+    expect(noWin.label).toMatch(/Jagiellonia/);
+  });
 });
 
 describe("computeMarketStats", () => {

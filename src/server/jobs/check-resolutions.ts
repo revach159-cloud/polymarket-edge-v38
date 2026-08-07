@@ -3,6 +3,7 @@ import { fetchGammaMarketBySlug } from "@/lib/polymarket/api";
 import {
   listHistoryPredictions,
   resolveClosedPredictions,
+  voidMissingOpenPredictions,
 } from "@/lib/history/prediction-store";
 import { tryCreateAdminClient } from "@/lib/auth/supabase/admin";
 import { isServiceRoleConfigured } from "@/lib/env";
@@ -57,18 +58,27 @@ export async function checkResolutionsJob() {
 
     const resolvedLocal = resolveClosedPredictions(closedMarkets);
 
+    const now = Date.now();
+    const missing = open.filter((pred, i) => {
+      if (fetched[i]) return false;
+      const age = now - Date.parse(pred.recordedAt);
+      return Number.isFinite(age) && age >= 36 * 60 * 60 * 1000;
+    });
+    const voidedLocal = voidMissingOpenPredictions(missing);
+
     let dbResolved = 0;
     if (isServiceRoleConfigured()) {
       dbResolved = await resolveDbOpenPredictions(closedMarkets);
     }
 
     return {
-      processed: resolvedLocal + dbResolved,
-      message: `Resolved local ${resolvedLocal}, DB ${dbResolved} (checked ${open.length} open)`,
+      processed: resolvedLocal + voidedLocal + dbResolved,
+      message: `Resolved local ${resolvedLocal}, voided ${voidedLocal}, DB ${dbResolved} (checked ${open.length} open)`,
       data: {
         open: open.length,
         closedFetched: closedMarkets.length,
         resolvedLocal,
+        voidedLocal,
         dbResolved,
       },
     };
