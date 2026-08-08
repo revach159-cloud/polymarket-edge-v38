@@ -24,12 +24,10 @@ export type HistoryPrediction = {
 };
 
 /**
- * Bump to wipe inflated / post-close-graded history and restart honest tracking.
- * v3 also clears the closed board (נסגרו + history table) — only pre-close
- * recorded picks reappear after they resolve.
- * v4 compacts duplicate history rows (same marketId / slug).
+ * Bump to wipe inflated / post-close-graded / price-follow history.
+ * v5: real model opens only (enrich + quality gate) — no simulated closed grades.
  */
-export const HISTORY_STORE_VERSION = 4 as const;
+export const HISTORY_STORE_VERSION = 5 as const;
 
 export type HistoryStoreShape = {
   version: typeof HISTORY_STORE_VERSION;

@@ -53,7 +53,8 @@ export function evaluateClosedMarket(
   options?: ClosedStatsOptions,
 ): ClosedMarketVerdict {
   const resolution = inferMarketResolution({ ...market, closed: true });
-  const allowLive = options?.fallbackToLivePick !== false;
+  // Opt-in only — default never grades from a post-close live re-pick.
+  const allowLive = options?.fallbackToLivePick === true;
   const side = predictedSide ?? (allowLive ? market.selectedOutcome ?? null : null);
   const correct =
     side && resolution.side ? side === resolution.side : null;

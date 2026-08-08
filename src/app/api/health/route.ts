@@ -24,10 +24,10 @@ export async function GET() {
     status,
     version: getAppVersion(),
     database: isSupabaseConfigured() ? "configured" : "not_configured",
-    // Supabase service role OR committed public/prediction-history.json.
+    // Supabase service role OR committed public/prediction-history.json (real opens).
     historyDurable: isServiceRoleConfigured()
       ? "supabase"
-      : "static_or_live_fallback",
+      : "static_real_history",
     polymarket,
     lastSuccessfulSync: null,
     timestamp: new Date().toISOString(),

@@ -90,12 +90,11 @@ describe("closed market verdicts", () => {
     });
     const stats = computeMarketStats([], closed, sides, now);
 
-    // Explicit tracked summary still ignores untracked Gamma rows.
+    // Real tracked sample only — strip matches board, ignores untracked Gamma rows.
     expect(summary.closed).toBe(2);
-    expect(summary.correct).toBe(1);
-    expect(summary.evaluable).toBe(2);
-    // computeMarketStats bypasses empty graded-history freeze with live closed.
-    expect(stats.closed).toBe(3);
+    expect(stats.closed).toBe(summary.closed);
+    expect(stats.correct).toBe(summary.correct);
+    expect(stats.resolvedTotal).toBe(summary.evaluable);
     expect(stats.correct).toBe(1);
     expect(stats.resolvedTotal).toBe(2);
     expect(stats.winRatePercent).toBe(50);
@@ -131,7 +130,7 @@ describe("closed market verdicts", () => {
     expect(summary.verdicts).toHaveLength(0);
   });
 
-  it("bypasses empty freeze: live closed scoring when no graded history", () => {
+  it("stays at empty sample when no real pre-close sides exist", () => {
     const closed = [
       market({
         id: "gamma-2",
@@ -143,9 +142,9 @@ describe("closed market verdicts", () => {
       }),
     ];
     const stats = computeMarketStats([], closed, new Map());
-    expect(stats.closed).toBe(1);
-    expect(stats.correct).toBe(1);
-    expect(stats.resolvedTotal).toBe(1);
-    expect(stats.winRatePercent).toBe(100);
+    expect(stats.closed).toBe(0);
+    expect(stats.correct).toBeNull();
+    expect(stats.resolvedTotal).toBe(0);
+    expect(stats.winRateLabel).toBe("אין מדגם");
   });
 });

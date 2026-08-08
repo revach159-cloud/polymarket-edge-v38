@@ -2,8 +2,8 @@ name: Sync prediction history
 
 on:
   schedule:
-    # Every 30 minutes — keeps נסגרו/צדקנו moving without Supabase.
-    - cron: "*/30 * * * *"
+    # Every 15 minutes — resolve real opens as markets close.
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -16,8 +16,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: master
-      - name: Rebuild public/prediction-history.json
-        run: node scripts/sync-prediction-history.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Rebuild history with real heuristic model
+        run: npm run sync:history
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
@@ -27,6 +33,6 @@ jobs:
             echo "No history changes"
             exit 0
           fi
-          git commit -m "chore(history): sync prediction-history.json for Production"
+          git commit -m "chore(history): sync real model prediction history"
           git push origin HEAD:master
           git push origin HEAD:main || true

@@ -67,7 +67,7 @@ export function computeMarketStats(
   const closedSummary = summarizeClosedMarkets(
     closedMarkets,
     predictedSides,
-    // Honest tracked sample when available; else live closed so UI never freezes at 0.
+    // Real-time honest sample only — never post-close simulated picks.
     getClosedStatsOptions(),
   );
   const closedCount = closedSummary.closed;

@@ -95,7 +95,7 @@ export default async function MarketsPage({
 
   const predictedSides = recordedPredictionSides();
   const historyResolved = listResolvedHistory().filter((r) => r.correct != null);
-  // Graded history when available; else live closed — strip + board always share one sample.
+  // Real graded history only — never invent rows from post-close prices.
   const closedSummary =
     historyResolved.length > 0
       ? summarizeFromHistory(historyResolved, closedMarkets.data)
@@ -109,7 +109,7 @@ export default async function MarketsPage({
     closedMarkets.data,
     predictedSides,
   );
-  // Force strip onto the same sample as the table (live or tracked).
+  // Strip + board share the same real sample (may be 0 until opens resolve).
   stats.closed = closedSummary.closed;
   stats.correct =
     closedSummary.evaluable > 0 ? closedSummary.correct : null;
@@ -238,7 +238,8 @@ export default async function MarketsPage({
           <div>
             <h2 className="font-display text-xl font-bold">שווקים שנסגרו · מסונכרן לסטטיסטיקה</h2>
             <p className="text-sm text-muted-foreground">
-              נסגרו / צדקנו / הלוח מאותו מדגם · מסונכרן ל־Production.
+              רק תחזיות מודל אמיתיות שנרשמו לפני הסגירה · נסגרו / צדקנו / הלוח
+              מאותו מדגם.
             </p>
           </div>
           <Link
@@ -250,7 +251,8 @@ export default async function MarketsPage({
         </div>
         {closedSummary.verdicts.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-            אין עדיין שורות בלוח. רעננו את הדף או המתינו לסנכרון ההיסטוריה.
+            אין עדיין תחזיות מודל שהוכרעו. נסגרו / צדקנו יתמלאו רק אחרי שתחזיות
+            שנרשמו בזמן אמת (כשהשוק היה פתוח) ייסגרו — בלי סימולציה.
           </div>
         ) : (
           <div className="space-y-3">

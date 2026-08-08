@@ -47,6 +47,7 @@ export default async function StatisticsPage() {
     );
   })();
   const stats = { ...statsRaw };
+  // Keep strip on the real graded sample only (no live/simulated fill).
   stats.closed = closedSummary.closed;
   stats.correct =
     closedSummary.evaluable > 0 ? closedSummary.correct : null;
