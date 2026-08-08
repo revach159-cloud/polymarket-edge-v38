@@ -9,6 +9,10 @@ import {
   recordOpenPredictions,
   resolveClosedPredictions,
 } from "@/lib/history/prediction-store";
+import {
+  ensurePredictionHistoryReady,
+  persistPredictionHistory,
+} from "@/lib/history/ensure-history";
 import type { Market } from "@/types";
 
 export type PersistChampionResult = {
@@ -16,6 +20,7 @@ export type PersistChampionResult = {
   resolvedLocal: number;
   upsertedDb: number;
   marketsLinked: number;
+  durableSaved: number;
   message: string;
 };
 
@@ -28,8 +33,10 @@ export async function persistChampionPredictions(
   closed: Market[] = [],
   now = new Date(),
 ): Promise<PersistChampionResult> {
+  await ensurePredictionHistoryReady();
   const recordedLocal = recordOpenPredictions(active, now);
   const resolvedLocal = resolveClosedPredictions(closed, now);
+  const durableSaved = await persistPredictionHistory();
 
   if (!isServiceRoleConfigured()) {
     return {
@@ -37,8 +44,9 @@ export async function persistChampionPredictions(
       resolvedLocal,
       upsertedDb: 0,
       marketsLinked: 0,
+      durableSaved: 0,
       message:
-        "Local history updated — configure SUPABASE_SERVICE_ROLE_KEY to persist predictions to DB",
+        "Local history updated — configure SUPABASE_SERVICE_ROLE_KEY to persist history + predictions",
     };
   }
 
@@ -49,7 +57,8 @@ export async function persistChampionPredictions(
       resolvedLocal,
       upsertedDb: 0,
       marketsLinked: 0,
-      message: "Admin client unavailable — local history only",
+      durableSaved,
+      message: "Admin client unavailable — durable history only",
     };
   }
 
@@ -127,7 +136,8 @@ export async function persistChampionPredictions(
       resolvedLocal,
       upsertedDb: 0,
       marketsLinked,
-      message: "model_versions unavailable — local history only",
+      durableSaved,
+      message: "model_versions unavailable — durable history saved",
     };
   }
 
@@ -185,6 +195,7 @@ export async function persistChampionPredictions(
     resolvedLocal,
     upsertedDb,
     marketsLinked,
-    message: `Local +${recordedLocal}/resolved ${resolvedLocal}; DB inserted ${upsertedDb}`,
+    durableSaved,
+    message: `Local +${recordedLocal}/resolved ${resolvedLocal}; durable ${durableSaved}; DB inserted ${upsertedDb}`,
   };
 }

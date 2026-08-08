@@ -3,6 +3,7 @@ import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { MarketsStatsStrip } from "@/components/markets/market-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import { ensurePredictionHistoryReady } from "@/lib/history/ensure-history";
 import {
   listResolvedHistory,
   summarizeFromHistory,
@@ -16,6 +17,8 @@ export const metadata = { title: "סטטיסטיקה" };
 export const dynamic = "force-dynamic";
 
 export default async function StatisticsPage() {
+  await ensurePredictionHistoryReady();
+
   const [statsRaw, markets, closedMarkets] = await Promise.all([
     getMarketStats(),
     getMarkets({ status: "active", sort: "volume" }),

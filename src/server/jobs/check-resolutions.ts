@@ -5,6 +5,10 @@ import {
   resolveClosedPredictions,
   voidMissingOpenPredictions,
 } from "@/lib/history/prediction-store";
+import {
+  ensurePredictionHistoryReady,
+  persistPredictionHistory,
+} from "@/lib/history/ensure-history";
 import { tryCreateAdminClient } from "@/lib/auth/supabase/admin";
 import { isServiceRoleConfigured } from "@/lib/env";
 import { inferMarketResolution } from "@/lib/markets/resolution";
@@ -39,11 +43,15 @@ async function mapPool<T, R>(
  */
 export async function checkResolutionsJob() {
   return withJobLock<ResolveJobData>("check-resolutions", async () => {
+    await ensurePredictionHistoryReady();
+
     const open = listHistoryPredictions({ status: "open", limit: 0 })
       .sort((a, b) => Date.parse(a.recordedAt) - Date.parse(b.recordedAt))
       .slice(0, 800);
     if (!open.length) {
-      return await resolveDbPredictionsOnly();
+      const onlyDb = await resolveDbPredictionsOnly();
+      await persistPredictionHistory();
+      return onlyDb;
     }
 
     const fetched = await mapPool(open, 8, async (pred) => {
@@ -71,15 +79,18 @@ export async function checkResolutionsJob() {
       dbResolved = await resolveDbOpenPredictions(closedMarkets);
     }
 
+    const durableSaved = await persistPredictionHistory();
+
     return {
       processed: resolvedLocal + voidedLocal + dbResolved,
-      message: `Resolved local ${resolvedLocal}, voided ${voidedLocal}, DB ${dbResolved} (checked ${open.length} open)`,
+      message: `Resolved local ${resolvedLocal}, voided ${voidedLocal}, DB ${dbResolved}, durable ${durableSaved} (checked ${open.length} open)`,
       data: {
         open: open.length,
         closedFetched: closedMarkets.length,
         resolvedLocal,
         voidedLocal,
         dbResolved,
+        durableSaved,
       },
     };
   });

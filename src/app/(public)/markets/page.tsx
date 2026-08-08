@@ -7,6 +7,10 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
 import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import {
+  ensurePredictionHistoryReady,
+  persistPredictionHistory,
+} from "@/lib/history/ensure-history";
 import { resolveOpenHistoryFromGamma } from "@/lib/history/resolve-open";
 import {
   listResolvedHistory,
@@ -62,6 +66,9 @@ export default async function MarketsPage({
     ? Math.floor(closedPageRaw)
     : 1;
 
+  // Restore tracked history before sync (Vercel /tmp is ephemeral).
+  await ensurePredictionHistoryReady();
+
   const [result, closedMarkets, activeForStats] = await Promise.all([
     getMarkets(filters),
     getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
@@ -76,6 +83,8 @@ export default async function MarketsPage({
     knownClosedIds: new Set(closedMarkets.data.map((m) => m.id)),
     knownClosedMarkets: closedMarkets.data,
   });
+  // Persist open + newly resolved rows so counters survive the next deploy.
+  await persistPredictionHistory();
 
   const predictedSides = recordedPredictionSides();
   const historyResolved = listResolvedHistory();

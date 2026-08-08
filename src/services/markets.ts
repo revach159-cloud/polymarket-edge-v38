@@ -400,6 +400,10 @@ export async function getResolvedPredictions(limit = 500): Promise<ResolvedPredi
 }
 
 export async function getMarketStats() {
+  const { ensurePredictionHistoryReady, persistPredictionHistory } =
+    await import("@/lib/history/ensure-history");
+  await ensurePredictionHistoryReady();
+
   const [activeResult, closedResult] = await Promise.all([
     getMarkets({ status: "active", sort: "smart" }),
     getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
@@ -415,6 +419,7 @@ export async function getMarketStats() {
     knownClosedIds: new Set(closedResult.data.map((m) => m.id)),
     knownClosedMarkets: closedResult.data,
   });
+  await persistPredictionHistory();
 
   const sides = recordedPredictionSides();
   return computeMarketStats(activeResult.data, closedResult.data, sides);

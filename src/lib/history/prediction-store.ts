@@ -29,13 +29,15 @@ export type HistoryPrediction = {
  * recorded picks reappear after they resolve.
  * v4 compacts duplicate history rows (same marketId / slug).
  */
-const STORE_VERSION = 4 as const;
+export const HISTORY_STORE_VERSION = 4 as const;
 
-type StoreShape = {
-  version: typeof STORE_VERSION;
+export type HistoryStoreShape = {
+  version: typeof HISTORY_STORE_VERSION;
   updatedAt: string;
   predictions: HistoryPrediction[];
 };
+
+type StoreShape = HistoryStoreShape;
 
 const GLOBAL_KEY = "__polymarket_edge_prediction_history__";
 
@@ -48,7 +50,7 @@ function storePath(): string {
 
 function emptyStore(): StoreShape {
   return {
-    version: STORE_VERSION,
+    version: HISTORY_STORE_VERSION,
     updatedAt: new Date().toISOString(),
     predictions: [],
   };
@@ -58,7 +60,7 @@ function memoryStore(): StoreShape {
   const g = globalThis as typeof globalThis & {
     [GLOBAL_KEY]?: StoreShape;
   };
-  if (!g[GLOBAL_KEY] || g[GLOBAL_KEY]!.version !== STORE_VERSION) {
+  if (!g[GLOBAL_KEY] || g[GLOBAL_KEY]!.version !== HISTORY_STORE_VERSION) {
     g[GLOBAL_KEY] = emptyStore();
   }
   return g[GLOBAL_KEY]!;
@@ -71,7 +73,7 @@ function readStore(): StoreShape {
     if (!existsSync(file)) return mem;
     const parsed = JSON.parse(readFileSync(file, "utf8")) as StoreShape;
     // Reset any pre-v4 history — clears duplicates / fixtures.
-    if (!parsed || parsed.version !== STORE_VERSION) {
+    if (!parsed || parsed.version !== HISTORY_STORE_VERSION) {
       writeStore(emptyStore());
       return memoryStore();
     }
@@ -114,10 +116,21 @@ function writeStore(store: StoreShape): void {
   }
 }
 
+/** Prefer resolved (esp. graded) over open; epoch-ms alone must not beat status. */
 function historyRank(row: HistoryPrediction): number {
-  const resolvedBoost = row.status === "resolved" ? 1_000_000 : 0;
+  const statusBoost =
+    row.status === "resolved" ? (row.correct != null ? 3 : 2) : 1;
   const time = Date.parse(row.resolvedAt ?? row.recordedAt) || 0;
-  return resolvedBoost + time;
+  // Status in the high digits, time in the low — 1e13 covers far-future dates.
+  return statusBoost * 1e13 + time;
+}
+
+function preferHistoryRow(
+  prev: HistoryPrediction | undefined,
+  row: HistoryPrediction,
+): HistoryPrediction {
+  if (!prev) return row;
+  return historyRank(row) >= historyRank(prev) ? row : prev;
 }
 
 /**
@@ -129,10 +142,7 @@ export function compactHistoryPredictions(
 ): HistoryPrediction[] {
   const byMarket = new Map<string, HistoryPrediction>();
   for (const row of predictions) {
-    const prev = byMarket.get(row.marketId);
-    if (!prev || historyRank(row) >= historyRank(prev)) {
-      byMarket.set(row.marketId, row);
-    }
+    byMarket.set(row.marketId, preferHistoryRow(byMarket.get(row.marketId), row));
   }
 
   const bySlug = new Map<string, HistoryPrediction>();
@@ -142,13 +152,39 @@ export function compactHistoryPredictions(
       bySlug.set(`id:${row.marketId}`, row);
       continue;
     }
-    const prev = bySlug.get(slugKey);
-    if (!prev || historyRank(row) >= historyRank(prev)) {
-      bySlug.set(slugKey, { ...row, id: `pred:${row.marketId}` });
-    }
+    const chosen = preferHistoryRow(bySlug.get(slugKey), row);
+    bySlug.set(slugKey, { ...chosen, id: `pred:${chosen.marketId}` });
   }
 
   return [...bySlug.values()];
+}
+
+/** Snapshot for durable flush (Supabase). */
+export function getHistoryStoreSnapshot(): HistoryStoreShape {
+  const store = readStore();
+  return {
+    version: store.version,
+    updatedAt: store.updatedAt,
+    predictions: [...store.predictions],
+  };
+}
+
+/**
+ * Merge remote/durable rows into the local store.
+ * Prefer resolved rows, then newest — same ranking as compact.
+ */
+export function importHistoryPredictions(
+  rows: HistoryPrediction[],
+): number {
+  if (!rows.length) return 0;
+  const store = readStore();
+  const before = store.predictions.length;
+  store.predictions = compactHistoryPredictions([
+    ...store.predictions,
+    ...rows,
+  ]);
+  writeStore(store);
+  return Math.max(0, store.predictions.length - before);
 }
 
 function predictionId(market: Market): string {
