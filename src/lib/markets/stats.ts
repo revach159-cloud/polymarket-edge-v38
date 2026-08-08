@@ -1,4 +1,5 @@
 import { wilsonLowerBound } from "@/lib/analytics/stats";
+import { getClosedStatsOptions } from "@/lib/history/closed-stats-mode";
 import { summarizeClosedMarkets } from "@/lib/markets/closed-stats";
 import { getTimeBucket } from "@/lib/predictions/time-buckets";
 import type { Market } from "@/types";
@@ -63,12 +64,12 @@ export function computeMarketStats(
     );
   }).length;
 
-  const closedSummary = summarizeClosedMarkets(closedMarkets, predictedSides, {
-    // Real performance only: never grade with a post-close live re-pick.
-    fallbackToLivePick: false,
-    // נסגרו + board = tracked history picks only (empty after stats reset).
-    trackedOnly: true,
-  });
+  const closedSummary = summarizeClosedMarkets(
+    closedMarkets,
+    predictedSides,
+    // Honest tracked sample when available; else live closed so UI never freezes at 0.
+    getClosedStatsOptions(),
+  );
   const closedCount = closedSummary.closed;
   const correctCount = closedSummary.correct;
   const graded = closedSummary.evaluable;

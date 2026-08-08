@@ -84,22 +84,25 @@ describe("closed market verdicts", () => {
       ["win", "YES"],
       ["lose", "NO"],
     ]);
-    const summary = summarizeClosedMarkets(closed, sides);
+    const summary = summarizeClosedMarkets(closed, sides, {
+      trackedOnly: true,
+      fallbackToLivePick: false,
+    });
     const stats = computeMarketStats([], closed, sides, now);
 
-    // Untracked Gamma closed rows are excluded from נסגרו + the board.
+    // Explicit tracked summary still ignores untracked Gamma rows.
     expect(summary.closed).toBe(2);
-    expect(stats.closed).toBe(summary.closed);
-    expect(stats.correct).toBe(summary.correct);
-    // Honest denominator = graded rows with a pre-close recorded pick.
-    expect(stats.resolvedTotal).toBe(summary.evaluable);
+    expect(summary.correct).toBe(1);
+    expect(summary.evaluable).toBe(2);
+    // computeMarketStats bypasses empty graded-history freeze with live closed.
+    expect(stats.closed).toBe(3);
     expect(stats.correct).toBe(1);
     expect(stats.resolvedTotal).toBe(2);
     expect(stats.winRatePercent).toBe(50);
     expect(stats.winRateLabel).toBe("50%");
   });
 
-  it("resets נסגרו and the closed board when history sides are empty", () => {
+  it("tracked-only mode still clears the board when history sides are empty", () => {
     const closed = [
       market({
         id: "gamma-1",
@@ -124,12 +127,25 @@ describe("closed market verdicts", () => {
       fallbackToLivePick: false,
       trackedOnly: true,
     });
-    const stats = computeMarketStats([], closed, new Map());
-
     expect(summary.closed).toBe(0);
     expect(summary.verdicts).toHaveLength(0);
-    expect(stats.closed).toBe(0);
-    expect(stats.correct).toBeNull();
-    expect(stats.winRateLabel).toBe("אין מדגם");
+  });
+
+  it("bypasses empty freeze: live closed scoring when no graded history", () => {
+    const closed = [
+      market({
+        id: "gamma-2",
+        selectedOutcome: "YES",
+        outcomes: [
+          { id: "y", name: "Yes", price: 0.99 },
+          { id: "n", name: "No", price: 0.01 },
+        ],
+      }),
+    ];
+    const stats = computeMarketStats([], closed, new Map());
+    expect(stats.closed).toBe(1);
+    expect(stats.correct).toBe(1);
+    expect(stats.resolvedTotal).toBe(1);
+    expect(stats.winRatePercent).toBe(100);
   });
 });

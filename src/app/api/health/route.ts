@@ -24,8 +24,10 @@ export async function GET() {
     status,
     version: getAppVersion(),
     database: isSupabaseConfigured() ? "configured" : "not_configured",
-    // Without service role, /tmp history is wiped every cold start → נסגרו stays 0.
-    historyDurable: isServiceRoleConfigured() ? "configured" : "not_configured",
+    // Supabase service role OR committed public/prediction-history.json.
+    historyDurable: isServiceRoleConfigured()
+      ? "supabase"
+      : "static_or_live_fallback",
     polymarket,
     lastSuccessfulSync: null,
     timestamp: new Date().toISOString(),

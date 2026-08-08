@@ -6,6 +6,7 @@ import {
   recordedPredictionSides,
   syncPredictionHistory,
 } from "@/lib/history/prediction-store";
+import { getClosedStatsOptions } from "@/lib/history/closed-stats-mode";
 import {
   ensurePredictionHistoryReady,
   persistPredictionHistory,
@@ -35,29 +36,30 @@ export default async function StatisticsPage() {
   await persistPredictionHistory();
 
   const closedSummary = (() => {
-    const historyResolved = listResolvedHistory();
+    const historyResolved = listResolvedHistory().filter((r) => r.correct != null);
     if (historyResolved.length > 0) {
       return summarizeFromHistory(historyResolved, closedMarkets.data);
     }
     return summarizeClosedMarkets(
       closedMarkets.data,
       recordedPredictionSides(),
-      { fallbackToLivePick: false, trackedOnly: true },
+      getClosedStatsOptions(),
     );
   })();
   const stats = { ...statsRaw };
-  if (closedSummary.closed > 0 || listResolvedHistory(1).length === 0) {
-    stats.closed = closedSummary.closed;
-    stats.correct =
-      closedSummary.evaluable > 0 ? closedSummary.correct : null;
-    stats.resolvedTotal = closedSummary.evaluable;
-    if (closedSummary.evaluable > 0) {
-      const pct = Math.round(
-        (closedSummary.correct / closedSummary.evaluable) * 100,
-      );
-      stats.winRatePercent = pct;
-      stats.winRateLabel = `${pct}%`;
-    }
+  stats.closed = closedSummary.closed;
+  stats.correct =
+    closedSummary.evaluable > 0 ? closedSummary.correct : null;
+  stats.resolvedTotal = closedSummary.evaluable;
+  if (closedSummary.evaluable > 0) {
+    const pct = Math.round(
+      (closedSummary.correct / closedSummary.evaluable) * 100,
+    );
+    stats.winRatePercent = pct;
+    stats.winRateLabel = `${pct}%`;
+  } else {
+    stats.winRatePercent = null;
+    stats.winRateLabel = "אין מדגם";
   }
   const resolvedRows = closedSummary.verdicts.filter((v) => v.correct !== null);
 
