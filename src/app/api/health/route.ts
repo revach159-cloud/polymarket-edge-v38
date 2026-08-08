@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { getAppVersion, isSupabaseConfigured } from "@/lib/env";
+import {
+  getAppVersion,
+  isServiceRoleConfigured,
+  isSupabaseConfigured,
+} from "@/lib/env";
 import { probeClob, probeGamma } from "@/lib/polymarket/api";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +24,8 @@ export async function GET() {
     status,
     version: getAppVersion(),
     database: isSupabaseConfigured() ? "configured" : "not_configured",
+    // Without service role, /tmp history is wiped every cold start → נסגרו stays 0.
+    historyDurable: isServiceRoleConfigured() ? "configured" : "not_configured",
     polymarket,
     lastSuccessfulSync: null,
     timestamp: new Date().toISOString(),

@@ -66,34 +66,45 @@ function memoryStore(): StoreShape {
   return g[GLOBAL_KEY]!;
 }
 
+function snapshotOf(store: StoreShape): StoreShape {
+  return {
+    version: store.version,
+    updatedAt: store.updatedAt,
+    predictions: [...store.predictions],
+  };
+}
+
 function readStore(): StoreShape {
   const mem = memoryStore();
   try {
     const file = storePath();
-    if (!existsSync(file)) return mem;
+    if (!existsSync(file)) return snapshotOf(mem);
     const parsed = JSON.parse(readFileSync(file, "utf8")) as StoreShape;
     // Reset any pre-v4 history — clears duplicates / fixtures.
     if (!parsed || parsed.version !== HISTORY_STORE_VERSION) {
-      writeStore(emptyStore());
-      return memoryStore();
+      writeStore(emptyStore(), { replace: true });
+      return snapshotOf(memoryStore());
     }
-    if (!parsed.predictions || !Array.isArray(parsed.predictions)) return mem;
+    if (!parsed.predictions || !Array.isArray(parsed.predictions)) {
+      return snapshotOf(mem);
+    }
     const compacted = compactHistoryPredictions(parsed.predictions);
     mem.predictions = compacted;
     mem.updatedAt = parsed.updatedAt ?? mem.updatedAt;
     if (compacted.length !== parsed.predictions.length) {
-      writeStore(mem);
+      writeStore(snapshotOf(mem));
     }
-    return mem;
+    // Return a copy so RMW callers cannot clobber live memory before writeStore.
+    return snapshotOf(mem);
   } catch {
-    return mem;
+    return snapshotOf(mem);
   }
 }
 
 /** Wipe on-disk + in-memory history (used after model policy changes). */
 export function resetPredictionHistory(): void {
   const empty = emptyStore();
-  writeStore(empty);
+  writeStore(empty, { replace: true });
   try {
     const file = storePath();
     if (existsSync(file)) writeFileSync(file, JSON.stringify(empty, null, 2), "utf8");
@@ -102,9 +113,21 @@ export function resetPredictionHistory(): void {
   }
 }
 
-function writeStore(store: StoreShape): void {
+function writeStore(
+  store: StoreShape,
+  options?: { replace?: boolean },
+): void {
+  // Merge with live memory so parallel getMarkets (active + closed) cannot
+  // wipe opens recorded by a sibling call that finished between our read+write.
+  const merged = options?.replace
+    ? compactHistoryPredictions(store.predictions)
+    : compactHistoryPredictions([
+        ...memoryStore().predictions,
+        ...store.predictions,
+      ]);
+  store.predictions = merged;
   store.updatedAt = new Date().toISOString();
-  memoryStore().predictions = store.predictions;
+  memoryStore().predictions = merged;
   memoryStore().updatedAt = store.updatedAt;
   try {
     const file = storePath();

@@ -53,6 +53,14 @@ let cached: AppEnv | null = null;
 
 export function getEnv(): AppEnv {
   if (cached) return cached;
+  // Common Vercel naming — accept anon key as the publishable key.
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY =
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  }
   const parsed = envSchema.safeParse(process.env);
   if (!parsed.success) {
     const message = parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ");

@@ -14,6 +14,7 @@ import { dedupeMarkets } from "@/lib/markets/dedupe";
 import {
   listHistoryPredictions,
   recordedPredictionSides,
+  resolveClosedPredictions,
   syncPredictionHistory,
   type HistoryPrediction,
 } from "@/lib/history/prediction-store";
@@ -205,7 +206,14 @@ export async function getMarkets(
   const enriched = enrichMarkets(markets, new Date(), consensusBySlug);
   const active = enriched.filter((m) => m.active && !m.closed);
   const closedRows = enriched.filter((m) => m.closed || m.resolved);
-  syncPredictionHistory(active, closedRows);
+  // Only full-sync when this fetch includes actives. Closed-only parallel calls
+  // used to race and overwrite opens with an empty snapshot (נסגרו stuck at 0).
+  if (active.length > 0) {
+    syncPredictionHistory(active, closedRows);
+  } else if (closedRows.length > 0) {
+    // Resolve against opens another concurrent fetch may already have recorded.
+    resolveClosedPredictions(closedRows);
+  }
 
   return {
     data: filterMarkets(enriched, filters),

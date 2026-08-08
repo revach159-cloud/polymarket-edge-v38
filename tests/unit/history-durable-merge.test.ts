@@ -5,6 +5,7 @@ import {
   listHistoryPredictions,
   recordOpenPredictions,
   resetPredictionHistory,
+  resolveClosedPredictions,
   type HistoryPrediction,
 } from "@/lib/history/prediction-store";
 import type { Market } from "@/types";
@@ -97,5 +98,44 @@ describe("durable history merge", () => {
     expect(resolved).toHaveLength(1);
     expect(resolved[0]?.correct).toBe(true);
     expect(listHistoryPredictions({ status: "open", limit: 10 })).toHaveLength(0);
+  });
+
+  it("does not wipe opens when a closed-only resolve races a record", () => {
+    const open = market({
+      id: "keep-me",
+      slug: "keep-me",
+      selectedOutcome: "YES",
+      active: true,
+      closed: false,
+    });
+
+    // Classic TOCTOU that used to zero נסגרו on /markets:
+    // 1) closed path reads empty snapshot
+    // 2) active path records opens into live memory
+    // 3) closed path writeStore(stale empty) must merge, not replace.
+    const closedStale = [
+      market({
+        id: "other-closed",
+        slug: "other-closed",
+        active: false,
+        closed: true,
+        outcomes: [
+          { id: "y", name: "Yes", price: 0.99 },
+          { id: "n", name: "No", price: 0.01 },
+        ],
+      }),
+    ];
+
+    // Begin closed resolve (captures empty copy)...
+    const midResolve = () => resolveClosedPredictions(closedStale);
+    // ...but record opens before/around that write.
+    recordOpenPredictions([open]);
+    midResolve();
+    recordOpenPredictions([open]);
+    resolveClosedPredictions(closedStale);
+
+    const opens = listHistoryPredictions({ status: "open" });
+    expect(opens.some((p) => p.marketId === "keep-me")).toBe(true);
+    expect(getHistoryStoreSnapshot().predictions.length).toBeGreaterThan(0);
   });
 });

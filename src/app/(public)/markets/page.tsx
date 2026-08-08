@@ -6,7 +6,10 @@ import { MarketFilters } from "@/components/markets/market-filters";
 import { EmptyState } from "@/components/shared/empty-state";
 import { LoadingState } from "@/components/shared/loading-state";
 import { StaleBanner } from "@/components/shared/stale-banner";
-import { recordedPredictionSides } from "@/lib/history/prediction-store";
+import {
+  recordedPredictionSides,
+  syncPredictionHistory,
+} from "@/lib/history/prediction-store";
 import {
   ensurePredictionHistoryReady,
   persistPredictionHistory,
@@ -76,6 +79,11 @@ export default async function MarketsPage({
       ? Promise.resolve(null)
       : getMarkets({ status: "active", sort: "smart" }),
   ]);
+
+  // Single post-fetch sync so opens from the active list are never wiped by the
+  // parallel closed fetch — then resolve + durable flush so נסגרו can leave 0.
+  const activeRows = activeForStats?.data ?? result.data;
+  syncPredictionHistory(activeRows, closedMarkets.data);
 
   await resolveOpenHistoryFromGamma({
     limit: 250,

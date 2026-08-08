@@ -2,8 +2,14 @@ import { DataFreshnessBadge } from "@/components/layout/data-freshness-badge";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { MarketsStatsStrip } from "@/components/markets/market-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { recordedPredictionSides } from "@/lib/history/prediction-store";
-import { ensurePredictionHistoryReady } from "@/lib/history/ensure-history";
+import {
+  recordedPredictionSides,
+  syncPredictionHistory,
+} from "@/lib/history/prediction-store";
+import {
+  ensurePredictionHistoryReady,
+  persistPredictionHistory,
+} from "@/lib/history/ensure-history";
 import {
   listResolvedHistory,
   summarizeFromHistory,
@@ -24,6 +30,9 @@ export default async function StatisticsPage() {
     getMarkets({ status: "active", sort: "volume" }),
     getMarkets({ status: "closed", sort: "endDate", qualityOnly: false }),
   ]);
+
+  syncPredictionHistory(markets.data, closedMarkets.data);
+  await persistPredictionHistory();
 
   const closedSummary = (() => {
     const historyResolved = listResolvedHistory();
