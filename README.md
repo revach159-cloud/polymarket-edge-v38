@@ -80,3 +80,4 @@ npm run check
 - `SECURITY.md`
 - `DEPLOYMENT.md`
 - `TESTING.md`
+- `docs/STRATEGY_INVENTORY.md` — forensic inventory of every verified prediction/selection algorithm (no invented strategies)
