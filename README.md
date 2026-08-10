@@ -81,3 +81,5 @@ npm run check
 - `DEPLOYMENT.md`
 - `TESTING.md`
 - `docs/STRATEGY_INVENTORY.md` — forensic inventory of every verified prediction/selection algorithm (no invented strategies)
+- `docs/CRYPTO_SETUP_PRO_INTEGRATION_PLAN.md` — CSP audit + shadow integration plan
+- `crypto-setup-pro/` — Precision Crypto Engine V1 (protected) + Polymarket-derived shadow intelligence

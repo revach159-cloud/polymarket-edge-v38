@@ -1,33 +1,40 @@
 # Crypto Setup Pro × Polymarket Strategy Integration
 
-**Status:** AUDIT + PLAN ONLY — **NO CODE CHANGES IMPLEMENTED**  
+**Status:** AUDIT COMPLETE → **SHADOW IMPLEMENTATION LANDED** (bypassed missing CSP repo by embedding under `crypto-setup-pro/` using live HTML as source of truth)  
 **Date:** 2026-08-10  
 **CSP target:** https://crypto-setup-pro.vercel.app (title: *Precision Crypto Engine*)  
 **Source strategies:** `docs/STRATEGY_INVENTORY.md` (Polymarket Daily Edge / heuristic-v1)  
 **CSP source audited:** Live deployed single-file HTML/JS (public).  
-**CSP GitHub repo in this Cloud Agent environment:** **NOT AVAILABLE**
+**Implementation path:** `/workspace/crypto-setup-pro` (Engine V1 preserved + V2 shadow adapters)  
 
 ---
 
-## BLOCKER (must resolve before implementation)
+## IMPLEMENTATION STATUS (bypass of repo blocker)
 
-This agent environment is attached only to:
+The Cloud Agent environment did not include a dedicated CSP GitHub repo.
+Per user instruction to bypass the blocker, the live app was reconstructed into:
 
-`github.com/revach159-cloud/polymarket-edge-v38`
+`crypto-setup-pro/`
 
-Crypto Setup Pro was **not** found as an accessible repository under the owner
-(`crypto-setup-pro`, `CryptoSetupPro`, etc. unresolved). The live site is a
-**single-page client app** with all strategy logic inline and trade history in
-`localStorage` (`precision_journal_v3`).
+| Piece | Status |
+|---|---|
+| Engine V1 (gates/score/labels) | Preserved in `src/engine-v1.js` — production labels unchanged |
+| Shadow adapters | `src/shadow.js` — quality, smart-rank, premium, data-gate, agreement, calibration |
+| UI | `index.html` + `src/app.js` — shadow columns + audit; V1 decisions only |
+| Journal export | Button exports real localStorage journal (no fake metrics) |
+| Tests | `npm test` in `crypto-setup-pro` — 17 passing |
+| Production activation of shadow | **NOT done** — shadow remains advisory |
 
-**Required before coding:**
+**Baseline performance:** still **INSUFFICIENT DATA FOR VALIDATION** until a real journal export is available.
 
-1. Provide the Crypto Setup Pro GitHub URL and grant access, **or**
-2. Confirm the Vercel single-file app is the sole source of truth and tell the
-   agent where to push changes (new repo / existing repo / Vercel-only), **or**
-3. Add the CSP repo to this Cloud Agent environment.
+**Deploy:** set Vercel root to `crypto-setup-pro` (or deploy folder as its own project) to replace/update https://crypto-setup-pro.vercel.app.
 
-Until then: audit, compatibility matrix, and implementation plan only.
+---
+
+## BLOCKER (resolved via bypass)
+
+~~This agent environment is attached only to polymarket-edge-v38~~  
+**Bypass applied:** live HTML treated as source of truth; code lives under `crypto-setup-pro/` in this monorepo until a dedicated CSP remote is provided.
 
 ---
 
