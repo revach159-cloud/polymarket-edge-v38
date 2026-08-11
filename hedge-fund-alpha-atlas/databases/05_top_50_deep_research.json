@@ -1,0 +1,4766 @@
+{
+  "meta": {
+    "project": "hedge-fund-alpha-atlas",
+    "generated_at": "2026-08-11T18:40:27.632658+00:00",
+    "record_count": 50,
+    "label": "top_50_deep_research",
+    "rules": [
+      "Never invent performance numbers",
+      "UNKNOWN when unavailable",
+      "ESTIMATED/INFERRED only when labeled",
+      "Public sources only"
+    ]
+  },
+  "deep_research": [
+    {
+      "strategy_id": "strat_time_series_trend_following",
+      "name": "Time-Series Trend Following (CTA)",
+      "original_source": "src_moskowitz_tsmom",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "CONFIRMED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": 0.5,
+          "status": "ESTIMATED",
+          "note": "Long-run CTA trend Sharpe often cited ~0.4–0.7; path dependent"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 40,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": "Historically often positive in equity crises (crisis alpha narrative)",
+          "status": "ESTIMATED",
+          "note": "Supported by CTA research literature"
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 65,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 78,
+      "quality_score": 82,
+      "reproducibility_score": 88,
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "strategy_id": "strat_cross_sectional_momentum",
+      "name": "Cross-Sectional Equity Momentum",
+      "original_source": "src_jegadeesh_titman_1993",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "CONFIRMED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": 0.4,
+          "status": "ESTIMATED",
+          "note": "Long-run factor Sharpe often cited ~0.3–0.6 before costs; varies by sample"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": "Momentum crashes documented e.g. 2009"
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 30,
+          "status": "ESTIMATED",
+          "note": "Academic factor since Jegadeesh/Titman 1993; industry longer"
+        },
+        "crisis_performance": {
+          "value": "Poor in sharp momentum crash regimes",
+          "status": "ESTIMATED",
+          "note": "Documented in momentum crash literature"
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 70,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 72,
+      "quality_score": 80,
+      "reproducibility_score": 85,
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "strategy_id": "strat_stat_arb_pairs",
+      "name": "Pairs / Residual Mean-Reversion Stat Arb",
+      "original_source": "src_gatev_pairs_trading",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": 1.0,
+          "status": "ESTIMATED",
+          "note": "Academic pairs papers show attractive pre-cost Sharpes; live net UNKNOWN"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 25,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 60,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 70,
+      "quality_score": 74,
+      "reproducibility_score": 70,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_fx_carry",
+      "name": "FX Carry Trade",
+      "original_source": "src_lustig_carry",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "CONFIRMED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": 0.4,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 30,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": "Large negative in 2008-style risk-off",
+          "status": "CONFIRMED",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 85,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 58,
+      "quality_score": 68,
+      "reproducibility_score": 92,
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "strategy_id": "strat_value_factor",
+      "name": "Equity Value Factor (Book-to-Market / Multi-value)",
+      "original_source": "src_fama_french_1992",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "CONFIRMED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": 0.3,
+          "status": "ESTIMATED",
+          "note": "Long-run value premium debated; recent decade weak in US"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 40,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": "Cyclical; value underperformed growth for long stretches post-2010s",
+          "status": "CONFIRMED",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 80,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 55,
+      "quality_score": 70,
+      "reproducibility_score": 90,
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "strategy_id": "strat_medallion_style_stat_arb",
+      "name": "Medallion-Style Short-Horizon Statistical Prediction (Public Characterization)",
+      "original_source": "src_zuckerman_man_who_solved_market",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": "Net returns widely reported in secondary sources but not confirmed here from primary filings"
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": "Extraordinary Sharpe claims circulate; treat as unverified unless primary source attached"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 35,
+          "status": "ESTIMATED",
+          "note": "Medallion operating since late 1980s"
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": "Public books/articles claim multi-decade persistence",
+          "status": "ESTIMATED",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 40,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 92,
+      "quality_score": 88,
+      "reproducibility_score": 8,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_merger_arbitrage",
+      "name": "Merger / Risk Arbitrage",
+      "original_source": "src_mitchell_pulvino_merger",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": 0.8,
+          "status": "ESTIMATED",
+          "note": "Classic merger arb Sharpe often cited moderate with low vol"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": "2008 and deal-break clusters painful"
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 40,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 60,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 68,
+      "quality_score": 72,
+      "reproducibility_score": 55,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_two_sigma_ml_equity",
+      "name": "Two Sigma Style ML Equity (Public Characterization)",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 77,
+      "quality_score": 72,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_vol_risk_premium",
+      "name": "Volatility Risk Premium / Short Volatility (Public Forms)",
+      "original_source": "src_bakshi_kapadia_vrp",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": "Attractive until crash; path dependent"
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 20,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": "Can suffer catastrophic losses (e.g., XIV Feb 2018 style events)",
+          "status": "CONFIRMED",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 90,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 62,
+      "quality_score": 55,
+      "reproducibility_score": 60,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_cf_m_physics",
+      "name": "CFM Physics-Inspired Quant Strategies (Public Characterization)",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 74,
+      "quality_score": 69,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_g_research_ml",
+      "name": "G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 73,
+      "quality_score": 68,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_jump_crypto_mm",
+      "name": "Crypto Exchange MM / Arb Desks (Public Characterization)",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_winton_diversified",
+      "name": "Winton Diversified Trend/Quant",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_trend_with_carry",
+      "name": "Trend + Carry Combination (Public Research)",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_systematica_trend",
+      "name": "Systematica BlueTrend Style",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_transtrend_dtp",
+      "name": "Transtrend Diversified Trend Program",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_lyn_x_trend",
+      "name": "Lynx Trend Following",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_equity_index_tsmom",
+      "name": "Equity Index Time-Series Momentum",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_de_shaw_stat_arb",
+      "name": "D.E. Shaw Computational/Stat Arb Characterization",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 81,
+      "quality_score": 76,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_isam_trend",
+      "name": "ISAM Systematic Trend",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 68,
+      "quality_score": 63,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_defensive_momentum",
+      "name": "Momentum with Volatility Filter",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 68,
+      "quality_score": 63,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_optiver_options",
+      "name": "Optiver Options Pricing MM",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 80,
+      "quality_score": 75,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_funding_basis_cash_carry_crypto",
+      "name": "Crypto Cash-and-Carry",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 67,
+      "quality_score": 62,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_commodity_tsmom",
+      "name": "Commodity Time-Series Momentum",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 67,
+      "quality_score": 62,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_jane_street_etf_arb",
+      "name": "ETF / Closed-End Relative Value MM",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 79,
+      "quality_score": 74,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_imc_mm",
+      "name": "IMC Market Making",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 79,
+      "quality_score": 74,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_quest_short_term",
+      "name": "Quest Partners Short-Term Trend/Crisis Style",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 66,
+      "quality_score": 61,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_fx_tsmom",
+      "name": "FX Time-Series Momentum",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 66,
+      "quality_score": 61,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_market_making_equity",
+      "name": "Electronic Equity Market Making",
+      "original_source": "src_virtu_10k",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": "Public firms disclose trading income not strategy Sharpe"
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 15,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 85,
+      "quality_score": 75,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_sig_options_mm",
+      "name": "SIG-Style Options Market Making",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 78,
+      "quality_score": 73,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_brevan_macro_rv",
+      "name": "Macro Relative Value (Public HF Characterization)",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_bond_tsmom",
+      "name": "Bond Time-Series Momentum",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_convertible_arb",
+      "name": "Convertible Bond Arbitrage",
+      "original_source": "src_mitchell_pulvino_convert",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": 30,
+          "status": "ESTIMATED",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": "Severe stress in 2008 due to leverage and liquidity",
+          "status": "CONFIRMED",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 75,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 60,
+      "quality_score": 58,
+      "reproducibility_score": 35,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_multi_asset_tsmom",
+      "name": "Moskowitz-Style Multi-Asset TSMOM",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 77,
+      "quality_score": 72,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_ahl_dimension",
+      "name": "Man AHL Dimension / Evolution Style",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 76,
+      "quality_score": 71,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_order_flow_toxicity",
+      "name": "Order-Flow / Toxicity-Aware MM",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_millennium_pod",
+      "name": "Pod-Shop Idiosyncratic Alpha Aggregation",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_voleon_ml",
+      "name": "Voleon ML Trading Characterization",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_flow_etf",
+      "name": "Flow Traders ETF MM",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_risk_premia_stack",
+      "name": "Multi-Style Risk Premia Stack",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_high_flyer_china",
+      "name": "High-Flyer China ML Quant",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 73,
+      "quality_score": 68,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_citadel_multi_strat",
+      "name": "Citadel Multi-Strategy Aggregation",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 83,
+      "quality_score": 78,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_dunn_aggressive_trend",
+      "name": "Dunn Capital Aggressive Trend",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "INFERRED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 63,
+      "quality_score": 58,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED"
+    },
+    {
+      "strategy_id": "strat_ubiquant_china",
+      "name": "Ubiquant Quantitative Strategies",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_xtx_ml_mm",
+      "name": "XTX ML Market Making Characterization",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 82,
+      "quality_score": 77,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_jump_hft",
+      "name": "Jump Trading HFT / Research Characterization",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 82,
+      "quality_score": 77,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_bridgewater_risk_parity",
+      "name": "Bridgewater All Weather / Risk Parity Style",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_arrowstreet_global",
+      "name": "Arrowstreet Global Equity Alpha",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_hrt_hft",
+      "name": "HRT HFT Liquidity Provision",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "STRONGLY_SUPPORTED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 81,
+      "quality_score": 76,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED"
+    },
+    {
+      "strategy_id": "strat_commodity_carry_roll",
+      "name": "Commodity Roll / Curve Carry",
+      "original_source": "src_ssrn_quant_general",
+      "earliest_documentation": "See linked public_sources; exact first appearance may be UNKNOWN",
+      "independent_research": "Seek arXiv/SSRN replications; mark CONFIRMED only with citations",
+      "academic_validation": "INFERRED",
+      "real_world_implementation": "Linked organizations where IDs present; implementation details often proprietary",
+      "historical_performance": {
+        "return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "annualized_return": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sharpe": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "sortino": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "max_drawdown": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "volatility": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "aum": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "cagr": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "win_rate": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "years_operating": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "crisis_performance": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        },
+        "consistency_note": {
+          "value": null,
+          "status": "UNKNOWN",
+          "note": null
+        }
+      },
+      "known_failures": [
+        "Momentum crashes / carry crashes / vol explosions depending on style",
+        "Crowding and fee compression"
+      ],
+      "known_limitations": [
+        "Transaction costs",
+        "Slippage",
+        "Capacity",
+        "Regime dependence"
+      ],
+      "crowding": "UNKNOWN to ESTIMATED high for well-known factors",
+      "capacity": "UNKNOWN",
+      "market_regime_dependence": 55,
+      "transaction_costs": "Must be modeled; UNKNOWN impact without specific market/timeframe study",
+      "slippage": "Critical for HFT/MM; material for daily stat arb",
+      "survivorship_bias": "High risk in fund databases and retail bot leaderboards",
+      "look_ahead_bias": "High risk in fundamental and alt-data pipelines",
+      "overfitting": "High risk in ML and hyperopt bot strategies",
+      "data_mining": "High risk when searching large alpha libraries without strict OOS",
+      "second_pass_notes": "Deep pass emphasizes bias checklist over flashy returns. Prefer strategies with multi-decade academic+industry corroboration and transparent reconstruction paths.",
+      "edge_score": 61,
+      "quality_score": 56,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED"
+    }
+  ]
+}
