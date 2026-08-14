@@ -19,8 +19,13 @@ export default async function TopWalletsPage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 className="font-display text-3xl font-bold">ארנקים מובילים</h1>
-            <p className="mt-1 text-muted-foreground">
-              דירוג ציבורי — נתונים עשויים להיות חלקיים
+            <p className="text-muted-foreground mt-1">
+              דירוג ציבורי לפי PnL חודשי — נתונים עשויים להיות חלקיים. לסינון לפי כמעט בלי הפסדים
+              ראו{" "}
+              <Link href="/wallets/elite" className="text-primary hover:underline">
+                ארנקי מפלצות
+              </Link>
+              .
             </p>
           </div>
           <DataFreshnessBadge
@@ -30,9 +35,7 @@ export default async function TopWalletsPage() {
           />
         </div>
 
-        {result.stale || result.error ? (
-          <StaleBanner message={result.error} />
-        ) : null}
+        {result.stale || result.error ? <StaleBanner message={result.error} /> : null}
 
         {result.data.length === 0 ? (
           <EmptyState
@@ -40,7 +43,7 @@ export default async function TopWalletsPage() {
             description={result.error ?? "נסו שוב מאוחר יותר."}
           />
         ) : (
-          <div className="overflow-x-auto rounded-xl border border-border">
+          <div className="border-border overflow-x-auto rounded-xl border">
             <table className="w-full min-w-[480px] text-sm">
               <thead className="bg-muted/50 text-muted-foreground">
                 <tr className="text-start">
@@ -52,12 +55,12 @@ export default async function TopWalletsPage() {
               </thead>
               <tbody>
                 {result.data.map((w) => (
-                  <tr key={w.address} className="border-t border-border/70">
+                  <tr key={w.address} className="border-border/70 border-t">
                     <td className="px-4 py-3 tabular-nums">{w.rank ?? "—"}</td>
                     <td className="px-4 py-3">
                       <Link
                         href={`/wallets/${w.address}`}
-                        className="font-mono text-primary hover:underline ltr-isolate"
+                        className="text-primary ltr-isolate font-mono hover:underline"
                       >
                         {truncateAddress(w.address, 6)}
                       </Link>
