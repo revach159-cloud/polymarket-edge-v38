@@ -105,6 +105,26 @@ describe("evaluateEliteWallet", () => {
     expect(result.eligible).toBe(false);
   });
 
+  it("rejects wallets whose open losses are a large share of headline PnL", () => {
+    const closed = Array.from({ length: 16 }, () => 20_000);
+    const result = evaluateEliteWallet({
+      pnl: 180_000,
+      closedPnls: closed,
+      openUnrealizedLoss: 90_000,
+    });
+    expect(result.eligible).toBe(false);
+  });
+
+  it("rejects large absolute open losses even when they are a small share of PnL", () => {
+    const closed = Array.from({ length: 12 }, () => 50_000);
+    const result = evaluateEliteWallet({
+      pnl: 6_000_000,
+      closedPnls: closed,
+      openUnrealizedLoss: 150_000,
+    });
+    expect(result.eligible).toBe(false);
+  });
+
   it("allows modest open inventory when closed losses are tiny", () => {
     const closed = Array.from({ length: 16 }, () => 7_500);
     const result = evaluateEliteWallet({

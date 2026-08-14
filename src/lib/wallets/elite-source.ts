@@ -14,6 +14,7 @@ const memoryCache: { at: number; value: EliteWallet[] | null; error?: string } =
 const CACHE_MS = 5 * 60_000;
 const MONTH_LIMIT = 50;
 const ALL_LIMIT = 40;
+/** Keep under Data API closed-positions / positions rate limits. */
 const POSITION_CONCURRENCY = 10;
 
 type SeedWallet = WalletSummary & { window: EliteWindow };

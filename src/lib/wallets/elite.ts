@@ -12,10 +12,12 @@ export const ELITE_MIN_PROFIT_FACTOR = 4;
 export const ELITE_MAX_LOSS_SHARE = 0.16;
 /** Wilson lower bound so 8/8 is OK but 8/12 at 67% is not. */
 export const ELITE_MIN_WILSON = 0.48;
+/** Absolute cap on open mark-to-market losses (USD). */
+export const ELITE_MAX_OPEN_UNREALIZED_LOSS = 100_000;
 /** Cap open mark-to-market losses vs headline PnL. */
-export const ELITE_MAX_OPEN_LOSS_VS_PNL = 0.4;
+export const ELITE_MAX_OPEN_LOSS_VS_PNL = 0.25;
 /** Cap open mark-to-market losses vs sampled closed wins. */
-export const ELITE_MAX_OPEN_LOSS_VS_GROSS_WINS = 0.45;
+export const ELITE_MAX_OPEN_LOSS_VS_GROSS_WINS = 0.35;
 /** JSON-safe cap for infinite profit factor (no closed losses). */
 export const PROFIT_FACTOR_CAP = 99;
 
@@ -109,9 +111,10 @@ function hidesOpenLosses(
 ): boolean {
   const open = Math.max(0, openUnrealizedLoss);
   if (open <= 0) return false;
+  if (open > ELITE_MAX_OPEN_UNREALIZED_LOSS) return true;
   const vsPnl = open / Math.max(pnl, 1);
   const vsWins = open / Math.max(summary.grossWins, 1);
-  return vsPnl > ELITE_MAX_OPEN_LOSS_VS_PNL && vsWins > ELITE_MAX_OPEN_LOSS_VS_GROSS_WINS;
+  return vsPnl > ELITE_MAX_OPEN_LOSS_VS_PNL || vsWins > ELITE_MAX_OPEN_LOSS_VS_GROSS_WINS;
 }
 
 export function evaluateEliteWallet(candidate: EliteCandidate): EliteEvaluation {

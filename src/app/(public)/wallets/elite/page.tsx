@@ -104,6 +104,11 @@ export default async function EliteWalletsPage() {
                       </td>
                       <td className="text-success px-4 py-3 tabular-nums">
                         {w.pnl != null ? formatUsd(w.pnl, 0) : "—"}
+                        {w.openUnrealizedLoss > 1_000 ? (
+                          <p className="text-risk mt-1 text-[11px]">
+                            פתוח −{formatUsd(w.openUnrealizedLoss, 0)}
+                          </p>
+                        ) : null}
                       </td>
                       <td className="px-4 py-3 tabular-nums">
                         {w.winRate != null ? formatPercent(w.winRate, 0) : "—"}
