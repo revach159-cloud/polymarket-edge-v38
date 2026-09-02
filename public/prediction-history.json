@@ -1,6 +1,6 @@
 {
   "version": 5,
-  "updatedAt": "2026-09-02T03:37:24.350Z",
+  "updatedAt": "2026-09-02T03:50:09.192Z",
   "predictions": [
     {
       "id": "pred:3397898",
@@ -157310,16 +157310,16 @@
       "slug": "will-michael-minogue-win-the-2026-massachusetts-governor-republican-primary-election",
       "marketQuestion": "Will Michael Minogue win the 2026 Massachusetts Governor Republican primary election?",
       "side": "YES",
-      "marketProbability": 0.968,
+      "marketProbability": 1,
       "modelProbability": 1,
-      "edgeScore": 0.468,
-      "qualityScore": 81,
+      "edgeScore": 0,
+      "qualityScore": 54.3,
       "walletConsensusScore": null,
       "recordedAt": "2026-08-22T03:08:33.540Z",
-      "status": "open",
-      "resolvedAt": null,
-      "resolvedOutcome": null,
-      "correct": null,
+      "status": "resolved",
+      "resolvedAt": "2026-09-02T03:50:09.063Z",
+      "resolvedOutcome": "Michael Minogue",
+      "correct": true,
       "source": "live-sync"
     },
     {
