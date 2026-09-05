@@ -14,8 +14,8 @@ export default function WalletsPage() {
       <Container className="space-y-8 py-8">
         <div>
           <h1 className="font-display text-3xl font-bold">ארנקים</h1>
-          <p className="mt-1 text-muted-foreground">
-            חיפוש כתובת או צפייה בלוח מובילים ציבורי.
+          <p className="text-muted-foreground mt-1">
+            חיפוש כתובת, ארנקי מפלצות עם כמעט בלי הפסדים, או לוח מובילים ציבורי.
           </p>
         </div>
 
@@ -36,10 +36,24 @@ export default function WalletsPage() {
               />
               <Button type="submit">חיפוש</Button>
             </form>
-            <p className="mt-3 text-xs text-muted-foreground">
-              או עברו ישירות לכתובת:{" "}
-              <span className="ltr-isolate">/wallets/0x…</span>
+            <p className="text-muted-foreground mt-3 text-xs">
+              או עברו ישירות לכתובת: <span className="ltr-isolate">/wallets/0x…</span>
             </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-gold/35 bg-[linear-gradient(135deg,rgba(255,225,115,0.12),transparent)]">
+          <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-gold font-semibold">רווחים משוגעים · כמעט בלי הפסדים</p>
+              <p className="text-muted-foreground text-sm">
+                ארנקים עם PnL גבוה, שיעור ניצחון גבוה, וגורם רווח גבוה — בלי הפסדים פתוחים שמסתירים
+                את התמונה.
+              </p>
+            </div>
+            <Button asChild variant="gold">
+              <Link href="/wallets/elite">למפלצות</Link>
+            </Button>
           </CardContent>
         </Card>
 
@@ -47,7 +61,7 @@ export default function WalletsPage() {
           <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="font-semibold">ארנקים מובילים</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 דירוג ציבורי לפי נתוני Polymarket Data API
               </p>
             </div>
