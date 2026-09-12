@@ -1,0 +1,3736 @@
+{
+  "meta": {
+    "project": "hedge-fund-alpha-atlas",
+    "generated_at": "2026-08-11T18:40:27.635257+00:00",
+    "record_count": 60,
+    "label": "strategy_reconstruction",
+    "rules": [
+      "Never invent performance numbers",
+      "UNKNOWN when unavailable",
+      "ESTIMATED/INFERRED only when labeled",
+      "Public sources only"
+    ]
+  },
+  "reconstructions": [
+    {
+      "strategy_id": "strat_medallion_style_stat_arb",
+      "name": "Medallion-Style Short-Horizon Statistical Prediction (Public Characterization)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "High-quality historical market data; alternative data role UNKNOWN.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public sources describe ensembles of short-horizon predictive signals from price/volume and other features; exact features UNKNOWN.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public sources describe ensembles of short-horizon predictive signals from price/volume and other features; exact features UNKNOWN.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Highly constrained optimization with risk limits; Kelly-like speculation is SPECULATIVE.",
+          "evidence": "SPECULATIVE"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Low-latency execution important; proprietary stack UNKNOWN.",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Strict risk overlays and diversification across many weak signals (public interviews/books).",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Short holding periods; continuous re-forecasting; exact exit rules UNKNOWN.",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Market-neutral / hedged characterization common in public literature.",
+          "evidence": "STRONGLY_SUPPORTED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_time_series_trend_following",
+      "name": "Time-Series Trend Following (CTA)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Futures prices, rolls, volatility estimates.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Price above/below moving averages or positive time-series momentum; multi-horizon blends common.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Price above/below moving averages or positive time-series momentum; multi-horizon blends common.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Volatility targeting / risk parity across markets is standard public practice.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Mostly daily/weekly; some intraday overlays.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Vol scaling, correlation-aware allocation, max leverage caps.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Exit or reverse on signal flip; trailing stops sometimes used.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Diversification across uncorrelated futures; not classic beta hedge.",
+          "evidence": "STRONGLY_SUPPORTED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_cross_sectional_momentum",
+      "name": "Cross-Sectional Equity Momentum",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Total return price histories, corporate actions, investability filters.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Rank assets by past 3–12 month returns excluding recent month; long winners / short losers.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Rank assets by past 3–12 month returns excluding recent month; long winners / short losers.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Equal-weight or risk-parity within sleeves; volatility scaling common.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Periodic rebalance with transaction-cost optimization.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Sector/country neutralization; volatility targeting; drawdown controls.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Exit when rank falls out of selected quantile at next rebalance.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Often run long-short market-neutral or long-only factor tilts.",
+          "evidence": "CONFIRMED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_stat_arb_pairs",
+      "name": "Pairs / Residual Mean-Reversion Stat Arb",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Point-in-time fundamentals/prices, borrow, corporate actions.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Cointegration / residual z-score vs peer basket or factor model; trade dislocations.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Cointegration / residual z-score vs peer basket or factor model; trade dislocations.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Dollar or beta neutrality; volatility-scaled legs.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "VWAP/TWAP/implementation shortfall algos.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Factor neutrality, hard loss limits, borrow constraints.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Exit at mean reversion / time stop / stop-loss on residual.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Long-short residual portfolios; market beta hedged.",
+          "evidence": "CONFIRMED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_citadel_multi_strat",
+      "name": "Citadel Multi-Strategy Aggregation",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Citadel Multi-Strategy Aggregation",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Citadel Multi-Strategy Aggregation",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_xtx_ml_mm",
+      "name": "XTX ML Market Making Characterization",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: XTX ML Market Making Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: XTX ML Market Making Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_jump_hft",
+      "name": "Jump Trading HFT / Research Characterization",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Jump Trading HFT / Research Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Jump Trading HFT / Research Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_market_making_equity",
+      "name": "Electronic Equity Market Making",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Full depth/L3, proprietary normalized market data.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Microprice, queue position, inventory, short-term order-flow imbalance; exact models proprietary.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Microprice, queue position, inventory, short-term order-flow imbalance; exact models proprietary.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Inventory caps; risk units by symbol volatility and ADV.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Co-located matching-engine access; smart order routing.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Kill switches, fat-finger limits, venue risk, toxicity filters.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Inventory mean-reversion; skew quotes; hard flatten limits.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "ETF/index/correlated hedges for residual inventory.",
+          "evidence": "STRONGLY_SUPPORTED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_de_shaw_stat_arb",
+      "name": "D.E. Shaw Computational/Stat Arb Characterization",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: D.E. Shaw Computational/Stat Arb Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: D.E. Shaw Computational/Stat Arb Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_hrt_hft",
+      "name": "HRT HFT Liquidity Provision",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: HRT HFT Liquidity Provision",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: HRT HFT Liquidity Provision",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_optiver_options",
+      "name": "Optiver Options Pricing MM",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Optiver Options Pricing MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Optiver Options Pricing MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_vol_risk_premium",
+      "name": "Volatility Risk Premium / Short Volatility (Public Forms)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Option surfaces, realized vol estimators.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Implied vol rich vs expected realized; harvest premium via option structures.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Implied vol rich vs expected realized; harvest premium via option structures.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Strict loss budgets; tail risk dominates.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Listed options; careful roll of short vol ETPs if used (retail forms fragile).",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Crash convexity; hedging with wings/variance; kill switches.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Expiry, buyback on rich-to-cheap flip, or risk limits.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Delta hedge; sometimes vega/correlation hedges.",
+          "evidence": "CONFIRMED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_jane_street_etf_arb",
+      "name": "ETF / Closed-End Relative Value MM",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: ETF / Closed-End Relative Value MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: ETF / Closed-End Relative Value MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_imc_mm",
+      "name": "IMC Market Making",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: IMC Market Making",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: IMC Market Making",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_sig_options_mm",
+      "name": "SIG-Style Options Market Making",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: SIG-Style Options Market Making",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: SIG-Style Options Market Making",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_two_sigma_ml_equity",
+      "name": "Two Sigma Style ML Equity (Public Characterization)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Two Sigma Style ML Equity (Public Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Two Sigma Style ML Equity (Public Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_tower_hft",
+      "name": "Tower Research HFT",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Tower Research HFT",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Tower Research HFT",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_multi_asset_tsmom",
+      "name": "Moskowitz-Style Multi-Asset TSMOM",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Moskowitz-Style Multi-Asset TSMOM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Moskowitz-Style Multi-Asset TSMOM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_ahl_dimension",
+      "name": "Man AHL Dimension / Evolution Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Man AHL Dimension / Evolution Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Man AHL Dimension / Evolution Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_fx_carry",
+      "name": "FX Carry Trade",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Interest rates, spot FX, rolls.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Long high-yielding currencies / short low-yielding; interest rate differential.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Long high-yielding currencies / short low-yielding; interest rate differential.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Vol targeting; crash-risk aware sizing recommended in literature.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Spot/forwards/futures; low frequency.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Carry crashes in risk-off; use trend/vol filters in research variants.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Rebalance on carry ranks; crash risk overlays sometimes added.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Basket construction provides partial diversification.",
+          "evidence": "INFERRED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_order_flow_toxicity",
+      "name": "Order-Flow / Toxicity-Aware MM",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Order-Flow / Toxicity-Aware MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Order-Flow / Toxicity-Aware MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_millennium_pod",
+      "name": "Pod-Shop Idiosyncratic Alpha Aggregation",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Pod-Shop Idiosyncratic Alpha Aggregation",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Pod-Shop Idiosyncratic Alpha Aggregation",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_voleon_ml",
+      "name": "Voleon ML Trading Characterization",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Voleon ML Trading Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Voleon ML Trading Characterization",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_flow_etf",
+      "name": "Flow Traders ETF MM",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Flow Traders ETF MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Flow Traders ETF MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_risk_premia_stack",
+      "name": "Multi-Style Risk Premia Stack",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Multi-Style Risk Premia Stack",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Multi-Style Risk Premia Stack",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_cf_m_physics",
+      "name": "CFM Physics-Inspired Quant Strategies (Public Characterization)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: CFM Physics-Inspired Quant Strategies (Public Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: CFM Physics-Inspired Quant Strategies (Public Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_merger_arbitrage",
+      "name": "Merger / Risk Arbitrage",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Deal terms databases, regulatory calendars, option-implied break odds.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Deal spread vs estimated completion probability and timing.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Deal spread vs estimated completion probability and timing.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Conviction × capital at risk; hard caps per deal.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Cash equity with borrow management.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Deal-break scenarios, regulatory risk, financing risk, portfolio deal correlation.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Deal close, deal break, or spread compression to target.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Cash deals: long target; stock deals: hedge acquirer.",
+          "evidence": "CONFIRMED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_g_research_ml",
+      "name": "G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_high_flyer_china",
+      "name": "High-Flyer China ML Quant",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: High-Flyer China ML Quant",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: High-Flyer China ML Quant",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_jump_crypto_mm",
+      "name": "Crypto Exchange MM / Arb Desks (Public Characterization)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Crypto Exchange MM / Arb Desks (Public Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Crypto Exchange MM / Arb Desks (Public Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_winton_diversified",
+      "name": "Winton Diversified Trend/Quant",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Winton Diversified Trend/Quant",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Winton Diversified Trend/Quant",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_ubiquant_china",
+      "name": "Ubiquant Quantitative Strategies",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Ubiquant Quantitative Strategies",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Ubiquant Quantitative Strategies",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_trend_with_carry",
+      "name": "Trend + Carry Combination (Public Research)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Trend + Carry Combination (Public Research)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Trend + Carry Combination (Public Research)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_bridgewater_risk_parity",
+      "name": "Bridgewater All Weather / Risk Parity Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Bridgewater All Weather / Risk Parity Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Bridgewater All Weather / Risk Parity Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_systematica_trend",
+      "name": "Systematica BlueTrend Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Systematica BlueTrend Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Systematica BlueTrend Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_transtrend_dtp",
+      "name": "Transtrend Diversified Trend Program",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Transtrend Diversified Trend Program",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Transtrend Diversified Trend Program",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_arrowstreet_global",
+      "name": "Arrowstreet Global Equity Alpha",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Arrowstreet Global Equity Alpha",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Arrowstreet Global Equity Alpha",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_value_factor",
+      "name": "Equity Value Factor (Book-to-Market / Multi-value)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Point-in-time fundamentals; careful delisting treatment.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Cheap vs expensive on value metrics (B/M, E/P, CF/P composites).",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Cheap vs expensive on value metrics (B/M, E/P, CF/P composites).",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Score or equal weight; industry neutralization common.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Low turnover relative to HFT; patient rebalance.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Tracking error budgets for long-only; leverage limits for L/S.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Exit when valuation scores normalize relative to universe.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Long-short or long-only benchmark-relative.",
+          "evidence": "CONFIRMED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_index_arb_etf",
+      "name": "ETF Creation/Redemption Arb",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: ETF Creation/Redemption Arb",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: ETF Creation/Redemption Arb",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_aspect_diversified",
+      "name": "Aspect Diversified Program Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Aspect Diversified Program Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Aspect Diversified Program Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_carver_sksys",
+      "name": "Carver Leveraged Systematic Futures",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Carver Leveraged Systematic Futures",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Carver Leveraged Systematic Futures",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_lyn_x_trend",
+      "name": "Lynx Trend Following",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Lynx Trend Following",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Lynx Trend Following",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_numeric_equity",
+      "name": "Man Numeric / Equity Market Neutral Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Man Numeric / Equity Market Neutral Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Man Numeric / Equity Market Neutral Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_drw_crypto_cumberland",
+      "name": "Cumberland / DRW Crypto Liquidity",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Cumberland / DRW Crypto Liquidity",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Cumberland / DRW Crypto Liquidity",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_equity_index_tsmom",
+      "name": "Equity Index Time-Series Momentum",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Equity Index Time-Series Momentum",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Equity Index Time-Series Momentum",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_wintermute_otc_mm",
+      "name": "Crypto OTC + Exchange MM",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Crypto OTC + Exchange MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Crypto OTC + Exchange MM",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_isam_trend",
+      "name": "ISAM Systematic Trend",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: ISAM Systematic Trend",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: ISAM Systematic Trend",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_defensive_momentum",
+      "name": "Momentum with Volatility Filter",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Momentum with Volatility Filter",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Momentum with Volatility Filter",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_fixed_income_rv",
+      "name": "Fixed Income Relative Value",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Fixed Income Relative Value",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Fixed Income Relative Value",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_funding_basis_cash_carry_crypto",
+      "name": "Crypto Cash-and-Carry",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Crypto Cash-and-Carry",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Crypto Cash-and-Carry",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_acadian_em",
+      "name": "Acadian Systematic Equity",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Acadian Systematic Equity",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Acadian Systematic Equity",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_commodity_tsmom",
+      "name": "Commodity Time-Series Momentum",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Commodity Time-Series Momentum",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Commodity Time-Series Momentum",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_quest_short_term",
+      "name": "Quest Partners Short-Term Trend/Crisis Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Quest Partners Short-Term Trend/Crisis Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Quest Partners Short-Term Trend/Crisis Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_fx_tsmom",
+      "name": "FX Time-Series Momentum",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: FX Time-Series Momentum",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: FX Time-Series Momentum",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_convertible_arb",
+      "name": "Convertible Bond Arbitrage",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Convert terms, borrow, credit spreads, option surfaces.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Cheap convert vs model fair value / implied vol vs hedge instruments.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Cheap convert vs model fair value / implied vol vs hedge instruments.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Leverage common historically; risk in gamma/credit/liquidity.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "OTC convert markets + exchange equity hedges.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Liquidity risk critical (2005/2008 lessons); haircuts, funding.",
+          "evidence": "CONFIRMED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Richening to fair value, vol realization, or forced deleveraging.",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Dynamic delta; credit and interest-rate hedges.",
+          "evidence": "CONFIRMED"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_funding_rate_arb_crypto",
+      "name": "Crypto Perp Funding Arbitrage",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Crypto Perp Funding Arbitrage",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Crypto Perp Funding Arbitrage",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_spoos_bonds_risk_parity",
+      "name": "Risk Parity / All-Weather Style",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Risk Parity / All-Weather Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Risk Parity / All-Weather Style",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_worldquant_alphas",
+      "name": "WorldQuant BRAIN Style Alphas",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: WorldQuant BRAIN Style Alphas",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: WorldQuant BRAIN Style Alphas",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_brevan_macro_rv",
+      "name": "Macro Relative Value (Public HF Characterization)",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: Macro Relative Value (Public HF Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: Macro Relative Value (Public HF Characterization)",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    },
+    {
+      "strategy_id": "strat_panagora_risk_parity",
+      "name": "PanAgora Risk Parity / Equity Market Neutral",
+      "pipeline": [
+        {
+          "stage": "DATA",
+          "detail": "Market data appropriate to asset class; alt-data if noted",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "DATA_CLEANING",
+          "detail": "Point-in-time alignment, corporate actions, outlier filters (general quant hygiene)",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "FEATURE_ENGINEERING",
+          "detail": "Public literature characterizes primary signal family for: PanAgora Risk Parity / Equity Market Neutral",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "SIGNAL_GENERATION",
+          "detail": "Public literature characterizes primary signal family for: PanAgora Risk Parity / Equity Market Neutral",
+          "evidence": "STRONGLY_SUPPORTED"
+        },
+        {
+          "stage": "PROBABILITY_OR_EXPECTED_RETURN",
+          "detail": "Map features to expected return / edge estimate after costs",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "TRADE_FILTER",
+          "detail": "Liquidity, borrow, news halts, risk budget filters",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "POSITION_SIZING",
+          "detail": "Often volatility-scaled in systematic implementations",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXECUTION",
+          "detail": "Varies from daily rebalance to low-latency",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "RISK_MANAGEMENT",
+          "detail": "Drawdown limits / diversification; specifics vary",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "EXIT",
+          "detail": "Regime-/signal-dependent exits per public descriptions",
+          "evidence": "INFERRED"
+        },
+        {
+          "stage": "PORTFOLIO_MANAGEMENT",
+          "detail": "Strategy-dependent",
+          "evidence": "UNKNOWN"
+        }
+      ],
+      "notes": "Traffic-light evidence labels follow project rules; SPECULATIVE must not be treated as fact."
+    }
+  ]
+}

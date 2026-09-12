@@ -1,0 +1,886 @@
+{
+  "meta": {
+    "project": "hedge-fund-alpha-atlas",
+    "generated_at": "2026-08-11T18:40:27.638251+00:00",
+    "record_count": 30,
+    "label": "research_hypotheses",
+    "rules": [
+      "Never invent performance numbers",
+      "UNKNOWN when unavailable",
+      "ESTIMATED/INFERRED only when labeled",
+      "Public sources only"
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "Hyp-01",
+      "title": "Cross-sectional momentum + Volatility filter + Dynamic vol targeting",
+      "components": [
+        "Cross-sectional momentum",
+        "Volatility filter",
+        "Dynamic vol targeting"
+      ],
+      "why_complementary": "Reduce momentum-crash exposure while keeping factor premium",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-02",
+      "title": "Time-series trend + FX carry + Correlation-aware risk parity",
+      "components": [
+        "Time-series trend",
+        "FX carry",
+        "Correlation-aware risk parity"
+      ],
+      "why_complementary": "Combine crisis-alpha trend with carry; size by cov risk",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-03",
+      "title": "Value + Momentum + Quality",
+      "components": [
+        "Value",
+        "Momentum",
+        "Quality"
+      ],
+      "why_complementary": "Classic multi-factor diversification of style drawdowns",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-04",
+      "title": "Pairs mean reversion + Hard-to-borrow filter + TCA cost model",
+      "components": [
+        "Pairs mean reversion",
+        "Hard-to-borrow filter",
+        "TCA cost model"
+      ],
+      "why_complementary": "Only trade residual dislocations that survive costs and borrow",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-05",
+      "title": "ETF arb + Intraday momentum overlay + Inventory skew",
+      "components": [
+        "ETF arb",
+        "Intraday momentum overlay",
+        "Inventory skew"
+      ],
+      "why_complementary": "MM inventory mean reversion plus short-horizon signal",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-06",
+      "title": "VRP harvest + Trend-on-vol filter + Tail hedge budget",
+      "components": [
+        "VRP harvest",
+        "Trend-on-vol filter",
+        "Tail hedge budget"
+      ],
+      "why_complementary": "Take vol premium only when vol trend not exploding; hard-cap tail budget",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-07",
+      "title": "Commodity curve carry + TSMOM + Seasonality filter",
+      "components": [
+        "Commodity curve carry",
+        "TSMOM",
+        "Seasonality filter"
+      ],
+      "why_complementary": "Curve shape + trend confirmation",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-08",
+      "title": "PEAD + Options skew confirmation + Liquidity filter",
+      "components": [
+        "PEAD",
+        "Options skew confirmation",
+        "Liquidity filter"
+      ],
+      "why_complementary": "Event drift with options-market confirmation",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-09",
+      "title": "Crypto funding harvest + Basis cash-and-carry + Exchange credit limits",
+      "components": [
+        "Crypto funding harvest",
+        "Basis cash-and-carry",
+        "Exchange credit limits"
+      ],
+      "why_complementary": "Structural crypto carry with venue risk controls",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-10",
+      "title": "Stat arb residuals + Meta-labeling + Position sizing by probability",
+      "components": [
+        "Stat arb residuals",
+        "Meta-labeling",
+        "Position sizing by probability"
+      ],
+      "why_complementary": "AFML-style secondary model filters primary signal",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-11",
+      "title": "Defensive equity + Trend overlay on index hedge + Vol targeting",
+      "components": [
+        "Defensive equity",
+        "Trend overlay on index hedge",
+        "Vol targeting"
+      ],
+      "why_complementary": "Keep low-vol sleeve; hedge when index trend breaks",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-12",
+      "title": "Merger arb + Deal-break probability model + Portfolio deal-correlation cap",
+      "components": [
+        "Merger arb",
+        "Deal-break probability model",
+        "Portfolio deal-correlation cap"
+      ],
+      "why_complementary": "Improve sizing beyond naive spread capture",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-13",
+      "title": "Index rebalance + Advancement timing model + Borrow/liquidity constraints",
+      "components": [
+        "Index rebalance",
+        "Advancement timing model",
+        "Borrow/liquidity constraints"
+      ],
+      "why_complementary": "Event microstructure with realistic capacity",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-14",
+      "title": "Alt-data nowcast + Earnings surprise model + Short holding period",
+      "components": [
+        "Alt-data nowcast",
+        "Earnings surprise model",
+        "Short holding period"
+      ],
+      "why_complementary": "Data edge only if lead time > implementation lag",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-15",
+      "title": "News NLP + Liquidity/impact model + Kill-switch on rumor quality",
+      "components": [
+        "News NLP",
+        "Liquidity/impact model",
+        "Kill-switch on rumor quality"
+      ],
+      "why_complementary": "Information edge with toxicity controls",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-16",
+      "title": "Dispersion trading + Correlation regime detector + Single-name jump filters",
+      "components": [
+        "Dispersion trading",
+        "Correlation regime detector",
+        "Single-name jump filters"
+      ],
+      "why_complementary": "Vol RV only when correlation premium justified",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-17",
+      "title": "FI relative value + PCA residual trading + Funding stress overlay",
+      "components": [
+        "FI relative value",
+        "PCA residual trading",
+        "Funding stress overlay"
+      ],
+      "why_complementary": "RV with liquidity-stress off switch",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-18",
+      "title": "Turtle-style breakout + ATR sizing + Long-only constraint for capacity",
+      "components": [
+        "Turtle-style breakout",
+        "ATR sizing",
+        "Long-only constraint for capacity"
+      ],
+      "why_complementary": "Public trend rules with modern risk overlays",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-19",
+      "title": "Dual momentum + Crash protection SMA + Multi-asset universe",
+      "components": [
+        "Dual momentum",
+        "Crash protection SMA",
+        "Multi-asset universe"
+      ],
+      "why_complementary": "Retail-reproducible absolute+relative momentum",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-20",
+      "title": "Clenow equity momentum + Sector neutrality + Gap-risk skip rules",
+      "components": [
+        "Clenow equity momentum",
+        "Sector neutrality",
+        "Gap-risk skip rules"
+      ],
+      "why_complementary": "Improve equity momentum implementability",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-21",
+      "title": "Carver multi-instrument trend + Carry overlay + IDM diversification multiplier",
+      "components": [
+        "Carver multi-instrument trend",
+        "Carry overlay",
+        "IDM diversification multiplier"
+      ],
+      "why_complementary": "Public systematic futures stack",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-22",
+      "title": "Avellaneda-Stoikov MM + Toxicity filter + Venue selection",
+      "components": [
+        "Avellaneda-Stoikov MM",
+        "Toxicity filter",
+        "Venue selection"
+      ],
+      "why_complementary": "Academic MM with adverse-selection defense",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-23",
+      "title": "Cross-exchange crypto arb + Latency budget realism + Withdrawal/credit risk model",
+      "components": [
+        "Cross-exchange crypto arb",
+        "Latency budget realism",
+        "Withdrawal/credit risk model"
+      ],
+      "why_complementary": "Only if ops risk priced correctly",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-24",
+      "title": "Qlib-style ML alpha + Purged CV + Cost-aware portfolio",
+      "components": [
+        "Qlib-style ML alpha",
+        "Purged CV",
+        "Cost-aware portfolio"
+      ],
+      "why_complementary": "Industrial ML workflow with leakage defenses",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-25",
+      "title": "Numerai-like ensemble + Neutralization constraints + Slow turnover",
+      "components": [
+        "Numerai-like ensemble",
+        "Neutralization constraints",
+        "Slow turnover"
+      ],
+      "why_complementary": "Crowdsourced features with institutional portfolio rules",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-26",
+      "title": "Risk premia stack + Dynamic allocation by Sharpe trailing + Max strategy correlation",
+      "components": [
+        "Risk premia stack",
+        "Dynamic allocation by Sharpe trailing",
+        "Max strategy correlation"
+      ],
+      "why_complementary": "Allocate across premia by recent risk-adj performance carefully",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-27",
+      "title": "Opening range breakout + Session vol regime filter + No-trade around news",
+      "components": [
+        "Opening range breakout",
+        "Session vol regime filter",
+        "No-trade around news"
+      ],
+      "why_complementary": "Intraday breakout with event avoidance",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-28",
+      "title": "Post-FOMC drift + Rates TSMOM + Equity-bond correlation monitor",
+      "components": [
+        "Post-FOMC drift",
+        "Rates TSMOM",
+        "Equity-bond correlation monitor"
+      ],
+      "why_complementary": "Macro event + trend hybrid",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-29",
+      "title": "Short interest crowding + Momentum fade + Squeeze risk cap",
+      "components": [
+        "Short interest crowding",
+        "Momentum fade",
+        "Squeeze risk cap"
+      ],
+      "why_complementary": "Crowding as risk overlay not alpha toy",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    },
+    {
+      "id": "Hyp-30",
+      "title": "HMM regime detection + Strategy switching between trend and MR + Transition cost penalty",
+      "components": [
+        "HMM regime detection",
+        "Strategy switching between trend and MR",
+        "Transition cost penalty"
+      ],
+      "why_complementary": "Regime-conditional strategy allocation hypothesis",
+      "potential_advantages": [
+        "Diversification across failure modes of single styles",
+        "Explicit risk overlays may improve drawdown profile"
+      ],
+      "potential_weaknesses": [
+        "Overfitting combination rules",
+        "Correlated breakdown in liquidity crises",
+        "Capacity and cost drag may erase paper edge"
+      ],
+      "expected_market_regime": "UNKNOWN — must be tested across regimes; do not assume universality",
+      "data_requirements": "Point-in-time market data + costs + borrow/funding where relevant",
+      "backtesting_requirements": [
+        "Purged / embargoed cross-validation where ML used",
+        "Realistic fees, slippage, latency",
+        "Crisis period stress tests",
+        "Capacity / ADV constraints"
+      ],
+      "status": "RESEARCH_HYPOTHESIS",
+      "disclaimer": "Not a claim that any fund uses this combination; not a guarantee of profitability"
+    }
+  ]
+}
