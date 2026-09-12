@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Precision Crypto Engine</title>
+  <style>
+    :root{--b:#050914;--p:#0d1628;--l:#263958;--t:#eef4ff;--m:#91a0bd;--g:#32d583;--r:#ff6577;--a:#fdb022;--c:#66d9ff;--sh:#8b7cf7}
+    *{box-sizing:border-box}body{margin:0;background:var(--b);color:var(--t);font:14px Arial}
+    .w{max-width:1700px;margin:auto;padding:16px}
+    .panel,.card,.box,dialog{background:var(--p);border:1px solid var(--l);border-radius:14px}
+    .controls{padding:12px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+    button,select,input{background:#121f36;color:var(--t);border:1px solid var(--l);border-radius:9px;padding:9px}
+    button{cursor:pointer;font-weight:800}
+    .tag{padding:7px 10px;border:1px solid #375582;border-radius:999px;color:var(--c);font-weight:800}
+    .tag-shadow{border-color:#5b4db8;color:#cbbfff}
+    .status{margin-inline-start:auto;color:var(--m)}
+    .cards{display:grid;grid-template-columns:repeat(11,1fr);gap:10px;margin:12px 0}
+    .card{padding:13px}.lab{color:var(--m);font-size:12px}.val{font-size:18px;font-weight:900;margin-top:4px}
+    .box{overflow:auto;margin-top:12px}
+    table{width:100%;border-collapse:collapse;min-width:1400px}
+    th,td{padding:8px;border-bottom:1px solid var(--l);text-align:center;white-space:nowrap}
+    th{background:#121d33}th.shadow-h{background:#1a1633;color:#cbbfff}
+    .coin{text-align:right;font-weight:900}
+    .long,.win{color:var(--g)}.short,.loss{color:var(--r)}.watch{color:var(--a)}.best{color:#c6a7ff}.near{color:var(--c)}.muted{color:var(--m)}
+    .shadow-cell{color:#cbbfff;font-variant-numeric:tabular-nums}
+    .bar{height:10px;width:100%;background:#091221;border-radius:999px;overflow:hidden}
+    .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#12618e,#66d9ff)}
+    dialog{color:var(--t);width:min(900px,95vw)}dialog::backdrop{background:#000a}
+    .row{display:flex;justify-content:space-between;gap:16px;padding:8px;border-bottom:1px solid var(--l)}
+    .note{color:var(--m);font-size:12px;margin:8px 0}
+    @media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.status{width:100%;margin:0}}
+  </style>
+</head>
+<body>
+  <div class="w">
+    <h1>Precision Crypto Engine</h1>
+    <p class="muted">כל LONG או SHORT מאושר נשמר אוטומטית במאגר, עם צילום מלא של תנאי האישור והתוצאה.</p>
+    <p class="note">Engine V1 = ייצור (ללא שינוי לוגיקה). Shadow V2 = מודיעין נוסף מ־Polymarket Daily Edge (איכות / דירוג / פרימיום / כיול) — <b>לא משנה החלטות ייצור</b>.</p>
+
+    <div class="panel controls">
+      <span class="tag">EDGE SCORE</span>
+      <span class="tag tag-shadow" id="engineTag">v1+shadow</span>
+      <label>מצב
+        <select id="mode">
+          <option value="strict">Strict</option>
+          <option value="opportunity" selected>Opportunity</option>
+        </select>
+      </label>
+      <label>מטבעות
+        <select id="limit">
+          <option>100</option>
+          <option selected>150</option>
+          <option>200</option>
+        </select>
+      </label>
+      <label>רענון
+        <select id="refresh">
+          <option value="0">ידני</option>
+          <option value="180" selected>3 דקות</option>
+          <option value="300">5 דקות</option>
+        </select>
+      </label>
+      <label title="מיון תצוגה בלבד — לא משנה תווית V1">
+        <input type="checkbox" id="shadowSort" /> מיון Shadow
+      </label>
+      <button id="scan" type="button">סריקה מלאה</button>
+      <button id="exportJournal" type="button">ייצוא מאגר</button>
+      <input id="search" placeholder="חיפוש" />
+      <span id="db" class="tag">מאגר נטען…</span>
+      <span id="status" class="status">מוכן</span>
+      <div class="bar"><i id="bar"></i></div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><div class="lab">מצב שוק</div><div id="regime" class="val">—</div></div>
+      <div class="card"><div class="lab">Fear & Greed</div><div id="fng" class="val">—</div></div>
+      <div class="card"><div class="lab">BTC Dominance</div><div id="btcd" class="val">—</div></div>
+      <div class="card"><div class="lab">ETH/BTC</div><div id="ethbtc" class="val">—</div></div>
+      <div class="card"><div class="lab">Best Available</div><div id="best" class="val">—</div></div>
+      <div class="card"><div class="lab">LONG</div><div id="longs" class="val">0</div></div>
+      <div class="card"><div class="lab">SHORT</div><div id="shorts" class="val">0</div></div>
+      <div class="card"><div class="lab">עסקאות סגורות</div><div id="closed" class="val">0</div></div>
+      <div class="card"><div class="lab">Win Rate</div><div id="wr" class="val">—</div></div>
+      <div class="card"><div class="lab">R מצטבר</div><div id="tr" class="val">0R</div></div>
+      <div class="card"><div class="lab">כיול Shadow</div><div id="calib" class="val" style="font-size:13px">—</div></div>
+    </div>
+
+    <div class="box">
+      <table>
+        <thead>
+          <tr>
+            <th>מטבע</th><th>החלטה V1</th><th>Edge</th><th>Tech/Deriv/Sent</th><th>מחיר</th>
+            <th>5m/15m/1h/4h</th><th>RSI</th><th>ADX</th><th>Volume</th><th>Funding</th><th>OI</th><th>R:R</th><th>שערים</th>
+            <th class="shadow-h">Q</th><th class="shadow-h">Smart</th><th class="shadow-h">Prem</th>
+            <th class="shadow-h">Agree</th><th class="shadow-h">Data</th><th>Audit</th>
+          </tr>
+        </thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+
+    <h2>Watchlist — מתקרבים לאישור</h2>
+    <div class="box">
+      <table>
+        <thead><tr><th>מטבע</th><th>כיוון</th><th>ציון</th><th>שערים</th><th>חסר לאישור</th></tr></thead>
+        <tbody id="watchlist"></tbody>
+      </table>
+    </div>
+
+    <h2>מאגר עסקאות חי</h2>
+    <div class="box">
+      <table>
+        <thead>
+          <tr><th>מטבע</th><th>כיוון</th><th>סטטוס</th><th>כניסה</th><th>יציאה</th><th>R</th><th>Edge</th><th>זמן</th></tr>
+        </thead>
+        <tbody id="journal"></tbody>
+      </table>
+    </div>
+    <p class="muted">הדירוג הוא כלי מחקרי ולא הבטחה לביצועים. מדדי Shadow אינם משנים את תווית הייצור.</p>
+  </div>
+
+  <dialog id="dlg">
+    <button id="close" type="button">סגור</button>
+    <h2 id="title"></h2>
+    <div id="detail"></div>
+  </dialog>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
