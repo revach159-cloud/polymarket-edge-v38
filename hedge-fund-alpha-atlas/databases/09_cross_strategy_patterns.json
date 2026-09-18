@@ -1,0 +1,429 @@
+{
+  "meta": {
+    "project": "hedge-fund-alpha-atlas",
+    "generated_at": "2026-08-11T18:40:27.639168+00:00",
+    "record_count": 115,
+    "label": "cross_strategy_patterns",
+    "rules": [
+      "Never invent performance numbers",
+      "UNKNOWN when unavailable",
+      "ESTIMATED/INFERRED only when labeled",
+      "Public sources only"
+    ]
+  },
+  "most_frequent_categories": [
+    [
+      "Trend following",
+      19
+    ],
+    [
+      "Machine learning",
+      18
+    ],
+    [
+      "Market making",
+      18
+    ],
+    [
+      "Arbitrage",
+      17
+    ],
+    [
+      "Statistical arbitrage",
+      15
+    ],
+    [
+      "Momentum",
+      13
+    ],
+    [
+      "High frequency",
+      12
+    ],
+    [
+      "Relative value",
+      11
+    ],
+    [
+      "Low frequency",
+      10
+    ],
+    [
+      "Options",
+      10
+    ],
+    [
+      "Event driven",
+      9
+    ],
+    [
+      "Macro",
+      7
+    ],
+    [
+      "Carry",
+      7
+    ],
+    [
+      "Volatility arbitrage",
+      6
+    ],
+    [
+      "Mean reversion",
+      5
+    ],
+    [
+      "Liquidity provision",
+      5
+    ],
+    [
+      "Portfolio construction",
+      5
+    ],
+    [
+      "Cross-sectional momentum",
+      4
+    ],
+    [
+      "Basis trading",
+      4
+    ],
+    [
+      "Alternative data",
+      4
+    ]
+  ],
+  "most_frequent_edges": [
+    [
+      "BEHAVIORAL",
+      23
+    ],
+    [
+      "STATISTICAL",
+      18
+    ],
+    [
+      "PRICING",
+      15
+    ],
+    [
+      "STRUCTURAL",
+      14
+    ],
+    [
+      "EXECUTION",
+      8
+    ],
+    [
+      "DATA",
+      8
+    ],
+    [
+      "PORTFOLIO_CONSTRUCTION",
+      8
+    ],
+    [
+      "SPEED",
+      7
+    ],
+    [
+      "INFORMATION",
+      4
+    ],
+    [
+      "LIQUIDITY",
+      4
+    ],
+    [
+      "RISK_MANAGEMENT",
+      3
+    ],
+    [
+      "TECHNOLOGY",
+      3
+    ]
+  ],
+  "highest_reproducibility": [
+    {
+      "id": "strat_fx_carry",
+      "name": "FX Carry Trade",
+      "reproducibility_score": 92
+    },
+    {
+      "id": "strat_value_factor",
+      "name": "Equity Value Factor (Book-to-Market / Multi-value)",
+      "reproducibility_score": 90
+    },
+    {
+      "id": "strat_time_series_trend_following",
+      "name": "Time-Series Trend Following (CTA)",
+      "reproducibility_score": 88
+    },
+    {
+      "id": "strat_cross_sectional_momentum",
+      "name": "Cross-Sectional Equity Momentum",
+      "reproducibility_score": 85
+    },
+    {
+      "id": "strat_quality_factor",
+      "name": "Quality / Profitability Factor",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_size_factor",
+      "name": "Size Factor",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_turtle_trend",
+      "name": "Turtle Trading Rules (Public)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_dual_momentum",
+      "name": "Dual Momentum (Gary Antonacci Public)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_clenow_momentum",
+      "name": "Clenow Stocks on the Move Momentum",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_ernie_chan_mr",
+      "name": "Ernie Chan Mean-Reversion Recipes (Public Books)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_funding_basis_cash_carry_crypto",
+      "name": "Crypto Cash-and-Carry",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_jump_crypto_mm",
+      "name": "Crypto Exchange MM / Arb Desks (Public Characterization)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_brevan_macro_rv",
+      "name": "Macro Relative Value (Public HF Characterization)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_two_sigma_ml_equity",
+      "name": "Two Sigma Style ML Equity (Public Characterization)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_g_research_ml",
+      "name": "G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_cf_m_physics",
+      "name": "CFM Physics-Inspired Quant Strategies (Public Characterization)",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_systematica_trend",
+      "name": "Systematica BlueTrend Style",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_lyn_x_trend",
+      "name": "Lynx Trend Following",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_isam_trend",
+      "name": "ISAM Systematic Trend",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_quest_short_term",
+      "name": "Quest Partners Short-Term Trend/Crisis Style",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_dunn_aggressive_trend",
+      "name": "Dunn Capital Aggressive Trend",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_winton_diversified",
+      "name": "Winton Diversified Trend/Quant",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_transtrend_dtp",
+      "name": "Transtrend Diversified Trend Program",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_tax_aware_factor",
+      "name": "Tax-Aware Factor Harvesting",
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_credit_momentum",
+      "name": "Credit Momentum / CDS",
+      "reproducibility_score": 75
+    }
+  ],
+  "highest_edge": [
+    {
+      "id": "strat_medallion_style_stat_arb",
+      "name": "Medallion-Style Short-Horizon Statistical Prediction (Public Characterization)",
+      "edge_score": 92,
+      "reproducibility_score": 8
+    },
+    {
+      "id": "strat_market_making_equity",
+      "name": "Electronic Equity Market Making",
+      "edge_score": 85,
+      "reproducibility_score": 12
+    },
+    {
+      "id": "strat_citadel_multi_strat",
+      "name": "Citadel Multi-Strategy Aggregation",
+      "edge_score": 83,
+      "reproducibility_score": 12
+    },
+    {
+      "id": "strat_xtx_ml_mm",
+      "name": "XTX ML Market Making Characterization",
+      "edge_score": 82,
+      "reproducibility_score": 12
+    },
+    {
+      "id": "strat_jump_hft",
+      "name": "Jump Trading HFT / Research Characterization",
+      "edge_score": 82,
+      "reproducibility_score": 12
+    },
+    {
+      "id": "strat_de_shaw_stat_arb",
+      "name": "D.E. Shaw Computational/Stat Arb Characterization",
+      "edge_score": 81,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_hrt_hft",
+      "name": "HRT HFT Liquidity Provision",
+      "edge_score": 81,
+      "reproducibility_score": 12
+    },
+    {
+      "id": "strat_optiver_options",
+      "name": "Optiver Options Pricing MM",
+      "edge_score": 80,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_jane_street_etf_arb",
+      "name": "ETF / Closed-End Relative Value MM",
+      "edge_score": 79,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_imc_mm",
+      "name": "IMC Market Making",
+      "edge_score": 79,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_time_series_trend_following",
+      "name": "Time-Series Trend Following (CTA)",
+      "edge_score": 78,
+      "reproducibility_score": 88
+    },
+    {
+      "id": "strat_sig_options_mm",
+      "name": "SIG-Style Options Market Making",
+      "edge_score": 78,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_two_sigma_ml_equity",
+      "name": "Two Sigma Style ML Equity (Public Characterization)",
+      "edge_score": 77,
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_tower_hft",
+      "name": "Tower Research HFT",
+      "edge_score": 77,
+      "reproducibility_score": 12
+    },
+    {
+      "id": "strat_multi_asset_tsmom",
+      "name": "Moskowitz-Style Multi-Asset TSMOM",
+      "edge_score": 77,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_ahl_dimension",
+      "name": "Man AHL Dimension / Evolution Style",
+      "edge_score": 76,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_order_flow_toxicity",
+      "name": "Order-Flow / Toxicity-Aware MM",
+      "edge_score": 75,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_millennium_pod",
+      "name": "Pod-Shop Idiosyncratic Alpha Aggregation",
+      "edge_score": 75,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_voleon_ml",
+      "name": "Voleon ML Trading Characterization",
+      "edge_score": 75,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_flow_etf",
+      "name": "Flow Traders ETF MM",
+      "edge_score": 75,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_risk_premia_stack",
+      "name": "Multi-Style Risk Premia Stack",
+      "edge_score": 75,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_cf_m_physics",
+      "name": "CFM Physics-Inspired Quant Strategies (Public Characterization)",
+      "edge_score": 74,
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_g_research_ml",
+      "name": "G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+      "edge_score": 73,
+      "reproducibility_score": 75
+    },
+    {
+      "id": "strat_high_flyer_china",
+      "name": "High-Flyer China ML Quant",
+      "edge_score": 73,
+      "reproducibility_score": 40
+    },
+    {
+      "id": "strat_cross_sectional_momentum",
+      "name": "Cross-Sectional Equity Momentum",
+      "edge_score": 72,
+      "reproducibility_score": 85
+    }
+  ],
+  "notes": [
+    "Frequent ≠ profitable",
+    "High edge score with low reproducibility implies research interest without easy implementation"
+  ]
+}
