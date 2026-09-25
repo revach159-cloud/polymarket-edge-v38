@@ -1,14 +1,22 @@
-import {
-  fetchTopWallets,
-  fetchWalletActivity,
-} from "@/lib/polymarket/api";
-import type { DataResult, WalletSummary, WalletTrade } from "@/types";
+import { fetchTopWallets, fetchWalletActivity } from "@/lib/polymarket/api";
+import { collectEliteWallets } from "@/lib/wallets/elite-source";
+import type { DataResult, EliteWallet, WalletSummary, WalletTrade } from "@/types";
 
-export async function getTopWallets(
-  limit = 25,
-): Promise<DataResult<WalletSummary[]>> {
+export async function getTopWallets(limit = 25): Promise<DataResult<WalletSummary[]>> {
   const fetchedAt = new Date().toISOString();
   const { wallets, error } = await fetchTopWallets(limit);
+  return {
+    data: wallets,
+    stale: Boolean(error && wallets.length === 0),
+    error,
+    fetchedAt,
+    source: wallets.length ? "polymarket" : "empty",
+  };
+}
+
+export async function getEliteWallets(): Promise<DataResult<EliteWallet[]>> {
+  const fetchedAt = new Date().toISOString();
+  const { wallets, error } = await collectEliteWallets();
   return {
     data: wallets,
     stale: Boolean(error && wallets.length === 0),

@@ -13,6 +13,11 @@ test.describe("critical smoke", () => {
     await expect(page.getByRole("heading", { name: "שווקים" })).toBeVisible();
   });
 
+  test("elite wallets page opens", async ({ page }) => {
+    await page.goto("/wallets/elite");
+    await expect(page.getByRole("heading", { name: "ארנקים עם רווחים משוגעים" })).toBeVisible();
+  });
+
   test("health endpoint", async ({ request }) => {
     const res = await request.get("/api/health");
     expect(res.ok()).toBeTruthy();
