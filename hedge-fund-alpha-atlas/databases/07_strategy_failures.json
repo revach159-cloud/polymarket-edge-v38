@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-08-11T18:40:27.638066+00:00",
+  "strategies_to_avoid": [
+    {
+      "strategy_id": "strat_vol_risk_premium",
+      "name": "Volatility Risk Premium / Short Volatility (Public Forms)",
+      "reasons": [
+        "Tail-risk asymmetry; crash regimes dominate"
+      ],
+      "failure_modes": [
+        "Backtest-only evidence risk",
+        "Overfitting / hyperparameter search abuse",
+        "Ignored fees and slippage",
+        "Survivorship / look-ahead bias risk",
+        "Regime dependence / crowding"
+      ],
+      "verdict": "STRATEGIES TO AVOID until stronger out-of-sample and cost-aware evidence"
+    },
+    {
+      "strategy_id": "strat_size_factor",
+      "name": "Size Factor",
+      "reasons": [
+        "Reproducible toy with weak quality score"
+      ],
+      "failure_modes": [
+        "Backtest-only evidence risk",
+        "Overfitting / hyperparameter search abuse",
+        "Ignored fees and slippage",
+        "Survivorship / look-ahead bias risk",
+        "Regime dependence / crowding"
+      ],
+      "verdict": "STRATEGIES TO AVOID until stronger out-of-sample and cost-aware evidence"
+    },
+    {
+      "strategy_id": "strat_triangle_arb_crypto",
+      "name": "Crypto Triangular Arbitrage",
+      "reasons": [
+        "Weak evidence level",
+        "Reproducible toy with weak quality score",
+        "Historically crowded / fragile / research-only patterns"
+      ],
+      "failure_modes": [
+        "Backtest-only evidence risk",
+        "Overfitting / hyperparameter search abuse",
+        "Ignored fees and slippage",
+        "Survivorship / look-ahead bias risk",
+        "Regime dependence / crowding"
+      ],
+      "verdict": "STRATEGIES TO AVOID until stronger out-of-sample and cost-aware evidence"
+    },
+    {
+      "strategy_id": "strat_finrl_portfolio",
+      "name": "FinRL-Style Deep RL Portfolio (Open Research)",
+      "reasons": [
+        "Weak evidence level",
+        "Reproducible toy with weak quality score",
+        "Historically crowded / fragile / research-only patterns"
+      ],
+      "failure_modes": [
+        "Backtest-only evidence risk",
+        "Overfitting / hyperparameter search abuse",
+        "Ignored fees and slippage",
+        "Survivorship / look-ahead bias risk",
+        "Regime dependence / crowding"
+      ],
+      "verdict": "STRATEGIES TO AVOID until stronger out-of-sample and cost-aware evidence"
+    },
+    {
+      "strategy_id": "strat_spa_c_arb_historical",
+      "name": "SPAC Arb (Historical Crowding Caution)",
+      "reasons": [
+        "Historically crowded / fragile / research-only patterns"
+      ],
+      "failure_modes": [
+        "Backtest-only evidence risk",
+        "Overfitting / hyperparameter search abuse",
+        "Ignored fees and slippage",
+        "Survivorship / look-ahead bias risk",
+        "Regime dependence / crowding"
+      ],
+      "verdict": "STRATEGIES TO AVOID until stronger out-of-sample and cost-aware evidence"
+    }
+  ],
+  "historical_failure_case_studies": [
+    {
+      "id": "fail_alameda",
+      "name": "Alameda Research (historical)",
+      "lesson": "Opaque risk, correlated crypto basis/lending exposures, and governance failures — not a model to replicate",
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "id": "fail_3ac",
+      "name": "Three Arrows Capital (historical)",
+      "lesson": "Leverage + illiquid venture-like crypto bets + basis trades can fail violently in liquidity shocks",
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "id": "fail_xiv",
+      "name": "Short-vol ETP structures (XIV-style)",
+      "lesson": "Harvesting vol premium via products with convex liability can terminate in a single shock",
+      "evidence_level": "CONFIRMED"
+    },
+    {
+      "id": "fail_ltcm_lineage_lesson",
+      "name": "LTCM-style relative value leverage lesson (historical)",
+      "lesson": "High Sharpe RV with huge leverage fails when liquidity and correlations regime-shift",
+      "evidence_level": "STRONGLY_SUPPORTED"
+    }
+  ],
+  "bot_framework_warnings": [
+    {
+      "bot_id": "bot_freqtrade",
+      "name": "Freqtrade",
+      "warning": "Public bot frameworks are not evidence of alpha; most shared strategies are overfit or cost-naive"
+    },
+    {
+      "bot_id": "bot_gekko",
+      "name": "Gekko (archived lineage)",
+      "warning": "Public bot frameworks are not evidence of alpha; most shared strategies are overfit or cost-naive"
+    },
+    {
+      "bot_id": "bot_zenbot",
+      "name": "Zenbot",
+      "warning": "Public bot frameworks are not evidence of alpha; most shared strategies are overfit or cost-naive"
+    },
+    {
+      "bot_id": "bot_finrl",
+      "name": "FinRL",
+      "warning": "Public bot frameworks are not evidence of alpha; most shared strategies are overfit or cost-naive"
+    },
+    {
+      "bot_id": "bot_tensortrade",
+      "name": "TensorTrade",
+      "warning": "Public bot frameworks are not evidence of alpha; most shared strategies are overfit or cost-naive"
+    }
+  ]
+}

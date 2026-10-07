@@ -1,0 +1,338 @@
+{
+  "meta": {
+    "project": "hedge-fund-alpha-atlas",
+    "generated_at": "2026-08-11T18:40:27.638887+00:00",
+    "record_count": 40,
+    "label": "sources",
+    "rules": [
+      "Never invent performance numbers",
+      "UNKNOWN when unavailable",
+      "ESTIMATED/INFERRED only when labeled",
+      "Public sources only"
+    ]
+  },
+  "sources": [
+    {
+      "id": "src_zuckerman_man_who_solved_market",
+      "title": "The Man Who Solved the Market (Gregory Zuckerman)",
+      "url": null,
+      "source_type": "book",
+      "published_year": 2019,
+      "reliability": 4,
+      "notes": "Secondary source on Renaissance; useful characterization, not a primary performance audit"
+    },
+    {
+      "id": "src_renaissance_wikipedia_summary",
+      "title": "Renaissance Technologies — public encyclopedia summaries",
+      "url": "https://en.wikipedia.org/wiki/Renaissance_Technologies",
+      "source_type": "other",
+      "published_year": null,
+      "reliability": 2,
+      "notes": "Starting pointer only; verify claims via primary materials"
+    },
+    {
+      "id": "src_jegadeesh_titman_1993",
+      "title": "Returns to Buying Winners and Selling Losers (Jegadeesh & Titman 1993)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 1993,
+      "reliability": 5
+    },
+    {
+      "id": "src_aqr_momentum_paper",
+      "title": "AQR / Asness et al. momentum research (various)",
+      "url": "https://www.aqr.com",
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 5
+    },
+    {
+      "id": "src_moskowitz_tsmom",
+      "title": "Time Series Momentum (Moskowitz, Ooi, Pedersen)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2012,
+      "reliability": 5
+    },
+    {
+      "id": "src_hurst_trend_following",
+      "title": "Demystifying Managed Futures / trend-following research (Hurst et al. / AQR)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2013,
+      "reliability": 5
+    },
+    {
+      "id": "src_virtu_10k",
+      "title": "Virtu Financial Form 10-K filings",
+      "url": "https://www.sec.gov",
+      "source_type": "filing",
+      "published_year": null,
+      "reliability": 5
+    },
+    {
+      "id": "src_hft_academic_survey",
+      "title": "Academic surveys on HFT / market making",
+      "url": null,
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_gatev_pairs_trading",
+      "title": "Pairs Trading: Performance of a Relative-Value Arbitrage Rule (Gatev et al.)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2006,
+      "reliability": 5
+    },
+    {
+      "id": "src_avellaneda_lee_statarb",
+      "title": "Statistical Arbitrage in the US Equities Market (Avellaneda & Lee)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2010,
+      "reliability": 5
+    },
+    {
+      "id": "src_fama_french_1992",
+      "title": "The Cross-Section of Expected Stock Returns (Fama & French 1992)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 1992,
+      "reliability": 5
+    },
+    {
+      "id": "src_aqr_value_investing",
+      "title": "AQR value factor research / commentaries",
+      "url": "https://www.aqr.com",
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_mitchell_pulvino_merger",
+      "title": "Characteristics of Risk and Return in Risk Arbitrage (Mitchell & Pulvino)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2001,
+      "reliability": 5
+    },
+    {
+      "id": "src_mitchell_pulvino_convert",
+      "title": "Convertible bond arbitrage literature (Mitchell/Pulvino and related)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_lustig_carry",
+      "title": "Common Risk Factors in Currency Markets (Lustig et al.)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2011,
+      "reliability": 5
+    },
+    {
+      "id": "src_brunnermeier_carry_crash",
+      "title": "Carry Trades and Currency Crashes (Brunnermeier et al.)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2008,
+      "reliability": 5
+    },
+    {
+      "id": "src_bakshi_kapadia_vrp",
+      "title": "Delta-Hedged Gains and the Negative Market Volatility Risk Premium",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2003,
+      "reliability": 5
+    },
+    {
+      "id": "src_xiv_collapse_reports",
+      "title": "Public reporting on XIV / short-vol ETF collapse (Feb 2018)",
+      "url": null,
+      "source_type": "other",
+      "published_year": 2018,
+      "reliability": 4
+    },
+    {
+      "id": "src_turtle_rules_public",
+      "title": "Original Turtle Trading Rules (public PDF lineage)",
+      "url": null,
+      "source_type": "other",
+      "published_year": 2003,
+      "reliability": 3
+    },
+    {
+      "id": "src_antonacci_dual_momentum",
+      "title": "Dual Momentum Investing (Gary Antonacci)",
+      "url": null,
+      "source_type": "book",
+      "published_year": 2014,
+      "reliability": 3
+    },
+    {
+      "id": "src_carver_systematic_trading",
+      "title": "Systematic Trading / Leveraged Trading (Robert Carver)",
+      "url": null,
+      "source_type": "book",
+      "published_year": 2015,
+      "reliability": 4
+    },
+    {
+      "id": "src_ernie_chan_books",
+      "title": "Quantitative Trading / Algorithmic Trading (Ernie Chan)",
+      "url": null,
+      "source_type": "book",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_clenow_stocks_on_move",
+      "title": "Stocks on the Move (Andreas Clenow)",
+      "url": null,
+      "source_type": "book",
+      "published_year": 2015,
+      "reliability": 3
+    },
+    {
+      "id": "src_avellaneda_stoikov",
+      "title": "High-frequency trading in a limit order book (Avellaneda & Stoikov)",
+      "url": null,
+      "source_type": "paper",
+      "published_year": 2008,
+      "reliability": 5
+    },
+    {
+      "id": "src_freqtrade_repo",
+      "title": "Freqtrade GitHub repository",
+      "url": "https://github.com/freqtrade/freqtrade",
+      "source_type": "github",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_hummingbot_repo",
+      "title": "Hummingbot GitHub repository",
+      "url": "https://github.com/hummingbot/hummingbot",
+      "source_type": "github",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_qlib_repo",
+      "title": "Microsoft Qlib",
+      "url": "https://github.com/microsoft/qlib",
+      "source_type": "github",
+      "published_year": 2020,
+      "reliability": 4
+    },
+    {
+      "id": "src_finrl_repo",
+      "title": "FinRL",
+      "url": "https://github.com/AI4Finance-Foundation/FinRL",
+      "source_type": "github",
+      "published_year": 2020,
+      "reliability": 3
+    },
+    {
+      "id": "src_lean_repo",
+      "title": "QuantConnect Lean",
+      "url": "https://github.com/QuantConnect/Lean",
+      "source_type": "github",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_pysystemtrade",
+      "title": "pysystemtrade (Rob Carver)",
+      "url": "https://github.com/robcarver17/pysystemtrade",
+      "source_type": "github",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_bridgewater_principles",
+      "title": "Bridgewater public research / Principles-related materials",
+      "url": "https://www.bridgewater.com",
+      "source_type": "other",
+      "published_year": null,
+      "reliability": 3
+    },
+    {
+      "id": "src_man_ahl_research",
+      "title": "Man AHL research library (public papers)",
+      "url": "https://www.man.com",
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_winton_research",
+      "title": "Winton public research notes / interviews",
+      "url": null,
+      "source_type": "interview",
+      "published_year": null,
+      "reliability": 3
+    },
+    {
+      "id": "src_cf_m_research",
+      "title": "CFM research publications",
+      "url": "https://www.cfm.fr",
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_two_sigma_careers_research",
+      "title": "Two Sigma public research / engineering blogs",
+      "url": "https://www.twosigma.com",
+      "source_type": "blog",
+      "published_year": null,
+      "reliability": 3
+    },
+    {
+      "id": "src_de_shaw_public",
+      "title": "D.E. Shaw public firm materials",
+      "url": "https://www.deshaw.com",
+      "source_type": "other",
+      "published_year": null,
+      "reliability": 3
+    },
+    {
+      "id": "src_jane_street_blog",
+      "title": "Jane Street blog / tech talks",
+      "url": "https://blog.janestreet.com",
+      "source_type": "blog",
+      "published_year": null,
+      "reliability": 3
+    },
+    {
+      "id": "src_oxford_man_institute",
+      "title": "Oxford-Man Institute research",
+      "url": null,
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 4
+    },
+    {
+      "id": "src_ssrn_quant_general",
+      "title": "SSRN quantitative finance working papers (general index)",
+      "url": "https://www.ssrn.com",
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 3
+    },
+    {
+      "id": "src_arxiv_qfin",
+      "title": "arXiv q-fin submissions",
+      "url": "https://arxiv.org",
+      "source_type": "paper",
+      "published_year": null,
+      "reliability": 3
+    }
+  ]
+}
