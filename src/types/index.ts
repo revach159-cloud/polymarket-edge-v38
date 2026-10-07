@@ -71,6 +71,25 @@ export interface WalletSummary {
   userName?: string | null;
 }
 
+export type EliteLossLabel = "none" | "tiny" | "controlled";
+export type EliteWindow = "month" | "all";
+
+export interface EliteWallet extends WalletSummary {
+  profitFactor: number;
+  lossShare: number;
+  grossWins: number;
+  grossLosses: number;
+  worstLoss: number;
+  bestWin: number;
+  openUnrealizedLoss: number;
+  roi: number | null;
+  eliteScore: number;
+  window: EliteWindow;
+  lossLabel: EliteLossLabel;
+  wins: number;
+  losses: number;
+}
+
 export interface WalletTrade {
   id: string;
   marketSlug?: string;
