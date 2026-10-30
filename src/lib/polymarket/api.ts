@@ -50,10 +50,7 @@ function toNumber(value: string | number | undefined, fallback = 0): number {
 }
 
 /** Prefer full timestamps; Gamma often returns date-only endDateIso (midnight). */
-export function pickCloseTime(
-  endDate?: string | null,
-  endDateIso?: string | null,
-): string | null {
+export function pickCloseTime(endDate?: string | null, endDateIso?: string | null): string | null {
   const candidates = [endDate, endDateIso].filter(Boolean) as string[];
   if (!candidates.length) return null;
   const withTime = candidates.find((c) => /T\d{2}:\d{2}/.test(c));
@@ -64,21 +61,16 @@ export function mapGammaMarket(raw: GammaMarket): Market {
   const names = parseJsonArray(raw.outcomes);
   const prices = parseJsonArray(raw.outcomePrices).map((p) => toNumber(p));
   const tokenIds = parseJsonArray(raw.clobTokenIds);
-  const outcomes: MarketOutcome[] = (names.length ? names : ["Yes", "No"]).map(
-    (name, i) => ({
-      id: tokenIds[i] ?? `${raw.id ?? "m"}-${i}`,
-      name,
-      price: prices[i] ?? 0,
-      tokenId: tokenIds[i],
-    }),
-  );
+  const outcomes: MarketOutcome[] = (names.length ? names : ["Yes", "No"]).map((name, i) => ({
+    id: tokenIds[i] ?? `${raw.id ?? "m"}-${i}`,
+    name,
+    price: prices[i] ?? 0,
+    tokenId: tokenIds[i],
+  }));
 
   const question = raw.question ?? "שוק ללא כותרת";
   const slug = raw.slug || slugify(question) || raw.id || "market";
-  const eventSlug =
-    raw.eventSlug ||
-    raw.events?.[0]?.slug ||
-    null;
+  const eventSlug = raw.eventSlug || raw.events?.[0]?.slug || null;
   const eventId = raw.events?.[0]?.id ?? null;
 
   return {
@@ -153,9 +145,7 @@ export async function fetchGammaMarkets(params?: {
   sp.set("order", params?.order ?? "volume24hr");
   sp.set("ascending", String(params?.ascending ?? false));
 
-  const { data, error } = await fetchJson<GammaMarket[]>(
-    `${gamma}/markets?${sp.toString()}`,
-  );
+  const { data, error } = await fetchJson<GammaMarket[]>(`${gamma}/markets?${sp.toString()}`);
 
   if (!data) return { markets: [], error: error ?? "לא התקבלו נתונים" };
   return { markets: data.map(mapGammaMarket) };
@@ -220,8 +210,7 @@ export async function fetchActivePredictionUniverse(now = new Date()): Promise<{
     return cached;
   }
 
-  const iso = (msFromNow: number) =>
-    new Date(now.getTime() + msFromNow).toISOString();
+  const iso = (msFromNow: number) => new Date(now.getTime() + msFromNow).toISOString();
   const hour = 3_600_000;
   const day = 24 * hour;
 
@@ -303,9 +292,7 @@ async function fetchGammaMarketByPathId(
 ): Promise<{ market: Market | null; error?: string }> {
   if (!id.trim()) return { market: null, error: "חסר מזהה שוק" };
   const gamma = getGammaApiUrl();
-  const byId = await fetchJson<GammaMarket>(
-    `${gamma}/markets/${encodeURIComponent(id)}`,
-  );
+  const byId = await fetchJson<GammaMarket>(`${gamma}/markets/${encodeURIComponent(id)}`);
   if (byId.data && (byId.data.question || byId.data.id)) {
     return { market: mapGammaMarket(byId.data) };
   }
@@ -389,34 +376,81 @@ export async function fetchPriceHistory(
   return { points: data.history };
 }
 
-export async function fetchTopWallets(
+export type LeaderboardTimePeriod = "DAY" | "WEEK" | "MONTH" | "ALL";
+
+type LeaderboardRow = {
+  proxyWallet?: string;
+  address?: string;
+  pnl?: number;
+  vol?: number;
+  volume?: number;
+  realizedPnl?: number;
+  userName?: string;
+  rank?: string | number;
+};
+
+export async function fetchPnlLeaderboard(
   limit = 20,
+  timePeriod: LeaderboardTimePeriod = "MONTH",
 ): Promise<{ wallets: WalletSummary[]; error?: string }> {
   const dataApi = getDataApiUrl();
-  // Public leaderboard-ish endpoint; may vary — handle gracefully
-  const { data, error } = await fetchJson<
-    Array<{
-      proxyWallet?: string;
-      address?: string;
-      pnl?: number;
-      vol?: number;
-      volume?: number;
-      realizedPnl?: number;
-    }>
-  >(`${dataApi}/v1/leaderboard?limit=${limit}&window=all`);
+  const { data, error } = await fetchJson<LeaderboardRow[]>(
+    `${dataApi}/v1/leaderboard?limit=${limit}&timePeriod=${timePeriod}&orderBy=PNL`,
+  );
 
   if (!data || !Array.isArray(data)) {
     return { wallets: [], error: error ?? "לוח מובילים אינו זמין כרגע" };
   }
 
   const wallets: WalletSummary[] = data.slice(0, limit).map((row, i) => ({
-    address: row.proxyWallet || row.address || `unknown-${i}`,
+    address: (row.proxyWallet || row.address || `unknown-${i}`).toLowerCase(),
     pnl: row.realizedPnl ?? row.pnl,
     volume: row.volume ?? row.vol,
-    rank: i + 1,
+    rank: toNumber(row.rank, i + 1),
+    userName: row.userName ?? null,
   }));
 
   return { wallets };
+}
+
+export async function fetchTopWallets(
+  limit = 20,
+): Promise<{ wallets: WalletSummary[]; error?: string }> {
+  return fetchPnlLeaderboard(limit, "MONTH");
+}
+
+export async function fetchClosedPositionPnls(
+  address: string,
+  limit = 50,
+): Promise<{ pnls: number[]; error?: string }> {
+  const dataApi = getDataApiUrl();
+  const { data, error } = await fetchJson<Array<{ realizedPnl?: number | string }>>(
+    `${dataApi}/closed-positions?user=${encodeURIComponent(address)}&limit=${limit}&sortBy=TIMESTAMP&sortDirection=DESC`,
+  );
+  if (!data || !Array.isArray(data)) {
+    return { pnls: [], error: error ?? "פוזיציות סגורות אינן זמינות" };
+  }
+  return {
+    pnls: data.map((row) => toNumber(row.realizedPnl)).filter((n) => Number.isFinite(n)),
+  };
+}
+
+export async function fetchOpenUnrealizedLoss(
+  address: string,
+  limit = 50,
+): Promise<{ openUnrealizedLoss: number; error?: string }> {
+  const dataApi = getDataApiUrl();
+  const { data, error } = await fetchJson<Array<{ cashPnl?: number | string }>>(
+    `${dataApi}/positions?user=${encodeURIComponent(address)}&limit=${limit}`,
+  );
+  if (!data || !Array.isArray(data)) {
+    return { openUnrealizedLoss: 0, error: error ?? "פוזיציות פתוחות אינן זמינות" };
+  }
+  const openUnrealizedLoss = data.reduce((sum, row) => {
+    const pnl = toNumber(row.cashPnl);
+    return pnl < 0 ? sum + Math.abs(pnl) : sum;
+  }, 0);
+  return { openUnrealizedLoss };
 }
 
 export async function fetchWalletActivity(
@@ -436,9 +470,7 @@ export async function fetchWalletActivity(
       slug?: string;
       outcome?: string;
     }>
-  >(
-    `${dataApi}/activity?user=${encodeURIComponent(address)}&limit=${limit}`,
-  );
+  >(`${dataApi}/activity?user=${encodeURIComponent(address)}&limit=${limit}`);
 
   if (!data || !Array.isArray(data)) {
     return { trades: [], error: error ?? "פעילות הארנק אינה זמינה" };
