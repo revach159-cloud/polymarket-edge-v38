@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hedge-fund-alpha-atlas.local/schema/organization.json",
+  "title": "Organization",
+  "type": "object",
+  "required": ["id", "name", "org_type", "source_ids"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^org_" },
+    "name": { "type": "string", "minLength": 1 },
+    "aliases": { "type": "array", "items": { "type": "string" } },
+    "org_type": {
+      "type": "string",
+      "enum": [
+        "quant_hf",
+        "systematic_hf",
+        "prop",
+        "hft",
+        "market_maker",
+        "stat_arb",
+        "cta",
+        "macro_quant",
+        "options",
+        "vol_trading",
+        "crypto_hf",
+        "algo_company",
+        "indie_trader",
+        "trading_bot",
+        "open_source",
+        "academic",
+        "ml_trading",
+        "alt_data",
+        "multi_strat",
+        "other"
+      ]
+    },
+    "founded_year": {},
+    "headquarters": {},
+    "aum_usd": { "$ref": "#/definitions/ProvenanceValue" },
+    "markets": { "type": "array", "items": { "type": "string" } },
+    "strategy_ids": { "type": "array", "items": { "type": "string" } },
+    "automation_level": {},
+    "longevity_years": { "$ref": "#/definitions/ProvenanceValue" },
+    "known_for": { "type": "string" },
+    "discovery_tier": {
+      "type": "string",
+      "enum": ["famous", "known", "specialist", "emerging", "academic", "open_source"]
+    },
+    "notes": { "type": "string" },
+    "source_ids": { "type": "array", "items": { "type": "string" } }
+  },
+  "definitions": {
+    "ProvenanceValue": {
+      "type": "object",
+      "required": ["value", "status"],
+      "properties": {
+        "value": {},
+        "status": {
+          "type": "string",
+          "enum": ["CONFIRMED", "ESTIMATED", "INFERRED", "UNKNOWN"]
+        },
+        "note": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
