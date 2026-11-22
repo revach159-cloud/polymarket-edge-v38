@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Heebo, IBM_Plex_Sans } from "next/font/google";
+import { AppChrome } from "@/components/layout/app-chrome";
 import { AppProviders } from "@/components/providers";
-import { BottomNav } from "@/components/layout/bottom-nav";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -53,15 +51,7 @@ export default function RootLayout({
           <a href="#main-content" className="skip-to-content">
             דלג לתוכן
           </a>
-          <SiteHeader />
-          <main
-            id="main-content"
-            className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-4 md:pb-10"
-          >
-            {children}
-          </main>
-          <SiteFooter />
-          <BottomNav />
+          <AppChrome>{children}</AppChrome>
         </AppProviders>
       </body>
     </html>

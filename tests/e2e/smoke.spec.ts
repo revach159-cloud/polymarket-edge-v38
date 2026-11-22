@@ -34,4 +34,11 @@ test.describe("critical smoke", () => {
     await page.goto("/disclaimer");
     await expect(page.getByText(/מידע וניתוח בלבד/i).first()).toBeVisible();
   });
+
+  test("zigzag academy foundation loads RTL with sim banner", async ({ page }) => {
+    await page.goto("/academy");
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "ZIGZAG" })).toBeVisible();
+    await expect(page.getByText(/סימולציה וחינוך בלבד/i).first()).toBeVisible();
+  });
 });
