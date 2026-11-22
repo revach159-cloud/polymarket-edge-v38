@@ -60,24 +60,25 @@ export default function AcademyHomePage() {
       </section>
 
       <section className="academy-section academy-section--muted" aria-labelledby="assumptions-title">
-        <h2 id="assumptions-title">הנחות מתמטיות · ממתינות לאישור</h2>
+        <h2 id="assumptions-title">הנחות ZigZag · ממתינות לאישור</h2>
         <p className="academy-section__lede">
-          ברירות מחדל מוצעות בלבד (לא מיושמות במנוע). פירוט מלא בתוכנית המימוש.
+          מתודולוגיית reinforcement בלבד (לא Kelly). ברירות מחדל מוצעות — לא מיושמות
+          במנוע עד אישור. פירוט מלא בתוכנית המימוש.
         </p>
         <dl className="academy-assumptions">
           <div>
-            <dt>Sizing</dt>
-            <dd className="ltr-isolate">{proposedMathDefaults.defaultSizingMode}</dd>
+            <dt>Reinforcement sizing</dt>
+            <dd className="ltr-isolate">{proposedMathDefaults.reinforcementSizingMode}</dd>
           </div>
           <div>
-            <dt>Risk fraction</dt>
+            <dt>1x adverse interval</dt>
             <dd className="ltr-isolate">
-              {(proposedMathDefaults.defaultRiskFraction * 100).toFixed(0)}%
+              {(proposedMathDefaults.adverseMoveIntervalPct * 100).toFixed(0)}%
             </dd>
           </div>
           <div>
-            <dt>Reference price</dt>
-            <dd className="ltr-isolate">{proposedMathDefaults.primaryReferencePrice}</dd>
+            <dt>10x threshold</dt>
+            <dd className="ltr-isolate">{proposedMathDefaults.tenXReinforcementThreshold}</dd>
           </div>
           <div>
             <dt>Max leverage (edu)</dt>

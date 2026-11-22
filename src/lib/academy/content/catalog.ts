@@ -61,17 +61,18 @@ const rawCatalog = {
           ],
         },
         {
-          id: "mod-sizing-preview",
-          slug: "position-sizing-preview",
-          titleHe: "תצוגה מקדימה · גודל פוזיציה",
-          summaryHe: "מודולי sizing מלאים יגיעו אחרי אישור הנחות מתמטיות.",
+          id: "mod-zigzag-preview",
+          slug: "zigzag-method-preview",
+          titleHe: "תצוגה מקדימה · שיטת ZigZag",
+          summaryHe: "Reinforcement, מעבר 1x→10x, ומימוש 75% — אחרי אישור הנחות המתודה.",
           order: 1,
           lessons: [
             {
-              id: "lesson-sizing-placeholder",
-              slug: "sizing-placeholder",
-              titleHe: "ממתינים לאישור מודל הסיכון",
-              summaryHe: "Fixed fractional, Kelly חינוכי, ומינוף 1x→10x — טעונים אישור בעלים.",
+              id: "lesson-zigzag-placeholder",
+              slug: "zigzag-assumptions-placeholder",
+              titleHe: "ממתינים לאישור מתודולוגיית ZigZag",
+              summaryHe:
+                "מצבי reinforcement, מרווח 10% ל־1x adverse, סף 10x, ומסלולי מינוף נפרדים — טעונים אישור.",
               estimatedMinutes: 5,
               simulationOnly: true as const,
               blocks: [
@@ -80,7 +81,7 @@ const rawCatalog = {
                   id: "awaiting-math",
                   tone: "warning" as const,
                   title: "טעון אישור",
-                  body: "מצבי sizing ומתודולוגיית reference-price מתועדים בתוכנית המימוש וממתינים לאישור.",
+                  body: "הנחות המתודה (לא Kelly) מתועדות בתוכנית המימוש וממתינות לאישור בעלים לפני מנוע הסימולציה.",
                 },
               ],
             },

@@ -40,8 +40,13 @@ describe("academy foundation constants", () => {
     expect(academyTokens.productHe).toMatch(/אקדמי/);
   });
 
-  it("keeps math defaults flagged as unconfirmed", () => {
+  it("keeps ZigZag math defaults flagged as unconfirmed", () => {
+    expect(proposedMathDefaults.methodology).toBe("zigzag_reinforcement");
     expect(proposedMathDefaults.awaitingOwnerConfirmation).toBe(true);
+    expect(proposedMathDefaults.reinforcementSizingMode).toBe(
+      "cumulative_allocated_capital",
+    );
+    expect(proposedMathDefaults.adverseMoveIntervalPct).toBe(0.1);
     expect(proposedMathDefaults.maxEducationalLeverage).toBe(10);
   });
 });
