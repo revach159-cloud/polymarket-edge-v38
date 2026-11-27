@@ -1,0 +1,2724 @@
+{
+  "meta": {
+    "project": "hedge-fund-alpha-atlas",
+    "generated_at": "2026-08-11T18:40:27.630825+00:00",
+    "record_count": 100,
+    "label": "top_100",
+    "rules": [
+      "Never invent performance numbers",
+      "UNKNOWN when unavailable",
+      "ESTIMATED/INFERRED only when labeled",
+      "Public sources only"
+    ]
+  },
+  "rankings_defined": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+  ],
+  "top_100": [
+    {
+      "rank": 1,
+      "strategy_id": "strat_time_series_trend_following",
+      "name": "Time-Series Trend Following (CTA)",
+      "composite_score": 83.04,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 41.2,
+        "C_sharpe": 0.5,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 100.0,
+        "G_longevity": 40.0,
+        "H_reproducibility": 88,
+        "I_automation": 90.0,
+        "J_research_interest": 93.0
+      },
+      "edge_score": 78,
+      "quality_score": 82,
+      "reproducibility_score": 88,
+      "evidence_level": "CONFIRMED",
+      "categories": [
+        "Trend following",
+        "Momentum",
+        "Macro",
+        "Low frequency"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 2,
+      "strategy_id": "strat_cross_sectional_momentum",
+      "name": "Cross-Sectional Equity Momentum",
+      "composite_score": 80.4,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 38.0,
+        "C_sharpe": 0.4,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 99.0,
+        "G_longevity": 30.0,
+        "H_reproducibility": 85,
+        "I_automation": 90.0,
+        "J_research_interest": 90.0
+      },
+      "edge_score": 72,
+      "quality_score": 80,
+      "reproducibility_score": 85,
+      "evidence_level": "CONFIRMED",
+      "categories": [
+        "Momentum",
+        "Cross-sectional momentum",
+        "Low frequency"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 3,
+      "strategy_id": "strat_stat_arb_pairs",
+      "name": "Pairs / Residual Mean-Reversion Stat Arb",
+      "composite_score": 76.88,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 50.9,
+        "C_sharpe": 1.0,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 87.5,
+        "G_longevity": 25.0,
+        "H_reproducibility": 70,
+        "I_automation": 90.0,
+        "J_research_interest": 88.0
+      },
+      "edge_score": 70,
+      "quality_score": 74,
+      "reproducibility_score": 70,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Pairs trading",
+        "Mean reversion"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 4,
+      "strategy_id": "strat_fx_carry",
+      "name": "FX Carry Trade",
+      "composite_score": 76.06,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.8,
+        "C_sharpe": 0.4,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 94.5,
+        "G_longevity": 30.0,
+        "H_reproducibility": 92,
+        "I_automation": 70.0,
+        "J_research_interest": 80.0
+      },
+      "edge_score": 58,
+      "quality_score": 68,
+      "reproducibility_score": 92,
+      "evidence_level": "CONFIRMED",
+      "categories": [
+        "Carry",
+        "Macro",
+        "Low frequency"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 5,
+      "strategy_id": "strat_value_factor",
+      "name": "Equity Value Factor (Book-to-Market / Multi-value)",
+      "composite_score": 74.4,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 32.0,
+        "C_sharpe": 0.3,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 100.0,
+        "G_longevity": 40.0,
+        "H_reproducibility": 90,
+        "I_automation": 70.0,
+        "J_research_interest": 75.0
+      },
+      "edge_score": 55,
+      "quality_score": 70,
+      "reproducibility_score": 90,
+      "evidence_level": "CONFIRMED",
+      "categories": [
+        "Relative value",
+        "Low frequency"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 6,
+      "strategy_id": "strat_medallion_style_stat_arb",
+      "name": "Medallion-Style Short-Horizon Statistical Prediction (Public Characterization)",
+      "composite_score": 73.12,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 61.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 100.0,
+        "G_longevity": 35.0,
+        "H_reproducibility": 8,
+        "I_automation": 90.0,
+        "J_research_interest": 98.0
+      },
+      "edge_score": 92,
+      "quality_score": 88,
+      "reproducibility_score": 8,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Machine learning",
+        "Mean reversion",
+        "High frequency"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 7,
+      "strategy_id": "strat_merger_arbitrage",
+      "name": "Merger / Risk Arbitrage",
+      "composite_score": 71.24,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 45.2,
+        "C_sharpe": 0.8,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 100.0,
+        "G_longevity": 40.0,
+        "H_reproducibility": 55,
+        "I_automation": 70.0,
+        "J_research_interest": 78.0
+      },
+      "edge_score": 68,
+      "quality_score": 72,
+      "reproducibility_score": 55,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Merger arbitrage",
+        "Event driven",
+        "Arbitrage"
+      ],
+      "core_edge": "INFORMATION"
+    },
+    {
+      "rank": 8,
+      "strategy_id": "strat_two_sigma_ml_equity",
+      "name": "Two Sigma Style ML Equity (Public Characterization)",
+      "composite_score": 68.18,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 50.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 82.0
+      },
+      "edge_score": 77,
+      "quality_score": 72,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Machine learning",
+        "Statistical arbitrage"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 9,
+      "strategy_id": "strat_vol_risk_premium",
+      "name": "Volatility Risk Premium / Short Volatility (Public Forms)",
+      "composite_score": 67.5,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 38.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 71.0,
+        "G_longevity": 20.0,
+        "H_reproducibility": 60,
+        "I_automation": 70.0,
+        "J_research_interest": 84.0
+      },
+      "edge_score": 62,
+      "quality_score": 55,
+      "reproducibility_score": 60,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Volatility",
+        "Options",
+        "Volatility arbitrage"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 10,
+      "strategy_id": "strat_cf_m_physics",
+      "name": "CFM Physics-Inspired Quant Strategies (Public Characterization)",
+      "composite_score": 66.56,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 48.3,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 79.0
+      },
+      "edge_score": 74,
+      "quality_score": 69,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 11,
+      "strategy_id": "strat_g_research_ml",
+      "name": "G-Research Style Predictive Modeling (Public Job/Research Characterization)",
+      "composite_score": 66.02,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 47.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 78.0
+      },
+      "edge_score": 73,
+      "quality_score": 68,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Machine learning",
+        "Statistical arbitrage"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 12,
+      "strategy_id": "strat_jump_crypto_mm",
+      "name": "Crypto Exchange MM / Arb Desks (Public Characterization)",
+      "composite_score": 65.48,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 77.0
+      },
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Arbitrage"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 13,
+      "strategy_id": "strat_winton_diversified",
+      "name": "Winton Diversified Trend/Quant",
+      "composite_score": 65.48,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 77.0
+      },
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 14,
+      "strategy_id": "strat_trend_with_carry",
+      "name": "Trend + Carry Combination (Public Research)",
+      "composite_score": 65.48,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 77.0
+      },
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Carry"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 15,
+      "strategy_id": "strat_systematica_trend",
+      "name": "Systematica BlueTrend Style",
+      "composite_score": 64.94,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 76.0
+      },
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 16,
+      "strategy_id": "strat_transtrend_dtp",
+      "name": "Transtrend Diversified Trend Program",
+      "composite_score": 64.94,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 76.0
+      },
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 17,
+      "strategy_id": "strat_lyn_x_trend",
+      "name": "Lynx Trend Following",
+      "composite_score": 63.86,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 74.0
+      },
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 18,
+      "strategy_id": "strat_equity_index_tsmom",
+      "name": "Equity Index Time-Series Momentum",
+      "composite_score": 63.86,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 74.0
+      },
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Momentum"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 19,
+      "strategy_id": "strat_de_shaw_stat_arb",
+      "name": "D.E. Shaw Computational/Stat Arb Characterization",
+      "composite_score": 63.34,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 53.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 86.0
+      },
+      "edge_score": 81,
+      "quality_score": 76,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 20,
+      "strategy_id": "strat_isam_trend",
+      "name": "ISAM Systematic Trend",
+      "composite_score": 63.32,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 73.0
+      },
+      "edge_score": 68,
+      "quality_score": 63,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 21,
+      "strategy_id": "strat_defensive_momentum",
+      "name": "Momentum with Volatility Filter",
+      "composite_score": 63.32,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 73.0
+      },
+      "edge_score": 68,
+      "quality_score": 63,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Momentum",
+        "Risk management"
+      ],
+      "core_edge": "RISK_MANAGEMENT"
+    },
+    {
+      "rank": 22,
+      "strategy_id": "strat_optiver_options",
+      "name": "Optiver Options Pricing MM",
+      "composite_score": 62.8,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 52.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 85.0
+      },
+      "edge_score": 80,
+      "quality_score": 75,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Options",
+        "Market making"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 23,
+      "strategy_id": "strat_funding_basis_cash_carry_crypto",
+      "name": "Crypto Cash-and-Carry",
+      "composite_score": 62.78,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 43.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 72.0
+      },
+      "edge_score": 67,
+      "quality_score": 62,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Basis trading",
+        "Carry"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 24,
+      "strategy_id": "strat_commodity_tsmom",
+      "name": "Commodity Time-Series Momentum",
+      "composite_score": 62.78,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 43.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 72.0
+      },
+      "edge_score": 67,
+      "quality_score": 62,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Momentum"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 25,
+      "strategy_id": "strat_jane_street_etf_arb",
+      "name": "ETF / Closed-End Relative Value MM",
+      "composite_score": 62.26,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 51.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 84.0
+      },
+      "edge_score": 79,
+      "quality_score": 74,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Arbitrage",
+        "Market making"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 26,
+      "strategy_id": "strat_imc_mm",
+      "name": "IMC Market Making",
+      "composite_score": 62.26,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 51.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 84.0
+      },
+      "edge_score": 79,
+      "quality_score": 74,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Options"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 27,
+      "strategy_id": "strat_quest_short_term",
+      "name": "Quest Partners Short-Term Trend/Crisis Style",
+      "composite_score": 62.24,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.699999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 71.0
+      },
+      "edge_score": 66,
+      "quality_score": 61,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Macro"
+      ],
+      "core_edge": "RISK_MANAGEMENT"
+    },
+    {
+      "rank": 28,
+      "strategy_id": "strat_fx_tsmom",
+      "name": "FX Time-Series Momentum",
+      "composite_score": 62.24,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.699999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 71.0
+      },
+      "edge_score": 66,
+      "quality_score": 61,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 29,
+      "strategy_id": "strat_market_making_equity",
+      "name": "Electronic Equity Market Making",
+      "composite_score": 62.1,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 52.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 74.0,
+        "G_longevity": 15.0,
+        "H_reproducibility": 12,
+        "I_automation": 90.0,
+        "J_research_interest": 86.0
+      },
+      "edge_score": 85,
+      "quality_score": 75,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Liquidity provision",
+        "High frequency",
+        "Order-flow trading"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 30,
+      "strategy_id": "strat_sig_options_mm",
+      "name": "SIG-Style Options Market Making",
+      "composite_score": 61.72,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 51.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 83.0
+      },
+      "edge_score": 78,
+      "quality_score": 73,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Options",
+        "Market making"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 31,
+      "strategy_id": "strat_brevan_macro_rv",
+      "name": "Macro Relative Value (Public HF Characterization)",
+      "composite_score": 61.7,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Macro",
+        "Relative value"
+      ],
+      "core_edge": "INFORMATION"
+    },
+    {
+      "rank": 32,
+      "strategy_id": "strat_bond_tsmom",
+      "name": "Bond Time-Series Momentum",
+      "composite_score": 61.7,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 75,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 33,
+      "strategy_id": "strat_convertible_arb",
+      "name": "Convertible Bond Arbitrage",
+      "composite_score": 61.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 40.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 90.5,
+        "G_longevity": 30.0,
+        "H_reproducibility": 35,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 60,
+      "quality_score": 58,
+      "reproducibility_score": 35,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Convertible arbitrage",
+        "Volatility arbitrage",
+        "Relative value"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 34,
+      "strategy_id": "strat_multi_asset_tsmom",
+      "name": "Moskowitz-Style Multi-Asset TSMOM",
+      "composite_score": 61.18,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 50.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 82.0
+      },
+      "edge_score": 77,
+      "quality_score": 72,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Momentum"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 35,
+      "strategy_id": "strat_ahl_dimension",
+      "name": "Man AHL Dimension / Evolution Style",
+      "composite_score": 60.64,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 49.699999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 81.0
+      },
+      "edge_score": 76,
+      "quality_score": 71,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 36,
+      "strategy_id": "strat_order_flow_toxicity",
+      "name": "Order-Flow / Toxicity-Aware MM",
+      "composite_score": 60.1,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 49.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 80.0
+      },
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Order-flow trading",
+        "Market making",
+        "High frequency"
+      ],
+      "core_edge": "SPEED"
+    },
+    {
+      "rank": 37,
+      "strategy_id": "strat_millennium_pod",
+      "name": "Pod-Shop Idiosyncratic Alpha Aggregation",
+      "composite_score": 60.1,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 49.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 80.0
+      },
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Event driven"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 38,
+      "strategy_id": "strat_voleon_ml",
+      "name": "Voleon ML Trading Characterization",
+      "composite_score": 60.1,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 49.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 80.0
+      },
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Machine learning",
+        "Deep learning"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 39,
+      "strategy_id": "strat_flow_etf",
+      "name": "Flow Traders ETF MM",
+      "composite_score": 60.1,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 49.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 80.0
+      },
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Arbitrage"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 40,
+      "strategy_id": "strat_risk_premia_stack",
+      "name": "Multi-Style Risk Premia Stack",
+      "composite_score": 60.1,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 49.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 80.0
+      },
+      "edge_score": 75,
+      "quality_score": 70,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Momentum",
+        "Value",
+        "Carry",
+        "Portfolio construction"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 41,
+      "strategy_id": "strat_high_flyer_china",
+      "name": "High-Flyer China ML Quant",
+      "composite_score": 59.02,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 47.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 78.0
+      },
+      "edge_score": 73,
+      "quality_score": 68,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Machine learning",
+        "Deep learning"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 42,
+      "strategy_id": "strat_citadel_multi_strat",
+      "name": "Citadel Multi-Strategy Aggregation",
+      "composite_score": 58.82,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 54.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 12,
+        "I_automation": 70.0,
+        "J_research_interest": 88.0
+      },
+      "edge_score": 83,
+      "quality_score": 78,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Macro",
+        "Event driven"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 43,
+      "strategy_id": "strat_dunn_aggressive_trend",
+      "name": "Dunn Capital Aggressive Trend",
+      "composite_score": 58.62,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 40.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 68.0
+      },
+      "edge_score": 63,
+      "quality_score": 58,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 44,
+      "strategy_id": "strat_ubiquant_china",
+      "name": "Ubiquant Quantitative Strategies",
+      "composite_score": 58.48,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 77.0
+      },
+      "edge_score": 72,
+      "quality_score": 67,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 45,
+      "strategy_id": "strat_xtx_ml_mm",
+      "name": "XTX ML Market Making Characterization",
+      "composite_score": 58.28,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 53.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 12,
+        "I_automation": 70.0,
+        "J_research_interest": 87.0
+      },
+      "edge_score": 82,
+      "quality_score": 77,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Machine learning",
+        "High frequency"
+      ],
+      "core_edge": "TECHNOLOGY"
+    },
+    {
+      "rank": 46,
+      "strategy_id": "strat_jump_hft",
+      "name": "Jump Trading HFT / Research Characterization",
+      "composite_score": 58.28,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 53.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 12,
+        "I_automation": 70.0,
+        "J_research_interest": 87.0
+      },
+      "edge_score": 82,
+      "quality_score": 77,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "High frequency",
+        "Arbitrage"
+      ],
+      "core_edge": "SPEED"
+    },
+    {
+      "rank": 47,
+      "strategy_id": "strat_bridgewater_risk_parity",
+      "name": "Bridgewater All Weather / Risk Parity Style",
+      "composite_score": 57.94,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 76.0
+      },
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Macro",
+        "Portfolio construction"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 48,
+      "strategy_id": "strat_arrowstreet_global",
+      "name": "Arrowstreet Global Equity Alpha",
+      "composite_score": 57.94,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 46.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 76.0
+      },
+      "edge_score": 71,
+      "quality_score": 66,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Machine learning",
+        "Cross-sectional momentum"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 49,
+      "strategy_id": "strat_hrt_hft",
+      "name": "HRT HFT Liquidity Provision",
+      "composite_score": 57.74,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 53.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 12,
+        "I_automation": 70.0,
+        "J_research_interest": 86.0
+      },
+      "edge_score": 81,
+      "quality_score": 76,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "High frequency",
+        "Market making"
+      ],
+      "core_edge": "SPEED"
+    },
+    {
+      "rank": 50,
+      "strategy_id": "strat_commodity_carry_roll",
+      "name": "Commodity Roll / Curve Carry",
+      "composite_score": 57.54,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 39.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 66.0
+      },
+      "edge_score": 61,
+      "quality_score": 56,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Carry",
+        "Basis trading"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 51,
+      "strategy_id": "strat_index_arb_etf",
+      "name": "ETF Creation/Redemption Arb",
+      "composite_score": 57.4,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 45.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 75.0
+      },
+      "edge_score": 70,
+      "quality_score": 65,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Arbitrage",
+        "Market making"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 52,
+      "strategy_id": "strat_aspect_diversified",
+      "name": "Aspect Diversified Program Style",
+      "composite_score": 57.4,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 45.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 75.0
+      },
+      "edge_score": 70,
+      "quality_score": 65,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 53,
+      "strategy_id": "strat_clenow_momentum",
+      "name": "Clenow Stocks on the Move Momentum",
+      "composite_score": 57.0,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 38.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 65.0
+      },
+      "edge_score": 60,
+      "quality_score": 55,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Momentum"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 54,
+      "strategy_id": "strat_carver_sksys",
+      "name": "Carver Leveraged Systematic Futures",
+      "composite_score": 56.86,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 74.0
+      },
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Trend following",
+        "Carry"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 55,
+      "strategy_id": "strat_numeric_equity",
+      "name": "Man Numeric / Equity Market Neutral Style",
+      "composite_score": 56.86,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 74.0
+      },
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Cross-sectional momentum"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 56,
+      "strategy_id": "strat_drw_crypto_cumberland",
+      "name": "Cumberland / DRW Crypto Liquidity",
+      "composite_score": 56.86,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 74.0
+      },
+      "edge_score": 69,
+      "quality_score": 64,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Liquidity provision"
+      ],
+      "core_edge": "LIQUIDITY"
+    },
+    {
+      "rank": 57,
+      "strategy_id": "strat_quality_factor",
+      "name": "Quality / Profitability Factor",
+      "composite_score": 56.46,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 37.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 64.0
+      },
+      "edge_score": 59,
+      "quality_score": 54,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Low frequency"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 58,
+      "strategy_id": "strat_wintermute_otc_mm",
+      "name": "Crypto OTC + Exchange MM",
+      "composite_score": 56.32,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 44.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 73.0
+      },
+      "edge_score": 68,
+      "quality_score": 63,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Market making",
+        "Liquidity provision"
+      ],
+      "core_edge": "LIQUIDITY"
+    },
+    {
+      "rank": 59,
+      "strategy_id": "strat_ernie_chan_mr",
+      "name": "Ernie Chan Mean-Reversion Recipes (Public Books)",
+      "composite_score": 55.92,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 37.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 63.0
+      },
+      "edge_score": 58,
+      "quality_score": 53,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Mean reversion",
+        "Statistical arbitrage"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 60,
+      "strategy_id": "strat_fixed_income_rv",
+      "name": "Fixed Income Relative Value",
+      "composite_score": 55.78,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 43.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 72.0
+      },
+      "edge_score": 67,
+      "quality_score": 62,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Relative value"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 61,
+      "strategy_id": "strat_acadian_em",
+      "name": "Acadian Systematic Equity",
+      "composite_score": 55.78,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 43.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 72.0
+      },
+      "edge_score": 67,
+      "quality_score": 62,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Cross-sectional momentum",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 62,
+      "strategy_id": "strat_tower_hft",
+      "name": "Tower Research HFT",
+      "composite_score": 55.58,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 50.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 12,
+        "I_automation": 70.0,
+        "J_research_interest": 82.0
+      },
+      "edge_score": 77,
+      "quality_score": 72,
+      "reproducibility_score": 12,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "High frequency"
+      ],
+      "core_edge": "SPEED"
+    },
+    {
+      "rank": 63,
+      "strategy_id": "strat_dual_momentum",
+      "name": "Dual Momentum (Gary Antonacci Public)",
+      "composite_score": 55.38,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 36.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 62.0
+      },
+      "edge_score": 57,
+      "quality_score": 52,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Momentum"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 64,
+      "strategy_id": "strat_funding_rate_arb_crypto",
+      "name": "Crypto Perp Funding Arbitrage",
+      "composite_score": 54.7,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Funding arbitrage",
+        "Arbitrage"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 65,
+      "strategy_id": "strat_spoos_bonds_risk_parity",
+      "name": "Risk Parity / All-Weather Style",
+      "composite_score": 54.7,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Macro",
+        "Portfolio construction"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 66,
+      "strategy_id": "strat_worldquant_alphas",
+      "name": "WorldQuant BRAIN Style Alphas",
+      "composite_score": 54.7,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Statistical arbitrage",
+        "Machine learning"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 67,
+      "strategy_id": "strat_panagora_risk_parity",
+      "name": "PanAgora Risk Parity / Equity Market Neutral",
+      "composite_score": 54.7,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 42.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 51.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 70.0
+      },
+      "edge_score": 65,
+      "quality_score": 60,
+      "reproducibility_score": 40,
+      "evidence_level": "STRONGLY_SUPPORTED",
+      "categories": [
+        "Portfolio construction",
+        "Statistical arbitrage"
+      ],
+      "core_edge": "PORTFOLIO_CONSTRUCTION"
+    },
+    {
+      "rank": 68,
+      "strategy_id": "strat_turtle_trend",
+      "name": "Turtle Trading Rules (Public)",
+      "composite_score": 54.3,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 35.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 60.0
+      },
+      "edge_score": 55,
+      "quality_score": 50,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Trend following"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 69,
+      "strategy_id": "strat_credit_momentum",
+      "name": "Credit Momentum / CDS",
+      "composite_score": 52.68,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 32.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 57.0
+      },
+      "edge_score": 52,
+      "quality_score": 47,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Momentum",
+        "Relative value"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 70,
+      "strategy_id": "strat_stat_arb_crypto",
+      "name": "Crypto Cross-Exchange Stat Arb",
+      "composite_score": 51.62,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 40.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 68.0
+      },
+      "edge_score": 63,
+      "quality_score": 58,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Statistical arbitrage",
+        "Arbitrage"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 71,
+      "strategy_id": "strat_qcp_options_crypto",
+      "name": "QCP Crypto Options",
+      "composite_score": 51.62,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 40.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 68.0
+      },
+      "edge_score": 63,
+      "quality_score": 58,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Options",
+        "Volatility"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 72,
+      "strategy_id": "strat_tax_aware_factor",
+      "name": "Tax-Aware Factor Harvesting",
+      "composite_score": 51.6,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 31.499999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 55.0
+      },
+      "edge_score": 50,
+      "quality_score": 45,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Low frequency",
+        "Portfolio construction"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 73,
+      "strategy_id": "strat_options_skew_rv",
+      "name": "Options Skew Relative Value",
+      "composite_score": 51.08,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 39.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 67.0
+      },
+      "edge_score": 62,
+      "quality_score": 57,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Options",
+        "Volatility arbitrage"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 74,
+      "strategy_id": "strat_gsr_crypto",
+      "name": "GSR Crypto Trading / MM",
+      "composite_score": 51.08,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 39.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 67.0
+      },
+      "edge_score": 62,
+      "quality_score": 57,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Market making",
+        "Arbitrage"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 75,
+      "strategy_id": "strat_dispersion_trading",
+      "name": "Index-Single Stock Vol Dispersion",
+      "composite_score": 50.54,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 39.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 66.0
+      },
+      "edge_score": 61,
+      "quality_score": 56,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Volatility arbitrage",
+        "Options"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 76,
+      "strategy_id": "strat_numerai_meta_model",
+      "name": "Numerai Crowdsourced Meta-Model",
+      "composite_score": 50.54,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 39.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 66.0
+      },
+      "edge_score": 61,
+      "quality_score": 56,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Machine learning",
+        "Crowdsourced signals"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 77,
+      "strategy_id": "strat_amber_crypto",
+      "name": "Amber Group Crypto Quant/MM",
+      "composite_score": 50.54,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 39.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 66.0
+      },
+      "edge_score": 61,
+      "quality_score": 56,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Market making",
+        "Arbitrage"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 78,
+      "strategy_id": "strat_basis_cash_futures",
+      "name": "Equity Index Basis Trading",
+      "composite_score": 50.0,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 38.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 65.0
+      },
+      "edge_score": 60,
+      "quality_score": 55,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Basis trading",
+        "Arbitrage"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 79,
+      "strategy_id": "strat_kronos_crypto",
+      "name": "Kronos Research Crypto Quant",
+      "composite_score": 50.0,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 38.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 65.0
+      },
+      "edge_score": 60,
+      "quality_score": 55,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Statistical arbitrage",
+        "High frequency"
+      ],
+      "core_edge": "SPEED"
+    },
+    {
+      "rank": 80,
+      "strategy_id": "strat_variance_swap_rv",
+      "name": "Variance Swap / Realized Var Trading",
+      "composite_score": 49.46,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 37.8,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 64.0
+      },
+      "edge_score": 59,
+      "quality_score": 54,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Volatility arbitrage"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 81,
+      "strategy_id": "strat_defensive_equity",
+      "name": "Low-Volatility / Defensive Equity",
+      "composite_score": 48.92,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 37.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 63.0
+      },
+      "edge_score": 58,
+      "quality_score": 53,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Low frequency",
+        "Relative value"
+      ],
+      "core_edge": "RISK_MANAGEMENT"
+    },
+    {
+      "rank": 82,
+      "strategy_id": "strat_correlation_trading",
+      "name": "Correlation / Dispersion Trading Extended",
+      "composite_score": 48.92,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 37.099999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 63.0
+      },
+      "edge_score": 58,
+      "quality_score": 53,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Volatility arbitrage"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 83,
+      "strategy_id": "strat_alt_data_satellite",
+      "name": "Satellite/Alt-Data Demand Nowcasting",
+      "composite_score": 47.3,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 35.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 60.0
+      },
+      "edge_score": 55,
+      "quality_score": 50,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Alternative data",
+        "Machine learning"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 84,
+      "strategy_id": "strat_selini_crypto",
+      "name": "Selini Capital Crypto MM",
+      "composite_score": 47.3,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 35.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 60.0
+      },
+      "edge_score": 55,
+      "quality_score": 50,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Market making"
+      ],
+      "core_edge": "LIQUIDITY"
+    },
+    {
+      "rank": 85,
+      "strategy_id": "strat_tca_alpha",
+      "name": "TCA / Implementation Shortfall Minimization as Edge",
+      "composite_score": 47.3,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 35.0,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 60.0
+      },
+      "edge_score": 55,
+      "quality_score": 50,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Execution"
+      ],
+      "core_edge": "EXECUTION"
+    },
+    {
+      "rank": 86,
+      "strategy_id": "strat_calendar_spread_futures",
+      "name": "Futures Calendar Spreads",
+      "composite_score": 46.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 58.0
+      },
+      "edge_score": 53,
+      "quality_score": 48,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Relative value",
+        "Carry"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 87,
+      "strategy_id": "strat_post_earnings_drift",
+      "name": "Post-Earnings Announcement Drift",
+      "composite_score": 46.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 58.0
+      },
+      "edge_score": 53,
+      "quality_score": 48,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Event driven",
+        "Momentum"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 88,
+      "strategy_id": "strat_index_rebalance_arb",
+      "name": "Index Rebalance / Addition Trading",
+      "composite_score": 46.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 58.0
+      },
+      "edge_score": 53,
+      "quality_score": 48,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Event driven",
+        "Arbitrage"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 89,
+      "strategy_id": "strat_hummingbot_avellaneda",
+      "name": "Hummingbot Avellaneda-Stoikov MM",
+      "composite_score": 46.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 58.0
+      },
+      "edge_score": 53,
+      "quality_score": 48,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Market making"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 90,
+      "strategy_id": "strat_capital_structure_arb",
+      "name": "Capital Structure Arbitrage",
+      "composite_score": 46.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 58.0
+      },
+      "edge_score": 53,
+      "quality_score": 48,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Relative value",
+        "Event driven"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 91,
+      "strategy_id": "strat_borrow_specials",
+      "name": "Hard-to-Borrow Specials Trading",
+      "composite_score": 46.22,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 33.599999999999994,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 58.0
+      },
+      "edge_score": 53,
+      "quality_score": 48,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Relative value"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 92,
+      "strategy_id": "strat_size_factor",
+      "name": "Size Factor",
+      "composite_score": 46.2,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 24.5,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 75,
+        "I_automation": 70.0,
+        "J_research_interest": 45.0
+      },
+      "edge_score": 40,
+      "quality_score": 35,
+      "reproducibility_score": 75,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Low frequency"
+      ],
+      "core_edge": "BEHAVIORAL"
+    },
+    {
+      "rank": 93,
+      "strategy_id": "strat_mean_reversion_intraday",
+      "name": "Intraday Mean Reversion Equities",
+      "composite_score": 45.68,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 32.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 57.0
+      },
+      "edge_score": 52,
+      "quality_score": 47,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Mean reversion"
+      ],
+      "core_edge": "STATISTICAL"
+    },
+    {
+      "rank": 94,
+      "strategy_id": "strat_pead_options",
+      "name": "Earnings Announcement Options Strategies",
+      "composite_score": 45.68,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 32.9,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 57.0
+      },
+      "edge_score": 52,
+      "quality_score": 47,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Event driven",
+        "Options"
+      ],
+      "core_edge": "INFORMATION"
+    },
+    {
+      "rank": 95,
+      "strategy_id": "strat_etf_flow_prediction",
+      "name": "ETF Flow Prediction Strategies",
+      "composite_score": 45.14,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 32.199999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 56.0
+      },
+      "edge_score": 51,
+      "quality_score": 46,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Alternative data",
+        "Event driven"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 96,
+      "strategy_id": "strat_news_nlp_trading",
+      "name": "News/NLP Event Trading",
+      "composite_score": 44.6,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 31.499999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 55.0
+      },
+      "edge_score": 50,
+      "quality_score": 45,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "News trading",
+        "Sentiment",
+        "Machine learning"
+      ],
+      "core_edge": "INFORMATION"
+    },
+    {
+      "rank": 97,
+      "strategy_id": "strat_mortgage_basis",
+      "name": "Mortgage Basis / TBA Strategies",
+      "composite_score": 44.6,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 31.499999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 55.0
+      },
+      "edge_score": 50,
+      "quality_score": 45,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Relative value",
+        "Basis trading"
+      ],
+      "core_edge": "STRUCTURAL"
+    },
+    {
+      "rank": 98,
+      "strategy_id": "strat_gamma_scalping",
+      "name": "Long Gamma Scalping",
+      "composite_score": 44.6,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 31.499999999999996,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 55.0
+      },
+      "edge_score": 50,
+      "quality_score": 45,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Volatility",
+        "Options"
+      ],
+      "core_edge": "PRICING"
+    },
+    {
+      "rank": 99,
+      "strategy_id": "strat_short_interest_squeeze_avoid",
+      "name": "Short Interest / Crowding Signals",
+      "composite_score": 42.98,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 29.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 52.0
+      },
+      "edge_score": 47,
+      "quality_score": 42,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Sentiment",
+        "Alternative data"
+      ],
+      "core_edge": "DATA"
+    },
+    {
+      "rank": 100,
+      "strategy_id": "strat_closed_end_fund_arb",
+      "name": "Closed-End Fund Discount Arb",
+      "composite_score": 42.98,
+      "ranking_scores": {
+        "A_absolute_return": null,
+        "B_risk_adjusted": 29.4,
+        "C_sharpe": null,
+        "D_sortino": null,
+        "E_return_over_drawdown": null,
+        "F_consistency": 41.5,
+        "G_longevity": null,
+        "H_reproducibility": 40,
+        "I_automation": 70.0,
+        "J_research_interest": 52.0
+      },
+      "edge_score": 47,
+      "quality_score": 42,
+      "reproducibility_score": 40,
+      "evidence_level": "INFERRED",
+      "categories": [
+        "Relative value",
+        "Arbitrage"
+      ],
+      "core_edge": "BEHAVIORAL"
+    }
+  ]
+}
